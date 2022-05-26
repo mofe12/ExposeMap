@@ -16,7 +16,7 @@ struct ContentView: View {
         if onBoarding == 0{
             OnBoardingView()
         }else if onBoarding == 1{
-            ResultsView(changeScreens: $changeScreens).environmentObject(MapUIViewModel())
+            ResultsView(changeScreens: $changeScreens).environmentObject(viewModel)
         }
     }
 }

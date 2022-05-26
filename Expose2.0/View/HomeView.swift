@@ -19,10 +19,12 @@ struct HomeView: View {
             // Using it as environment object so that it can  used in subviews...
             MapUIView().environmentObject(mapData)
             VStack{
-                VStack(spacing: 0){
-                    SearchBar().environmentObject(mapData)
-                }
-                .padding()
+//                VStack(spacing: 0){
+//                    SearchBar().environmentObject(mapData)
+//                }
+//                .padding()
+                header
+                
                 Spacer()
                 LocationAndGlobeButton().environmentObject(mapData)
             }
@@ -132,6 +134,40 @@ struct LocationAndGlobeButton: View {
             
         }
         .frame(maxWidth: .infinity, alignment: .trailing)
+        .padding()
+    }
+}
+
+extension HomeView{
+    private var header: some View{
+        VStack{
+            Button {
+                mapData.toogleInterstListView()
+            } label: {
+                Text(mapData.MLPhotoResults[0])
+                    .font(.title2)
+                    .fontWeight(.black)
+                    .foregroundColor(.primary)
+                    .frame(height: 55)
+                    .frame(maxWidth: .infinity)
+                    .textCase(.uppercase)
+                    .overlay(alignment: .leading) {
+                        Image(systemName: "arrow.down")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                            .padding()
+                            .rotationEffect(Angle(degrees: mapData.showInterestListView ? 180: 0))
+                    }
+            }
+
+            
+            if mapData.showInterestListView{
+                InterestListView()
+            }
+        }
+        .background(.thickMaterial)
+        .cornerRadius(10)
+        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
         .padding()
     }
 }

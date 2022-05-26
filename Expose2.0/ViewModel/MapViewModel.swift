@@ -39,11 +39,14 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // More info view
     @Published var showMoreInfoView = false
     
-    // Photos to be scanned my the ML
-    @Published var photosToBeScammed: [String] = ["lemon","strawberry", "test"]
+    // More list view
+    @Published var showInterestListView = false
+    
+    // Photos to be scanned by the ML
+    @Published var photosToBeScanned: [String] = ["lemon","strawberry", "test"]
     
     // ML results
-    @Published var MLPhotoResults : [String] = []
+    @Published var MLPhotoResults : [String] = ["chess", "guitar", "car"]
     
     // More info place
     @Published var moreInfoPlace: PlaceMarked =
@@ -148,6 +151,13 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
                                              longitudinalMeters: 5000)
         }
         print(place)
+    }
+    
+    // Toggle Interest List view
+    func toogleInterstListView(){
+        withAnimation(.easeInOut) {
+            showInterestListView.toggle()
+        }
     }
     
     

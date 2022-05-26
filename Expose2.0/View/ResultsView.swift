@@ -51,7 +51,7 @@ struct ResultsView: View {
 
         }.onAppear {
             viewModel.MLPhotoResults = []
-            for photo in viewModel.photosToBeScammed {
+            for photo in viewModel.photosToBeScanned {
                 classifyImage(currentImageName: photo)
             }
         }

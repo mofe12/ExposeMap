@@ -12,7 +12,7 @@ struct MLContentView: View {
     @EnvironmentObject var viewModel : MapUIViewModel
     var body: some View {
         VStack {
-            Image(viewModel.photosToBeScammed[0])
+            Image(viewModel.photosToBeScanned[0])
                 .resizable()
                 .frame(width: 200, height: 200)
             
@@ -20,7 +20,7 @@ struct MLContentView: View {
             Button("Classify") {
                 // Add more code here
                 viewModel.MLPhotoResults = []
-                for photo in viewModel.photosToBeScammed {
+                for photo in viewModel.photosToBeScanned {
                     classifyImage(currentImageName: photo)
                 }
                 
