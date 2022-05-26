@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		55020541283606FA004A2A69 /* MoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55020540283606FA004A2A69 /* MoreInfoView.swift */; };
 		552F27E32834BC27001634D8 /* MapUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552F27E22834BC26001634D8 /* MapUIView.swift */; };
+		554960BF283F44D900ED0FAA /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554960BE283F44D900ED0FAA /* ResultsView.swift */; };
 		55AF2FA32835418F0040D030 /* LocationMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF2FA22835418F0040D030 /* LocationMapAnnotationView.swift */; };
 		55CA7CC2283202C9008B5C2C /* Expose2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CA7CC1283202C9008B5C2C /* Expose2App.swift */; };
 		55CA7CC4283202C9008B5C2C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CA7CC3283202C9008B5C2C /* ContentView.swift */; };
@@ -22,17 +23,14 @@
 		55E0EE7A2837627400CDB250 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E0EE792837627400CDB250 /* OnBoardingView.swift */; };
 		55E0EE7C28377D2B00CDB250 /* NewQuickFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E0EE7B28377D2B00CDB250 /* NewQuickFile.swift */; };
 		8A5C89E8283F15990036CBE8 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C89E0283F15990036CBE8 /* UIImage+Extension.swift */; };
-		8A5C89E9283F15990036CBE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C89E1283F15990036CBE8 /* Assets.xcassets */; };
-		8A5C89EA283F15990036CBE8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C89E3283F15990036CBE8 /* Preview Assets.xcassets */; };
 		8A5C89EB283F15990036CBE8 /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C89E4283F15990036CBE8 /* MobileNetV2.mlmodel */; };
-		8A5C89EC283F15990036CBE8 /* CoreMLwithSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C89E5283F15990036CBE8 /* CoreMLwithSwiftUIApp.swift */; };
-		8A5C89ED283F15990036CBE8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C89E6283F15990036CBE8 /* ContentView.swift */; };
-		8A5C89EE283F15990036CBE8 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C89E7283F15990036CBE8 /* Info.plist */; };
+		8A5C89ED283F15990036CBE8 /* MLContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C89E6283F15990036CBE8 /* MLContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		55020540283606FA004A2A69 /* MoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreInfoView.swift; sourceTree = "<group>"; };
 		552F27E22834BC26001634D8 /* MapUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUIView.swift; sourceTree = "<group>"; };
+		554960BE283F44D900ED0FAA /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
 		55AF2FA22835418F0040D030 /* LocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapAnnotationView.swift; sourceTree = "<group>"; };
 		55CA7CBE283202C9008B5C2C /* Expose2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Expose2.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CA7CC1283202C9008B5C2C /* Expose2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expose2App.swift; sourceTree = "<group>"; };
@@ -47,12 +45,8 @@
 		55E0EE792837627400CDB250 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		55E0EE7B28377D2B00CDB250 /* NewQuickFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewQuickFile.swift; sourceTree = "<group>"; };
 		8A5C89E0283F15990036CBE8 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
-		8A5C89E1283F15990036CBE8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8A5C89E3283F15990036CBE8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8A5C89E4283F15990036CBE8 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MobileNetV2.mlmodel; sourceTree = "<group>"; };
-		8A5C89E5283F15990036CBE8 /* CoreMLwithSwiftUIApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreMLwithSwiftUIApp.swift; sourceTree = "<group>"; };
-		8A5C89E6283F15990036CBE8 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		8A5C89E7283F15990036CBE8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A5C89E6283F15990036CBE8 /* MLContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +84,6 @@
 				55CA7CD0283203A1008B5C2C /* ViewModel */,
 				55CA7CC1283202C9008B5C2C /* Expose2App.swift */,
 				55CA7CCF28320399008B5C2C /* View */,
-				55CA7CC3283202C9008B5C2C /* ContentView.swift */,
 				55CA7CC5283202CD008B5C2C /* Assets.xcassets */,
 				55CA7CC7283202CD008B5C2C /* Preview Content */,
 			);
@@ -108,6 +101,9 @@
 		55CA7CCF28320399008B5C2C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8A5C89E6283F15990036CBE8 /* MLContentView.swift */,
+				554960BE283F44D900ED0FAA /* ResultsView.swift */,
+				55E0EE792837627400CDB250 /* OnBoardingView.swift */,
 				55CA7CD1283203D3008B5C2C /* HomeView.swift */,
 				552F27E22834BC26001634D8 /* MapUIView.swift */,
 				55E0EE7B28377D2B00CDB250 /* NewQuickFile.swift */,
@@ -115,7 +111,7 @@
 				55020540283606FA004A2A69 /* MoreInfoView.swift */,
 				55CA7CD3283203F7008B5C2C /* MapView.swift */,
 				55E0EE772836E1E000CDB250 /* LaunchScreen.storyboard */,
-				55E0EE792837627400CDB250 /* OnBoardingView.swift */,
+				55CA7CC3283202C9008B5C2C /* ContentView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -140,22 +136,9 @@
 			isa = PBXGroup;
 			children = (
 				8A5C89E0283F15990036CBE8 /* UIImage+Extension.swift */,
-				8A5C89E1283F15990036CBE8 /* Assets.xcassets */,
-				8A5C89E2283F15990036CBE8 /* Preview Content */,
 				8A5C89E4283F15990036CBE8 /* MobileNetV2.mlmodel */,
-				8A5C89E5283F15990036CBE8 /* CoreMLwithSwiftUIApp.swift */,
-				8A5C89E6283F15990036CBE8 /* ContentView.swift */,
-				8A5C89E7283F15990036CBE8 /* Info.plist */,
 			);
 			path = CoreMLwithSwiftUI;
-			sourceTree = "<group>";
-		};
-		8A5C89E2283F15990036CBE8 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				8A5C89E3283F15990036CBE8 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,9 +201,6 @@
 			files = (
 				55E0EE782836E1E000CDB250 /* LaunchScreen.storyboard in Resources */,
 				55CA7CC9283202CD008B5C2C /* Preview Assets.xcassets in Resources */,
-				8A5C89EE283F15990036CBE8 /* Info.plist in Resources */,
-				8A5C89EA283F15990036CBE8 /* Preview Assets.xcassets in Resources */,
-				8A5C89E9283F15990036CBE8 /* Assets.xcassets in Resources */,
 				55CA7CC6283202CD008B5C2C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,7 +215,6 @@
 				55E0EE7C28377D2B00CDB250 /* NewQuickFile.swift in Sources */,
 				55CA7CD2283203D3008B5C2C /* HomeView.swift in Sources */,
 				55CA7CD6283204AB008B5C2C /* MapViewModel.swift in Sources */,
-				8A5C89EC283F15990036CBE8 /* CoreMLwithSwiftUIApp.swift in Sources */,
 				8A5C89E8283F15990036CBE8 /* UIImage+Extension.swift in Sources */,
 				552F27E32834BC27001634D8 /* MapUIView.swift in Sources */,
 				55E0EE7A2837627400CDB250 /* OnBoardingView.swift in Sources */,
@@ -243,9 +222,10 @@
 				55020541283606FA004A2A69 /* MoreInfoView.swift in Sources */,
 				55CA7CD92832DFB0008B5C2C /* Place.swift in Sources */,
 				55CA7CC4283202C9008B5C2C /* ContentView.swift in Sources */,
-				8A5C89ED283F15990036CBE8 /* ContentView.swift in Sources */,
+				8A5C89ED283F15990036CBE8 /* MLContentView.swift in Sources */,
 				55CA7CC2283202C9008B5C2C /* Expose2App.swift in Sources */,
 				8A5C89EB283F15990036CBE8 /* MobileNetV2.mlmodel in Sources */,
+				554960BF283F44D900ED0FAA /* ResultsView.swift in Sources */,
 				55AF2FA32835418F0040D030 /* LocationMapAnnotationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

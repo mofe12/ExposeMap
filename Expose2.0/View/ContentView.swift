@@ -9,17 +9,20 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage("onBoarding") var onBoarding = 0
+    @EnvironmentObject var viewModel : MapUIViewModel
+    @Binding var changeScreens: changeScreen
+    
     var body: some View {
         if onBoarding == 0{
             OnBoardingView()
         }else if onBoarding == 1{
-            HomeView()
+            ResultsView(changeScreens: $changeScreens).environmentObject(MapUIViewModel())
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(changeScreens: .constant(changeScreen.contentView)).environmentObject(MapUIViewModel())
     }
 }

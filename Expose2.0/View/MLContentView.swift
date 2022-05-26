@@ -7,27 +7,20 @@
 import SwiftUI
 import CoreML
 
-struct ContentView: View {
-
-    let model = MobileNetV2()
-    @State private var classificationLabel: String = ""
+struct MLContentView: View {
     
-    let photos = ["lemon","strawberry", "electric-guitar"]
-    @State private var currentIndex: Int = 0
-    
-    @State private var resultArray: [String] = []
-    
+    @EnvironmentObject var viewModel : MapUIViewModel
     var body: some View {
         VStack {
-            Image(photos[currentIndex])
+            Image(viewModel.photosToBeScammed[0])
                 .resizable()
                 .frame(width: 200, height: 200)
             
             // The button we will use to classify the image using our model
             Button("Classify") {
                 // Add more code here
-                resultArray = []
-                for photo in photos {
+                viewModel.MLPhotoResults = []
+                for photo in viewModel.photosToBeScammed {
                     classifyImage(currentImageName: photo)
                 }
                 
@@ -36,7 +29,7 @@ struct ContentView: View {
             .background(Color.green)
 
             // The Text View that we will use to display the results of the classification
-            ForEach(resultArray, id: \.self){ result in
+            ForEach(viewModel.MLPhotoResults, id: \.self){ result in
                 Text(result)
                     .padding()
                     .font(.body)
@@ -55,24 +48,23 @@ struct ContentView: View {
               return
         }
         
-        let output = try? model.prediction(image: buffer)
+        let output = try? viewModel.model.prediction(image: buffer)
         
         if let output = output {
             let results = output.classLabelProbs.sorted { $0.1 > $1.1 }
-//            let result = results.map { (key, value) in
-//                return "\(key) = \(String(format: "%.2f", value * 100))%"
-//            }.joined(separator: "\n")
+            //let result = results.map { (key, value) in
+            //    return "\(key) = \(String(format: "%.2f", value * 100))%"
+            //}.joined(separator: "\n")
             let result = results.first
-            self.classificationLabel = result?.key ?? "No result"
-            resultArray.append(self.classificationLabel)
+            viewModel.MLPhotoResults.append(result?.key ?? "No result")
         }
     }
     
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct MLContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-            .previewDevice("iPhone 12")
+        MLContentView().environmentObject(MapUIViewModel())
+            //.previewDevice("iPhone 12")
     }
 }

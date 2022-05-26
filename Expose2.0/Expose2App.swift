@@ -9,10 +9,24 @@ import SwiftUI
 
 @main
 struct Expose2App: App {
+    @StateObject var mapData = MapUIViewModel()
+    @State var changeScreens : changeScreen = .contentView
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+
+            if changeScreens == changeScreen.contentView{
+                ContentView(changeScreens: $changeScreens).environmentObject(mapData)
+            }else if changeScreens == changeScreen.homeView{
+                HomeView().environmentObject(mapData)
+            }
+            
         }
     }
 }
 
+
+enum changeScreen{
+    case contentView
+    case homeView
+}

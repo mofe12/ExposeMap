@@ -15,6 +15,12 @@ import CoreLocation
 final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegate{
     @Published var mapView = MKMapView()
     
+    // Instiating ML model
+    let model = MobileNetV2()
+    
+    //Current Page
+    @Published var currentPage = changeScreen.contentView
+    
     // Setting Region
     @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37, longitude: -95), latitudinalMeters: 10000000, longitudinalMeters: 10000000)
     
@@ -33,6 +39,11 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // More info view
     @Published var showMoreInfoView = false
     
+    // Photos to be scanned my the ML
+    @Published var photosToBeScammed: [String] = ["lemon","strawberry", "test"]
+    
+    // ML results
+    @Published var MLPhotoResults : [String] = []
     
     // More info place
     @Published var moreInfoPlace: PlaceMarked =

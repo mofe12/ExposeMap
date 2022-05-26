@@ -11,7 +11,7 @@ import MapKit
 import CoreLocationUI
 
 struct HomeView: View {
-    @StateObject var mapData = MapUIViewModel()
+    @EnvironmentObject var mapData : MapUIViewModel
     
     var body: some View {
         
