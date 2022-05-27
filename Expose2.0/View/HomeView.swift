@@ -31,16 +31,16 @@ struct HomeView: View {
             MoreInfoView(isShowing: $mapData.showMoreInfoView)
                 .environmentObject(mapData)
         }
-        .onChange(of: mapData.searchTxt, perform:{ value in
+        .onChange(of: mapData.currentInterest, perform:{ value in
             
             // Searching Place
-            
             // You can use your
             let delay = 0.1
+            print("This is value \(value)")
             
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                if value == mapData.searchTxt{
-                     
+                if value == mapData.currentInterest{
+                    print("So it is getting here")
                     // Search...
                     self.mapData.searchQuery()
                 }
@@ -69,7 +69,7 @@ struct SearchBar: View {
                 .colorScheme(.light)
                 .onSubmit {
                     //mapData.updateMapRegion(places: mapData.places)
-                    mapData.selectAllPlaces(places: mapData.places)
+                    // mapData.selectAllPlaces(places: mapData.places)
                 }
         }
         .padding(.vertical, 10)
@@ -144,7 +144,7 @@ extension HomeView{
             Button {
                 mapData.toogleInterstListView()
             } label: {
-                Text(mapData.MLPhotoResults[0])
+                Text(mapData.currentInterest)
                     .font(.title2)
                     .fontWeight(.black)
                     .foregroundColor(.primary)

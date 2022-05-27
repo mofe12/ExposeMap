@@ -14,6 +14,10 @@ struct InterestListView: View {
         List {
             ForEach(viewModel.MLPhotoResults, id: \.self){ result in
                 Button {
+                    
+                    viewModel.toogleInterstListView()
+                    viewModel.currentInterest = result
+                    //viewModel.selectAllPlaces(places: viewModel.places)
                 } label: {
                     Text(result)
                         .textCase(.uppercase)

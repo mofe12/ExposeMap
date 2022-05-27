@@ -45,6 +45,9 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // Photos to be scanned by the ML
     @Published var photosToBeScanned: [String] = ["lemon","strawberry", "test"]
     
+    // Current Interest
+    @Published var currentInterest: String = "CLICK TO SELECT INTEREST"
+    
     // ML results
     @Published var MLPhotoResults : [String] = ["chess", "guitar", "car"]
     
@@ -61,7 +64,7 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     
     
     // Updating Map type
-    
+        
     func updateMapType(){
         if mapType == .standard{
             mapType = .hybrid
@@ -86,16 +89,21 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
         places.removeAll()
         
         let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = searchTxt
+        request.naturalLanguageQuery = currentInterest
         
         // Fetch
         MKLocalSearch(request: request).start{(respose, _) in
             guard let result = respose else{return}
             
             self.places = result.mapItems.compactMap({(item) -> Place? in
+                
+                //Easy fix rn to get the places in places Array immediately
+                self.placesArray.append(Place(place: item.placemark))
+                
                 return Place(place: item.placemark)
             })
         }
+        setPlacesArray()
     }
     // Pick Search Results..
     
@@ -137,6 +145,10 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
         // Moving map to the location
         // updateMapRegion(place: places.first!)
         
+    }
+    
+    func setPlacesArray(){
+        placesArray = places
     }
     
     func updateMapRegion(places: [Place]){
