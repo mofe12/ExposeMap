@@ -13,7 +13,6 @@ import CoreLocation
 
 
 final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegate{
-    @Published var mapView = MKMapView()
     
     // Instiating ML model
     let model = MobileNetV2()
@@ -36,6 +35,7 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // places array
     @Published var placesArray: [Place] = []
     
+    
     // More info view
     @Published var showMoreInfoView = false
     
@@ -43,10 +43,10 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     @Published var showInterestListView = false
     
     // Photos to be scanned by the ML
-    @Published var photosToBeScanned: [String] = ["lemon","strawberry", "test"]
+    @Published var photosToBeScanned: [String] = ["lemon","strawberry", "test","basketball","soccer","climb"]
     
     // Current Interest
-    @Published var currentInterest: String = "CLICK TO SELECT INTEREST"
+    @Published var currentInterest: String = "SELECT INTEREST"
     
     // ML results
     @Published var MLPhotoResults : [String] = ["chess", "guitar", "car"]
@@ -63,30 +63,12 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
                  , zipCode: "94133")
     
     
-    // Updating Map type
-        
-    func updateMapType(){
-        if mapType == .standard{
-            mapType = .hybrid
-            mapView.mapType = mapType
-        }else{
-            mapType = .standard
-            mapView.mapType = mapType
-        }
-    }
-    
-    // Focus Location
-    
-    func focusLocation(){
-        
-        mapView.setRegion(region, animated: true)
-        mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
-    }
-    
-    // Search Places
+    // Search Places and puts result in placeArray
     func searchQuery(){
         
         places.removeAll()
+        
+        placesArray.removeAll()
         
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = currentInterest
@@ -97,43 +79,17 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             
             self.places = result.mapItems.compactMap({(item) -> Place? in
                 
-                //Easy fix rn to get the places in places Array immediately
+                // -- Easy fix rn to get the places in places Array immediately
                 self.placesArray.append(Place(place: item.placemark))
+                print("This is the self place array \(self.placesArray)")
+                // -- Easy fex
                 
                 return Place(place: item.placemark)
             })
         }
-        setPlacesArray()
     }
-    // Pick Search Results..
-    
-    func selectPlace(place: Place){
-        // Showing pin on map...
-        searchTxt = ""
-        
-        guard let coordinate = place.place.location?.coordinate else{return}
-        let pointAnnotation = MKPointAnnotation()
-        pointAnnotation.coordinate = coordinate
-        pointAnnotation.title = place.place.name ?? "No Name"
-        
-        // Removing All Old Ones...
-        // mapView.removeAnnotations(mapView.annotations)
-        
-        mapView.addAnnotation(pointAnnotation)
-        
-        // Moving map to the location
-        let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
-        
-        mapView.setRegion(coordinateRegion, animated: true)
-        mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
-        
-        
-        
-    }
-    
     
     // Show All Places
-    
     func selectAllPlaces(places: [Place] ){
         // Making sure the places array is not empty
         guard places.count != 0 else{return}
@@ -147,22 +103,19 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
         
     }
     
-    func setPlacesArray(){
-        placesArray = places
-    }
-    
-    func updateMapRegion(places: [Place]){
+    // Updates the map to the region of the new interest selected
+    func updateMapRegion(){
         
-        guard places.count != 0 else{return}
+        guard placesArray.count != 0 else{return}
         
-        let place = places.first!
+        let place = placesArray.first!
         searchTxt = ""
         withAnimation(.easeInOut){
             self.region = MKCoordinateRegion(center: place.place.location!.coordinate,
                                              latitudinalMeters: 5000,
                                              longitudinalMeters: 5000)
         }
-        print(place)
+        print("This is placs Array \(placesArray)")
     }
     
     // Toggle Interest List view
@@ -172,6 +125,32 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
         }
     }
     
+    // Classifying image for ML
+    func classifyImage(currentImageName: String) {
+        //let currentImageName = photos[currentIndex]
+        
+        guard let image = UIImage(named: currentImageName),
+              let resizedImage = image.resizeImageTo(size:CGSize(width: 224, height: 224)),
+              let buffer = resizedImage.convertToBuffer() else {
+            return
+        }
+        
+        let output = try? model.prediction(image: buffer)
+        
+        if let output = output {
+            let results = output.classLabelProbs.sorted { $0.1 > $1.1 }
+            //let result = results.map { (key, value) in
+            //    return "\(key) = \(String(format: "%.2f", value * 100))%"
+            //}.joined(separator: "\n")
+            let result = results.first
+            var stringOfResult = result?.key ?? "No result"
+            if let index = (stringOfResult.range(of: ",")?.lowerBound)
+            {
+                stringOfResult = String(stringOfResult.prefix(upTo: index))
+            }
+            MLPhotoResults.append(stringOfResult)
+        }
+    }
     
     
     // Everything below has to do with the location of the user
@@ -202,155 +181,3 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
         print(error.localizedDescription)
     }
 }
-//class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate{
-//    @Published var mapView = MKMapView()
-//
-//    // Region..
-//    @Published var region: MKCoordinateRegion!
-//    // Based on Location It Will Set Up
-//
-//    // Alert...
-//    @Published var permissionDenied = false
-//
-//    // Map type
-//    @Published var mapType: MKMapType = .standard
-//
-//    // Search Text
-//    @Published var searchTxt = ""
-//
-//    // Searched Places...
-//    @Published var places : [Place] = []
-//
-//    // Updating Map type
-//
-//    func updateMapType(){
-//        if mapType == .standard{
-//            mapType = .hybrid
-//            mapView.mapType = mapType
-//        }else{
-//            mapType = .standard
-//            mapView.mapType = mapType
-//        }
-//    }
-//
-//    // Focus Location
-//    func focusLocation(){
-//        guard let _ = region else{return}
-//
-//        mapView.setRegion(region, animated: true)
-//        mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
-//    }
-//
-//    // Search Places
-//    func searchQuery(){
-//
-//        places.removeAll()
-//
-//        let request = MKLocalSearch.Request()
-//        request.naturalLanguageQuery = searchTxt
-//
-//        // Fetch
-//        MKLocalSearch(request: request).start{(respose, _) in
-//            guard let result = respose else{return}
-//
-//            self.places = result.mapItems.compactMap({(item) -> Place? in
-//                return Place(place: item.placemark)
-//            })
-//        }
-//    }
-//
-//    // Pick Search Results..
-//
-//    func selectPlace(place: Place){
-//        // Showing pin on map...
-//        searchTxt = ""
-//
-//        guard let coordinate = place.place.location?.coordinate else{return}
-//        let pointAnnotation = MKPointAnnotation()
-//        pointAnnotation.coordinate = coordinate
-//        pointAnnotation.title = place.place.name ?? "No Name"
-//
-//        // Removing All Old Ones...
-//       // mapView.removeAnnotations(mapView.annotations)
-//
-//        mapView.addAnnotation(pointAnnotation)
-//
-//        // Moving map to the location
-//        let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
-//
-//        mapView.setRegion(coordinateRegion, animated: true)
-//        mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
-//
-//
-//    }
-//
-//
-//    // Show All Places
-//
-//    func selectAllPlaces(places: [Place] ){
-//
-//        // Showing pin on map...
-//        searchTxt = ""
-//
-//        // Removing All Old Ones...
-//        mapView.removeAnnotations(mapView.annotations)
-//
-//        // Show all the location of the interest
-//        for place in places {
-//            guard let coordinate = place.place.location?.coordinate else{return}
-//            let pointAnnotation = MKPointAnnotation()
-//            pointAnnotation.coordinate = coordinate
-//
-//
-//            pointAnnotation.title = place.place.name ?? "No Name"
-//
-//            mapView.addAnnotation(pointAnnotation)
-//
-//            // Moving map to the location
-//            let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
-//
-//            mapView.setRegion(coordinateRegion, animated: true)
-//            mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
-//
-//        }
-//
-//    }
-//
-//    // Based on Location It will Set up
-//    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-//        // Checking permissions...
-//        switch manager.authorizationStatus{
-//        case .denied:
-//            // Alert
-//            permissionDenied.toggle()
-//        case .notDetermined:
-//            // Requesting
-//            manager.requestWhenInUseAuthorization()
-//        case .authorizedWhenInUse:
-//            // If the permission was given
-//            manager.requestLocation()
-//
-//        default:
-//            ()
-//        }
-//    }
-//
-//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-//        // Error
-//        print(error.localizedDescription)
-//    }
-//
-//    // Getting the user region
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        guard let location = locations.last else{return}
-//
-//        self.region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
-//
-//        // Updating map
-//        self.mapView.setRegion(self.region, animated: true)
-//
-//        // Smooth Animations...
-//        self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, animated: true)
-//
-//    }
-//}

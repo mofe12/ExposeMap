@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct InterestListView: View {
-    @EnvironmentObject private var viewModel: MapUIViewModel
+    @EnvironmentObject private var mapData: MapUIViewModel
     
     var body: some View {
         List {
-            ForEach(viewModel.MLPhotoResults, id: \.self){ result in
+            ForEach(mapData.MLPhotoResults, id: \.self){ result in
                 Button {
                     
-                    viewModel.toogleInterstListView()
-                    viewModel.currentInterest = result
-                    //viewModel.selectAllPlaces(places: viewModel.places)
+                    mapData.toogleInterstListView()
+                    mapData.currentInterest = result
+                    //viewModel.updateMapRegion(places: viewModel.placesArray)
                 } label: {
                     Text(result)
                         .textCase(.uppercase)
@@ -29,6 +29,7 @@ struct InterestListView: View {
                 
         }
         .listStyle(PlainListStyle())
+
         
     }
 }
