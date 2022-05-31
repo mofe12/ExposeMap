@@ -7,6 +7,8 @@
 
 import SwiftUI
 import MapKit
+import UIKit
+import PhotosUI
 import CoreLocation
 
 // All Map Data Goes here....
@@ -43,10 +45,15 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     @Published var showInterestListView = false
     
     // Photos to be scanned by the ML
-    @Published var photosToBeScanned: [String] = ["lemon","strawberry", "test","basketball","soccer","climb"]
+    
+    // Showing image picker
+    @Published var isShowingImagePicker = false
+    
+    @Published var photosToBeScanned: [UIImage] = []
     
     // Current Interest
     @Published var currentInterest: String = "SELECT INTEREST"
+
     
     // ML results
     @Published var MLPhotoResults : [String] = ["chess", "guitar", "car"]
@@ -61,6 +68,21 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
                  , county: "test"
                  , country: "US"
                  , zipCode: "94133")
+    
+    
+    // Handle result
+    func handleResults(_ results: [PHPickerResult]) {
+      for result in results {
+        result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] imageObject, error in
+          guard let image = imageObject as? UIImage else { return }
+            guard let data = image.jpegData(compressionQuality: 1), let compressedImage = UIImage(data: data) else{return}
+          DispatchQueue.main.async { [weak self] in
+            self?.photosToBeScanned.append(compressedImage)
+          }
+        }
+      }
+    }
+
     
     
     // Search Places and puts result in placeArray
@@ -126,11 +148,12 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     }
     
     // Classifying image for ML
-    func classifyImage(currentImageName: String) {
+    func classifyImage(currentImageName: UIImage) {
         //let currentImageName = photos[currentIndex]
         
-        guard let image = UIImage(named: currentImageName),
-              let resizedImage = image.resizeImageTo(size:CGSize(width: 224, height: 224)),
+       // guard let image = UIImage(named: currentImageName),
+        let image = currentImageName
+            guard let resizedImage = image.resizeImageTo(size:CGSize(width: 224, height: 224)),
               let buffer = resizedImage.convertToBuffer() else {
             return
         }
