@@ -12,7 +12,7 @@ struct MLContentView: View {
     @EnvironmentObject var viewModel : MapUIViewModel
     var body: some View {
         VStack {
-            Image(uiImage: viewModel.photosToBeScanned[0])
+            Image(viewModel.photosToBeScanned[0])
                 .resizable()
                 .frame(width: 200, height: 200)
             
@@ -21,7 +21,7 @@ struct MLContentView: View {
                 // Add more code here
                 viewModel.MLPhotoResults = []
                 for photo in viewModel.photosToBeScanned {
-                    viewModel.classifyImage(currentImageName: photo)
+                    classifyImage(currentImageName: photo)
                 }
                 
             }
@@ -39,26 +39,26 @@ struct MLContentView: View {
         }
     }
     
-//    private func classifyImage(currentImageName: String) {
-//        //let currentImageName = photos[currentIndex]
-//
-//        guard let image = UIImage(named: currentImageName),
-//              let resizedImage = image.resizeImageTo(size:CGSize(width: 224, height: 224)),
-//              let buffer = resizedImage.convertToBuffer() else {
-//              return
-//        }
-//
-//        let output = try? viewModel.model.prediction(image: buffer)
-//
-//        if let output = output {
-//            let results = output.classLabelProbs.sorted { $0.1 > $1.1 }
-//            //let result = results.map { (key, value) in
-//            //    return "\(key) = \(String(format: "%.2f", value * 100))%"
-//            //}.joined(separator: "\n")
-//            let result = results.first
-//            viewModel.MLPhotoResults.append(result?.key ?? "No result")
-//        }
-//    }
+    private func classifyImage(currentImageName: String) {
+        //let currentImageName = photos[currentIndex]
+        
+        guard let image = UIImage(named: currentImageName),
+              let resizedImage = image.resizeImageTo(size:CGSize(width: 224, height: 224)),
+              let buffer = resizedImage.convertToBuffer() else {
+              return
+        }
+        
+        let output = try? viewModel.model.prediction(image: buffer)
+        
+        if let output = output {
+            let results = output.classLabelProbs.sorted { $0.1 > $1.1 }
+            //let result = results.map { (key, value) in
+            //    return "\(key) = \(String(format: "%.2f", value * 100))%"
+            //}.joined(separator: "\n")
+            let result = results.first
+            viewModel.MLPhotoResults.append(result?.key ?? "No result")
+        }
+    }
     
 }
 
