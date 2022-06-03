@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PhotoSelectedView: View {
     @EnvironmentObject var mapData : MapUIViewModel
+    @Binding var changeScreens: changeScreen
     var body: some View {
         NavigationView {
             ScrollView {
@@ -47,12 +48,20 @@ struct PhotoSelectedView: View {
             Button(action: { mapData.isShowingImagePicker.toggle() }) {
                 Image(systemName: "plus.circle")
             }
+            NavigationLink {
+                ResultsView(changeScreens: $changeScreens).environmentObject(mapData)
+            } label: {
+                
+                    Image(systemName: "chevron.right.2")
+                
+            }
+
         }
     }
 }
 
 struct PhotoSelectedView_Previews: PreviewProvider {
     static var previews: some View {
-        PhotoSelectedView()
+        PhotoSelectedView(changeScreens: .constant(changeScreen.contentView)).environmentObject(MapUIViewModel())
     }
 }

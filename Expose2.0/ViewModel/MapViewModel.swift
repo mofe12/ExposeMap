@@ -56,7 +56,7 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
 
     
     // ML results
-    @Published var MLPhotoResults : [String] = ["chess", "guitar", "car"]
+    @Published var MLPhotoResults : [String] = []
     
     // More info place
     @Published var moreInfoPlace: PlaceMarked =

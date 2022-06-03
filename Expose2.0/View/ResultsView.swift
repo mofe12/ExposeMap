@@ -9,6 +9,10 @@ import SwiftUI
 
 struct ResultsView: View {
     @EnvironmentObject var viewModel : MapUIViewModel
+    
+    @GestureState private var dragOffset = CGSize.zero
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    
     // For changing screen from the expose button
     @Binding var changeScreens: changeScreen
     var body: some View {
@@ -19,35 +23,39 @@ struct ResultsView: View {
                 .ignoresSafeArea()
                 .blur(radius: 15)
             VStack {
-                
-                VStack(spacing: 78) {
-                    Text("YOUR RESULTS SHOW THAT YOU ARE INTERESTED IN ALOT")
-                    Text("HERE ARE SOME OF THOSE THINGS:")
-                    
-                    ScrollView() {
-                        ForEach(viewModel.MLPhotoResults, id: \.self){ result in
-                            Text(result).textCase(.uppercase)
-                                .padding()
-                            
-                        }
-                    }.fixedSize()
-                    
-                    
+                Spacer()
+                Message()
+                Spacer()
+                ScrollView(){
+                    ForEach(viewModel.MLPhotoResults, id: \.self){ result in
+                        Text(result).textCase(.uppercase)
+                            .padding()
+                    }
                 }
-                .font(.title2)
-                .padding()
-                .multilineTextAlignment(.center)
-                VStack {
-                    Text("GET EXPOSED")
-                        .font(.title2)
-                        .padding()
-                        .background(Color("Turquoise"))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                }.onTapGesture {
-                    changeScreens = .homeView
-                }
+                GetExposed(changeScreens: $changeScreens)
+                Spacer()
+                    .frame( height: 100)
                 
             }
+
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: Button(action : {
+                self.mode.wrappedValue.dismiss()
+            }){
+                Text("\(Image(systemName: "chevron.backward"))")
+                    .font(.title2)
+                    .foregroundColor(Color("Turquoise"))
+                    .padding(6)
+                    .padding(6.0)
+
+            })
+                    .gesture(DragGesture().updating($dragOffset, body: { (value, state, transaction) in
+
+                        if(value.startLocation.x < 20 && value.translation.width > 100) {
+                            self.mode.wrappedValue.dismiss()
+                        }
+
+                }))
             
         }.onAppear {
             viewModel.MLPhotoResults = []
@@ -55,6 +63,7 @@ struct ResultsView: View {
                 viewModel.classifyImage(currentImageName: photo)
             }
         }
+        .font(.title2)
         
     }
 }
@@ -66,3 +75,32 @@ struct ResultsView_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
     }
 }
+
+struct Message: View{
+    var body: some View{
+        VStack(spacing: 78) {
+            Text("YOUR RESULTS SHOW THAT YOU ARE INTERESTED IN ALOT")
+            Text("HERE ARE SOME OF THOSE THINGS:")
+        }
+        .font(.title2)
+        .padding()
+        .multilineTextAlignment(.center)
+    }
+}
+
+struct GetExposed: View{
+    @Binding var changeScreens: changeScreen
+    var body: some View{
+        VStack {
+            Text("GET EXPOSED")
+                .font(.title2)
+                .padding()
+                .background(Color("Turquoise"))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }.onTapGesture {
+            changeScreens = .homeView
+        }
+    }
+}
+
+

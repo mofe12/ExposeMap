@@ -19,7 +19,7 @@ struct PhotoPickerUIKitView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> PHPickerViewController {
       var configuration = PHPickerConfiguration(photoLibrary: .shared())
       configuration.filter = .any(of: [.images])
-      configuration.selectionLimit = 0
+      configuration.selectionLimit = 10
       configuration.selection = .ordered
       let controller = PHPickerViewController(configuration: configuration)
       controller.delegate = context.coordinator
