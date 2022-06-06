@@ -12,7 +12,7 @@ struct MLContentView: View {
     
     @EnvironmentObject var viewModel : MapUIViewModel
     
-    @State var photosToBeScanned: [String] = ["TwoGuitars"]
+    @State var photosToBeScanned: [String] = ["egg"]
     @State var classifyImageResult: String = ""
     @State var classifyImageResultArray: [String] = []
     var body: some View {
@@ -36,14 +36,18 @@ struct MLContentView: View {
             // The Text View that we will use to display the results of the classification
             Text("Fitered to anything higher than 1%")
                 .font(.title)
-            ForEach(classifyImageResultArray, id: \.self){ result in
-                Text(result)
-                    .font(.body)
+            ScrollView{
+                ForEach(classifyImageResultArray, id: \.self){ result in
+                    Text(result)
+                        .font(.body)
+                }
             }
             Text("Fitered to anything higher than 1%")
                 .font(.title)
-            Text(classifyImageResult)
-                .font(.body)
+            ScrollView {
+                Text(classifyImageResult)
+                    .font(.body)
+            }
             Spacer()
         }
     }
