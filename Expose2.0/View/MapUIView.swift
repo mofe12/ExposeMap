@@ -17,7 +17,9 @@ struct MapUIView: View {
             Map(coordinateRegion: $viewModel.region, showsUserLocation: true, annotationItems: viewModel.placesArray){ place in
                 MapAnnotation(coordinate: place.place.location!.coordinate) {
                     ZStack {
-                        LocationMapAnnotationView().environmentObject(viewModel)
+                        //LocationMapAnnotationView().environmentObject(viewModel)
+                        Image(systemName: "mappin")
+                            .font(.title)
                             .onTapGesture {
                                 viewModel.showMoreInfoView = true
                                 viewModel.moreInfoPlace = PlaceMarked(name: place.place.name ?? "No name",
@@ -30,7 +32,7 @@ struct MapUIView: View {
                                                                       zipCode: place.place.postalCode ?? "No postal code")
                             }
                     }
-                    
+
                 }
             }
             .ignoresSafeArea()

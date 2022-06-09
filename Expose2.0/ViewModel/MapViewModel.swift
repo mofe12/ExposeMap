@@ -158,9 +158,6 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     
     // Classifying image for ML
     func classifyImage(currentImageName: UIImage) {
-        //let currentImageName = photos[currentIndex]
-        
-       // guard let image = UIImage(named: currentImageName),
         let image = currentImageName
             guard let resizedImage = image.resizeImageTo(size:CGSize(width: 224, height: 224)),
               let buffer = resizedImage.convertToBuffer() else {
