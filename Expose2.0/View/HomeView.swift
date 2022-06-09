@@ -12,17 +12,18 @@ import CoreLocationUI
 
 struct HomeView: View {
     @EnvironmentObject var mapData : MapUIViewModel
-    
+    @Binding var changeScreens: changeScreen
     var body: some View {
         
         ZStack {
             // Using it as environment object so that it can  used in subviews...
             MapUIView().environmentObject(mapData)
             VStack{
+                
                 header
                 
                 Spacer()
-                LocationAndGlobeButton().environmentObject(mapData)
+                LocationAndGlobeButton(changeScreens: $changeScreens).environmentObject(mapData)
             }
             MoreInfoView(isShowing: $mapData.showMoreInfoView)
                 .environmentObject(mapData)
@@ -48,32 +49,42 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(changeScreens: .constant(changeScreen.contentView))
             .environmentObject(MapUIViewModel())
     }
 }
 
 struct LocationAndGlobeButton: View {
     @EnvironmentObject var mapData : MapUIViewModel
+    @Binding var changeScreens: changeScreen
     var body: some View {
         VStack{
+            Button {
+                changeScreens = .photoSelectedVeiw
+            } label: {
+                Image(systemName: "photo.fill")
+                    .font(.largeTitle)
+            }.foregroundColor(.black)
+
+          //  Spacer()
             LocationButton(.currentLocation){
                 mapData.requestAllowOnceLocationPermission()
             }
             .scaledToFill()
             .foregroundColor(.white)
             .clipShape(RoundedRectangle(cornerRadius: 10))
-            //.labelStyle(.iconOnly)
+            .labelStyle(.iconOnly)
             .symbolVariant(.fill)
             .tint(.black)
             
             
         }
+        .frame(maxWidth: .infinity, alignment: .trailing)
         // Quick solution to get the map to update region
         .onChange(of: mapData.placesArray, perform:{ newValue in
             if newValue == mapData.placesArray{
                 print("Gets here first?")
-                mapData.updateMapRegion()
+               // mapData.updateMapRegion()
             }
         })
         .frame(maxWidth: .infinity, alignment: .center)
@@ -111,6 +122,6 @@ extension HomeView{
         .background(.thickMaterial)
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
-        .padding()
+        .padding(.horizontal)
     }
 }

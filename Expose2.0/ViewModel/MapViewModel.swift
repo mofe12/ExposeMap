@@ -75,7 +75,7 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
       for result in results {
         result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] imageObject, error in
           guard let image = imageObject as? UIImage else { return }
-            guard let data = image.jpegData(compressionQuality: 1), let compressedImage = UIImage(data: data) else{return}
+            guard let data = image.jpegData(compressionQuality: 0.5), let compressedImage = UIImage(data: data) else{return}
           DispatchQueue.main.async { [weak self] in
             self?.photosToBeScanned.append(compressedImage)
           }
@@ -93,12 +93,20 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
         placesArray.removeAll()
         
         let request = MKLocalSearch.Request()
+       // request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.restaurant, .airport, .foodMarket,.])
+        request.region = region
         request.naturalLanguageQuery = currentInterest
         
         // Fetch
         MKLocalSearch(request: request).start{(respose, _) in
             guard let result = respose else{return}
             
+            DispatchQueue.main.async {
+                withAnimation(.easeInOut) {
+                    self.region = result.boundingRegion
+                }
+            }
+
             self.places = result.mapItems.compactMap({(item) -> Place? in
                 
                 // -- Easy fix rn to get the places in places Array immediately
@@ -128,14 +136,15 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // Updates the map to the region of the new interest selected
     func updateMapRegion(){
         
-        guard placesArray.count != 0 else{return}
+        guard let place = placesArray.first else{return}
         
-        let place = placesArray.first!
+//        let place = placesArray.first!
         searchTxt = ""
         withAnimation(.easeInOut){
             self.region = MKCoordinateRegion(center: place.place.location!.coordinate,
                                              latitudinalMeters: 5000,
                                              longitudinalMeters: 5000)
+            
         }
         print("This is placs Array \(placesArray)")
     }
@@ -185,7 +194,12 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     }
     
     func requestAllowOnceLocationPermission(){
-        locationManager.requestLocation()
+        //locationManager.requestLocation()
+        locationManager.startUpdatingLocation()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.locationManager.stopUpdatingLocation()
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

@@ -29,8 +29,6 @@ struct InterestListView: View {
                 
         }
         .listStyle(PlainListStyle())
-
-        
     }
 }
 

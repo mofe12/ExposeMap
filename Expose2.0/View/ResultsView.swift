@@ -20,10 +20,10 @@ struct ResultsView: View {
             Image("MapBack")
                 .resizable()
                 .scaledToFill()
-                .ignoresSafeArea()
+                .edgesIgnoringSafeArea(.all)
+                //.ignoresSafeArea()
                 .blur(radius: 15)
             VStack {
-                Spacer()
                 Message()
                 Spacer()
                 ScrollView(){
@@ -34,7 +34,7 @@ struct ResultsView: View {
                 }
                 GetExposed(changeScreens: $changeScreens)
                 Spacer()
-                    .frame( height: 100)
+                    .frame( height: 50)
                 
             }
 
@@ -80,11 +80,14 @@ struct Message: View{
     var body: some View{
         VStack(spacing: 78) {
             Text("YOUR RESULTS SHOW THAT YOU ARE INTERESTED IN ALOT")
+                .underline()
             Text("HERE ARE SOME OF THOSE THINGS:")
+                .underline()
         }
         .font(.title2)
         .padding()
         .multilineTextAlignment(.center)
+        
     }
 }
 

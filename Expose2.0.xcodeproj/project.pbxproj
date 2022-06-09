@@ -109,6 +109,7 @@
 			children = (
 				8A5C89E6283F15990036CBE8 /* MLContentView.swift */,
 				55E0EE792837627400CDB250 /* OnBoardingView.swift */,
+				552A558428468A660057E81F /* PhotoSelectedView.swift */,
 				554960BE283F44D900ED0FAA /* ResultsView.swift */,
 				55CA7CD1283203D3008B5C2C /* HomeView.swift */,
 				5560C56E283FCD8F0045CA37 /* InterestListView.swift */,
@@ -120,7 +121,6 @@
 				55E0EE772836E1E000CDB250 /* LaunchScreen.storyboard */,
 				55CA7CC3283202C9008B5C2C /* ContentView.swift */,
 				552A558228468A150057E81F /* PhotoPickerUIKitView.swift */,
-				552A558428468A660057E81F /* PhotoSelectedView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
