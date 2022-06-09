@@ -17,7 +17,7 @@ import CoreLocation
 final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegate{
     
     // Instiating ML model
-    let model = MobileNetV2()
+    let model = Resnet50()
     
     //Current Page
     @Published var currentPage = changeScreen.contentView
