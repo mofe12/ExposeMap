@@ -39,7 +39,7 @@
 		554960BE283F44D900ED0FAA /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
 		5560C56E283FCD8F0045CA37 /* InterestListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestListView.swift; sourceTree = "<group>"; };
 		55AF2FA22835418F0040D030 /* LocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapAnnotationView.swift; sourceTree = "<group>"; };
-		55CA7CBE283202C9008B5C2C /* Expose2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Expose2.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		55CA7CBE283202C9008B5C2C /* Expose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Expose.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CA7CC1283202C9008B5C2C /* Expose2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expose2App.swift; sourceTree = "<group>"; };
 		55CA7CC3283202C9008B5C2C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		55CA7CC5283202CD008B5C2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 		55CA7CBF283202C9008B5C2C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				55CA7CBE283202C9008B5C2C /* Expose2.0.app */,
+				55CA7CBE283202C9008B5C2C /* Expose.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -156,9 +156,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		55CA7CBD283202C9008B5C2C /* Expose2.0 */ = {
+		55CA7CBD283202C9008B5C2C /* Expose */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55CA7CCC283202CD008B5C2C /* Build configuration list for PBXNativeTarget "Expose2.0" */;
+			buildConfigurationList = 55CA7CCC283202CD008B5C2C /* Build configuration list for PBXNativeTarget "Expose" */;
 			buildPhases = (
 				55CA7CBA283202C9008B5C2C /* Sources */,
 				55CA7CBB283202C9008B5C2C /* Frameworks */,
@@ -168,9 +168,9 @@
 			);
 			dependencies = (
 			);
-			name = Expose2.0;
+			name = Expose;
 			productName = Expose2.0;
-			productReference = 55CA7CBE283202C9008B5C2C /* Expose2.0.app */;
+			productReference = 55CA7CBE283202C9008B5C2C /* Expose.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -188,7 +188,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 55CA7CB9283202C9008B5C2C /* Build configuration list for PBXProject "Expose2.0" */;
+			buildConfigurationList = 55CA7CB9283202C9008B5C2C /* Build configuration list for PBXProject "Expose" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -203,7 +203,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				55CA7CBD283202C9008B5C2C /* Expose2.0 */,
+				55CA7CBD283202C9008B5C2C /* Expose */,
 			);
 		};
 /* End PBXProject section */
@@ -390,7 +390,7 @@
 				);
 				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.academy.Expose2-0";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Expose;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -422,7 +422,7 @@
 				);
 				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.academy.Expose2-0";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Expose;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -432,7 +432,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		55CA7CB9283202C9008B5C2C /* Build configuration list for PBXProject "Expose2.0" */ = {
+		55CA7CB9283202C9008B5C2C /* Build configuration list for PBXProject "Expose" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55CA7CCA283202CD008B5C2C /* Debug */,
@@ -441,7 +441,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55CA7CCC283202CD008B5C2C /* Build configuration list for PBXNativeTarget "Expose2.0" */ = {
+		55CA7CCC283202CD008B5C2C /* Build configuration list for PBXNativeTarget "Expose" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55CA7CCD283202CD008B5C2C /* Debug */,
