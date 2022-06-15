@@ -28,22 +28,21 @@ struct HomeView: View {
             MoreInfoView(isShowing: $mapData.showMoreInfoView)
                 .environmentObject(mapData)
         }
-        .onChange(of: mapData.currentInterest, perform:{ value in
-            
-            // Searching Place
-            // You can use your delay time
-            let delay = 0.1
-            print("This is value \(value)")
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                if value == mapData.currentInterest{
-                    print("So it is getting here")
-                    // Search...
-                    self.mapData.searchQuery()
-                    
-                }
-            }
-        })
+//        .onChange(of: mapData.currentInterest, perform:{ value in
+//            
+//            // Searching Place
+//            // You can use your delay time
+//            let delay = 0.1
+//            print("This is value \(value)")
+//            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+//                if value == mapData.currentInterest{
+//                    print("So it is getting here")
+//                    // Search...
+//                    self.mapData.searchQuery()
+//                }
+//            }
+//        })
     }
 }
 
@@ -64,9 +63,9 @@ struct LocationAndGlobeButton: View {
             } label: {
                 Image(systemName: "photo.fill")
                     .font(.largeTitle)
+                    .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
             }.foregroundColor(.black)
-
-          //  Spacer()
+            
             LocationButton(.currentLocation){
                 mapData.requestAllowOnceLocationPermission()
             }
@@ -76,17 +75,14 @@ struct LocationAndGlobeButton: View {
             .labelStyle(.iconOnly)
             .symbolVariant(.fill)
             .tint(.black)
+//            .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
             
             
         }
+        .onAppear{
+            mapData.requestAllowOnceLocationPermission()
+        }
         .frame(maxWidth: .infinity, alignment: .trailing)
-        // Quick solution to get the map to update region
-        .onChange(of: mapData.placesArray, perform:{ newValue in
-            if newValue == mapData.placesArray{
-                print("Gets here first?")
-               // mapData.updateMapRegion()
-            }
-        })
         .frame(maxWidth: .infinity, alignment: .center)
         .padding()
     }

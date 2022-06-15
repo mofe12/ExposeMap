@@ -10,17 +10,23 @@ import MapKit
 import UIKit
 import PhotosUI
 import CoreLocation
+import OrderedCollections
 
 // All Map Data Goes here....
 
 
 final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegate{
-    
     // Instiating ML model
-    let model = Resnet50()
+    let model = MobileNetV2()
     
     //Current Page
     @Published var currentPage = changeScreen.contentView
+    
+    @Published var OnBoardingStepArray: [OnBoardingStep] = [
+        OnBoardingStep(Image: "heart.fill", Text: "WE CARE ABOUT PRIVACY!"),
+        OnBoardingStep(Image: "nosign", Text: "Exposé DOES NOT keep or share any of your photos or information with any third parties nor do we store it!"),
+        OnBoardingStep(Image: "lasso.and.sparkles", Text: "We only use your photos to curate your interest and give you options of places to get exposed to around you! That's it!"),
+    ]
     
     // Setting Region
     @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37, longitude: -95), latitudinalMeters: 10000000, longitudinalMeters: 10000000)
@@ -50,6 +56,9 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     @Published var isShowingImagePicker = false
     
     @Published var photosToBeScanned: [UIImage] = []
+    
+    // Ordered set
+    @Published var OrderedPhotoToBeScanned = []
     
     // Current Interest
     @Published var currentInterest: String = "SELECT INTEREST"
@@ -102,9 +111,7 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             guard let result = respose else{return}
             
             DispatchQueue.main.async {
-                withAnimation(.easeInOut) {
-                    self.region = result.boundingRegion
-                }
+                self.updateMapRegion(result: result)
             }
 
             self.places = result.mapItems.compactMap({(item) -> Place? in
@@ -134,19 +141,10 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     }
     
     // Updates the map to the region of the new interest selected
-    func updateMapRegion(){
-        
-        guard let place = placesArray.first else{return}
-        
-//        let place = placesArray.first!
-        searchTxt = ""
-        withAnimation(.easeInOut){
-            self.region = MKCoordinateRegion(center: place.place.location!.coordinate,
-                                             latitudinalMeters: 5000,
-                                             longitudinalMeters: 5000)
-            
+    func updateMapRegion(result:  MKLocalSearch.Response){
+        withAnimation(.easeInOut) {
+            self.region = result.boundingRegion
         }
-        print("This is placs Array \(placesArray)")
     }
     
     // Toggle Interest List view
@@ -180,7 +178,6 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             MLPhotoResults.append(stringOfResult)
         }
     }
-    
     
     // Everything below has to do with the location of the user
     let locationManager = CLLocationManager()

@@ -10,6 +10,9 @@ import SwiftUI
 struct PhotoSelectedView: View {
     @EnvironmentObject var mapData : MapUIViewModel
     @Binding var changeScreens: changeScreen
+    @State var showAlert: Bool = false
+    @State var isActive: Bool = false
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -39,22 +42,38 @@ struct PhotoSelectedView: View {
                 .navigationBarItems(
                     trailing:
                         trailingButtons
-            )
+                )
                 
                 VStack{
                     Spacer()
-                    NavigationLink {
-                        ResultsView(changeScreens: $changeScreens).environmentObject(mapData)
-                    } label: {
-                        ScanPhoto()
-                            .foregroundColor(/*@START_MENU_TOKEN@*/Color("BackGroundColor")/*@END_MENU_TOKEN@*/)
-                        
+                    if mapData.photosToBeScanned.isEmpty{
+                        Button {
+                            mapData.isShowingImagePicker.toggle()
+                        } label: {
+                            ScanPhoto().environmentObject(mapData)
+                                .foregroundColor(Color("BackGroundColor"))
+                                .tint(.black)
+                        }
+                    }else{
+                        NavigationLink(isActive: $isActive) {
+                            ResultsView(changeScreens: $changeScreens).environmentObject(mapData)
+                        } label: {
+                            
+                            ScanPhoto().environmentObject(mapData)
+                                .foregroundColor(/*@START_MENU_TOKEN@*/Color("BackGroundColor")/*@END_MENU_TOKEN@*/)
+                                .onTapGesture {
+                                    if !mapData.photosToBeScanned.isEmpty{
+                                        isActive = true
+                                    }
+                                }
+                        }
                     }
+                    
                 }
             }
         }
         .onAppear{mapData.isShowingImagePicker = true}
-
+        
         .sheet(isPresented: $mapData.isShowingImagePicker) {
             PhotoPickerUIKitView(isPresented: $mapData.isShowingImagePicker) {
                 mapData.handleResults($0)
@@ -66,6 +85,7 @@ struct PhotoSelectedView: View {
             Button(action: { mapData.isShowingImagePicker.toggle() }) {
                 Image(systemName: "plus.circle")
             }
+            .foregroundColor(Color("Turquoise"))
         }
     }
 }
@@ -76,13 +96,15 @@ struct PhotoSelectedView_Previews: PreviewProvider {
     }
 }
 struct ScanPhoto: View{
+    @EnvironmentObject var mapData : MapUIViewModel
     var body: some View{
         VStack {
-            Text("SCAN MY PHOTOS")
-                .font(.title2)
-                .padding()
+            Text(mapData.photosToBeScanned.isEmpty ? "ADD MY PHOTOS" : "SCAN MY PHOTOS" )
+                .padding(16)
+                .frame(maxWidth: .infinity)
                 .background(Color("Turquoise"))
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .cornerRadius(16)
+                .padding(.horizontal, 16)
         }
     }
 }

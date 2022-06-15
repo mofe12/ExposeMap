@@ -14,10 +14,13 @@ struct InterestListView: View {
         List {
             ForEach(mapData.MLPhotoResults, id: \.self){ result in
                 Button {
-                    
                     mapData.toogleInterstListView()
                     mapData.currentInterest = result
-                    //viewModel.updateMapRegion(places: viewModel.placesArray)
+                    
+                    // Searching Place
+                    // You can use your delay time
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {self.mapData.searchQuery()}
+                    
                 } label: {
                     Text(result)
                         .textCase(.uppercase)
@@ -26,7 +29,7 @@ struct InterestListView: View {
                 }
             }.frame(maxWidth: .infinity, alignment: .leading)
                 .listRowBackground(Color.clear)
-                
+            
         }
         .listStyle(PlainListStyle())
     }

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "55CA7CBD283202C9008B5C2C"
-               BuildableName = "Expose2.0.app"
+               BuildableName = "Expose.app"
                BlueprintName = "Expose"
                ReferencedContainer = "container:Expose.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "55CA7CBD283202C9008B5C2C"
-            BuildableName = "Expose2.0.app"
+            BuildableName = "Expose.app"
             BlueprintName = "Expose"
             ReferencedContainer = "container:Expose.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "55CA7CBD283202C9008B5C2C"
-            BuildableName = "Expose2.0.app"
+            BuildableName = "Expose.app"
             BlueprintName = "Expose"
             ReferencedContainer = "container:Expose.xcodeproj">
          </BuildableReference>

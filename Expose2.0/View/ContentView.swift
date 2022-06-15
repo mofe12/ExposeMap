@@ -9,15 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage("onBoarding") var onBoarding = 0
+    
+    @AppStorage("InterestList") var appStrInterestList = 0
+    
     @EnvironmentObject var viewModel : MapUIViewModel
     @Binding var changeScreens: changeScreen
     
     var body: some View {
+        
+        
         if onBoarding == 0{
-            OnBoardingView()
+            NewOnboardingScreen().environmentObject(viewModel)
         }else if onBoarding == 1{
             PhotoSelectedView(changeScreens: $changeScreens)
-           // ResultsView(changeScreens: $changeScreens).environmentObject(viewModel)
+        }else if onBoarding == 2{
+            HomeView(changeScreens: $changeScreens).environmentObject(viewModel)
         }
     }
 }
@@ -27,3 +33,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(changeScreens: .constant(changeScreen.contentView)).environmentObject(MapUIViewModel())
     }
 }
+

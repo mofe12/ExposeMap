@@ -10,6 +10,7 @@ import SwiftUI
 struct ResultsView: View {
     @EnvironmentObject var viewModel : MapUIViewModel
     
+    
     @GestureState private var dragOffset = CGSize.zero
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
@@ -30,9 +31,12 @@ struct ResultsView: View {
                     ForEach(viewModel.MLPhotoResults, id: \.self){ result in
                         Text(result).textCase(.uppercase)
                             .padding()
+                            .font(.title2)
                     }
                 }
                 GetExposed(changeScreens: $changeScreens)
+                    .opacity(100)
+                
                 Spacer()
                     .frame( height: 50)
                 
@@ -63,8 +67,6 @@ struct ResultsView: View {
                 viewModel.classifyImage(currentImageName: photo)
             }
         }
-        .font(.title2)
-        
     }
 }
 
@@ -80,9 +82,8 @@ struct Message: View{
     var body: some View{
         VStack(spacing: 78) {
             Text("YOUR RESULTS SHOW THAT YOU ARE INTERESTED IN ALOT")
-                .underline()
+
             Text("HERE ARE SOME OF THOSE THINGS:")
-                .underline()
         }
         .font(.title2)
         .padding()
@@ -93,15 +94,21 @@ struct Message: View{
 
 struct GetExposed: View{
     @Binding var changeScreens: changeScreen
+    @AppStorage("onBoarding") var onBoarding = 0
     var body: some View{
         VStack {
             Text("GET EXPOSED")
-                .font(.title2)
-                .padding()
+                .padding(16)
+                .frame(maxWidth: .infinity)
                 .background(Color("Turquoise"))
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-        }.onTapGesture {
+                .cornerRadius(16)
+                .padding(.horizontal, 16)
+                
+        }
+        .onTapGesture {
             changeScreens = .homeView
+            onBoarding = 2
+            
         }
     }
 }

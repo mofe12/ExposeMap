@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		55020541283606FA004A2A69 /* MoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55020540283606FA004A2A69 /* MoreInfoView.swift */; };
+		55036B192853F12B000DEBB9 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 55036B182853F12B000DEBB9 /* OrderedCollections */; };
 		552A558328468A150057E81F /* PhotoPickerUIKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552A558228468A150057E81F /* PhotoPickerUIKitView.swift */; };
 		552A558528468A660057E81F /* PhotoSelectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552A558428468A660057E81F /* PhotoSelectedView.swift */; };
 		552F27E32834BC27001634D8 /* MapUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552F27E22834BC26001634D8 /* MapUIView.swift */; };
 		554960BF283F44D900ED0FAA /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554960BE283F44D900ED0FAA /* ResultsView.swift */; };
+		555167EE2857BF47004E4D78 /* NewOnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555167ED2857BF47004E4D78 /* NewOnboardingScreen.swift */; };
+		555167F02857D9F6004E4D78 /* OnBoardingStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555167EF2857D9F6004E4D78 /* OnBoardingStep.swift */; };
 		5560C56F283FCD8F0045CA37 /* InterestListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5560C56E283FCD8F0045CA37 /* InterestListView.swift */; };
 		55AF2FA32835418F0040D030 /* LocationMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF2FA22835418F0040D030 /* LocationMapAnnotationView.swift */; };
 		55CA7CC2283202C9008B5C2C /* Expose2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CA7CC1283202C9008B5C2C /* Expose2App.swift */; };
@@ -37,6 +40,8 @@
 		552A558428468A660057E81F /* PhotoSelectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectedView.swift; sourceTree = "<group>"; };
 		552F27E22834BC26001634D8 /* MapUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUIView.swift; sourceTree = "<group>"; };
 		554960BE283F44D900ED0FAA /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
+		555167ED2857BF47004E4D78 /* NewOnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOnboardingScreen.swift; sourceTree = "<group>"; };
+		555167EF2857D9F6004E4D78 /* OnBoardingStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingStep.swift; sourceTree = "<group>"; };
 		5560C56E283FCD8F0045CA37 /* InterestListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestListView.swift; sourceTree = "<group>"; };
 		55AF2FA22835418F0040D030 /* LocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapAnnotationView.swift; sourceTree = "<group>"; };
 		55CA7CBE283202C9008B5C2C /* Expose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Expose.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55036B192853F12B000DEBB9 /* OrderedCollections in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,8 +115,10 @@
 		55CA7CCF28320399008B5C2C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				55CA7CC3283202C9008B5C2C /* ContentView.swift */,
 				8A5C89E6283F15990036CBE8 /* MLContentView.swift */,
 				55E0EE792837627400CDB250 /* OnBoardingView.swift */,
+				555167ED2857BF47004E4D78 /* NewOnboardingScreen.swift */,
 				552A558428468A660057E81F /* PhotoSelectedView.swift */,
 				554960BE283F44D900ED0FAA /* ResultsView.swift */,
 				55CA7CD1283203D3008B5C2C /* HomeView.swift */,
@@ -121,7 +129,6 @@
 				55020540283606FA004A2A69 /* MoreInfoView.swift */,
 				55CA7CD3283203F7008B5C2C /* MapView.swift */,
 				55E0EE772836E1E000CDB250 /* LaunchScreen.storyboard */,
-				55CA7CC3283202C9008B5C2C /* ContentView.swift */,
 				552A558228468A150057E81F /* PhotoPickerUIKitView.swift */,
 			);
 			path = View;
@@ -139,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				55CA7CD82832DFB0008B5C2C /* Place.swift */,
+				555167EF2857D9F6004E4D78 /* OnBoardingStep.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -169,6 +177,9 @@
 			dependencies = (
 			);
 			name = Expose;
+			packageProductDependencies = (
+				55036B182853F12B000DEBB9 /* OrderedCollections */,
+			);
 			productName = Expose2.0;
 			productReference = 55CA7CBE283202C9008B5C2C /* Expose.app */;
 			productType = "com.apple.product-type.application";
@@ -198,6 +209,7 @@
 			);
 			mainGroup = 55CA7CB5283202C9008B5C2C;
 			packageReferences = (
+				55036B172853F12B000DEBB9 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = 55CA7CBF283202C9008B5C2C /* Products */;
 			projectDirPath = "";
@@ -227,10 +239,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				55E0EE7C28377D2B00CDB250 /* NewQuickFile.swift in Sources */,
+				555167F02857D9F6004E4D78 /* OnBoardingStep.swift in Sources */,
 				55CA7CD2283203D3008B5C2C /* HomeView.swift in Sources */,
 				55CA7CD6283204AB008B5C2C /* MapViewModel.swift in Sources */,
 				8A5C89E8283F15990036CBE8 /* UIImage+Extension.swift in Sources */,
 				552F27E32834BC27001634D8 /* MapUIView.swift in Sources */,
+				555167EE2857BF47004E4D78 /* NewOnboardingScreen.swift in Sources */,
 				8A8DE077284E948A00BD2E6D /* Resnet50.mlkitmodel in Sources */,
 				55E0EE7A2837627400CDB250 /* OnBoardingView.swift in Sources */,
 				552A558528468A660057E81F /* PhotoSelectedView.swift in Sources */,
@@ -451,6 +465,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		55036B172853F12B000DEBB9 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		55036B182853F12B000DEBB9 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 55036B172853F12B000DEBB9 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 55CA7CB6283202C9008B5C2C /* Project object */;
 }

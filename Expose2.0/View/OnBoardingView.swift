@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct OnBoardingView: View {
-    @Environment(\.colorScheme) var colorScheme
-    @AppStorage("onBoarding") var onBoarding: Int?
+    @AppStorage("onBoarding") var onBoarding =  0
     var body: some View {
         
         ZStack {
@@ -47,14 +46,13 @@ struct OnBoardingView: View {
                     Button {
                         onBoarding = 1
                     } label: {
-                        Text("Continue")
+                        Text("CONTINUE")
                             .padding()
                             .padding(.horizontal, 40)
                             .background(Color("Turquoise"))
                             .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }.foregroundColor( colorScheme == .light ? Color(.black) : Color(.white)
-                        
-                        )
+                    }.shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
+                    .foregroundColor(.primary)
 
                 
 
@@ -68,7 +66,7 @@ struct OnBoardingView: View {
 struct OnBoardingView_Previews: PreviewProvider {
     static var previews: some View {
         OnBoardingView()
-            .preferredColorScheme(.dark)
+            .preferredColorScheme(.light)
             
     }
 }

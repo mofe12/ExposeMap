@@ -12,7 +12,7 @@ struct MLContentView: View {
     
     @EnvironmentObject var viewModel : MapUIViewModel
     
-    @State var photosToBeScanned: [String] = ["bears"]
+    @State var photosToBeScanned: [String] = ["lemon"]
     @State var classifyImageResult: String = ""
     @State var classifyImageResultArray: [String] = []
     var body: some View {

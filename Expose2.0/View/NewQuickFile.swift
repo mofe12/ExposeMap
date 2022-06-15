@@ -7,11 +7,22 @@
 
 import SwiftUI
 import MapKit
+import OrderedCollections
 
 struct NewQuickFile: View {
-    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37, longitude: -95), latitudinalMeters: 10000000, longitudinalMeters: 10000000)
+    @State var testArray = [1,2,3,4]
+    @State var orderedset = OrderedSet([1,2])
     var body: some View {
-        Map(coordinateRegion: $region)
+        VStack {
+            ForEach(orderedset, id: \.self){ number in
+                    Text("\(number)")
+            }
+        }.onAppear{
+            orderedset.append(1)
+        }
+    }
+    init(){
+        orderedset = OrderedSet(testArray)
     }
 }
 

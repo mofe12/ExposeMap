@@ -25,7 +25,7 @@ struct Expose2App: App {
                 PhotoSelectedView(changeScreens: $changeScreens).environmentObject(mapData)
             }
             
-            
+           // NewOnboardingScreen()
             
         }
     }
@@ -38,3 +38,4 @@ enum changeScreen{
     case resultView
     case photoSelectedVeiw
 }
+
