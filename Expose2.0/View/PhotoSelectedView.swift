@@ -100,6 +100,9 @@ struct ScanPhoto: View{
     var body: some View{
         VStack {
             Text(mapData.photosToBeScanned.isEmpty ? "ADD MY PHOTOS" : "SCAN MY PHOTOS" )
+                .foregroundColor(.primary)
+                .font(.title2)
+                .fontWeight(.black)
                 .padding(16)
                 .frame(maxWidth: .infinity)
                 .background(Color("Turquoise"))

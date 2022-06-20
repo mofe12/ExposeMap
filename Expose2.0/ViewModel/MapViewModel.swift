@@ -16,6 +16,7 @@ import OrderedCollections
 
 
 final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegate{
+    
     // Instiating ML model
     let model = MobileNetV2()
     

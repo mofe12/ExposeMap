@@ -43,8 +43,10 @@ struct NewOnboardingScreen: View {
                                 
                             }
                             Text(viewModel.OnBoardingStepArray[steps].Text)
-                                .multilineTextAlignment(.center)
                                 .font(.title2)
+                                .fontWeight(.black)
+                                .multilineTextAlignment(.center)
+                                //.font(.title2)
                                 .padding(.horizontal,32)
                                 .padding(.top,16)
                                 .foregroundColor(.white)
@@ -84,7 +86,10 @@ struct continueButton: View{
         
         VStack {
             Text("GET STARTED")
+                .font(.title2)
+                .fontWeight(.black)
                 .padding(16)
+                .foregroundColor(Color("Turquoise"))
                 .frame(maxWidth: .infinity)
                 .background(.white)
                 .cornerRadius(16)

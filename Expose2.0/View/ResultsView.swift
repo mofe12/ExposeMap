@@ -29,9 +29,10 @@ struct ResultsView: View {
                 Spacer()
                 ScrollView(){
                     ForEach(viewModel.MLPhotoResults, id: \.self){ result in
-                        Text(result).textCase(.uppercase)
-                            .padding()
+                        Text(result)
                             .font(.title2)
+                            .fontWeight(.black).textCase(.uppercase)
+                            .padding()
                     }
                 }
                 GetExposed(changeScreens: $changeScreens)
@@ -82,10 +83,13 @@ struct Message: View{
     var body: some View{
         VStack(spacing: 78) {
             Text("YOUR RESULTS SHOW THAT YOU ARE INTERESTED IN ALOT")
+                .font(.title2)
+                .fontWeight(.black)
 
             Text("HERE ARE SOME OF THOSE THINGS:")
+                .font(.title2)
+                .fontWeight(.black)
         }
-        .font(.title2)
         .padding()
         .multilineTextAlignment(.center)
         
@@ -98,6 +102,8 @@ struct GetExposed: View{
     var body: some View{
         VStack {
             Text("GET EXPOSED")
+                .font(.title2)
+                .fontWeight(.black)
                 .padding(16)
                 .frame(maxWidth: .infinity)
                 .background(Color("Turquoise"))
