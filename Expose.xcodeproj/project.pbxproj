@@ -33,7 +33,6 @@
 		8A5C89E8283F15990036CBE8 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C89E0283F15990036CBE8 /* UIImage+Extension.swift */; };
 		8A5C89EB283F15990036CBE8 /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C89E4283F15990036CBE8 /* MobileNetV2.mlmodel */; };
 		8A5C89ED283F15990036CBE8 /* MLContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C89E6283F15990036CBE8 /* MLContentView.swift */; };
-		8A8DE077284E948A00BD2E6D /* Resnet50.mlkitmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8A8DE076284E948A00BD2E6D /* Resnet50.mlkitmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,7 +62,6 @@
 		8A5C89E0283F15990036CBE8 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		8A5C89E4283F15990036CBE8 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MobileNetV2.mlmodel; sourceTree = "<group>"; };
 		8A5C89E6283F15990036CBE8 /* MLContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLContentView.swift; sourceTree = "<group>"; };
-		8A8DE076284E948A00BD2E6D /* Resnet50.mlkitmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Resnet50.mlkitmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				8A5C89E0283F15990036CBE8 /* UIImage+Extension.swift */,
-				8A8DE076284E948A00BD2E6D /* Resnet50.mlkitmodel */,
 				8A5C89E4283F15990036CBE8 /* MobileNetV2.mlmodel */,
 			);
 			path = CoreMLwithSwiftUI;
@@ -251,7 +248,6 @@
 				8A5C89E8283F15990036CBE8 /* UIImage+Extension.swift in Sources */,
 				552F27E32834BC27001634D8 /* MapUIView.swift in Sources */,
 				555167EE2857BF47004E4D78 /* NewOnboardingScreen.swift in Sources */,
-				8A8DE077284E948A00BD2E6D /* Resnet50.mlkitmodel in Sources */,
 				55E0EE7A2837627400CDB250 /* OnBoardingView.swift in Sources */,
 				5540D928285BAC800072AEAF /* DataProvider.swift in Sources */,
 				5540D926285BAACF0072AEAF /* FileManagerModel.swift in Sources */,

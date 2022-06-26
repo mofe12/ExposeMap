@@ -21,7 +21,7 @@ struct Expose2App: App {
                 ResultsView(changeScreens: $changeScreens).environmentObject(mapData)
             }else if changeScreens == changeScreen.homeView{
                 HomeView(changeScreens: $changeScreens).environmentObject(mapData)
-            }else if changeScreens == changeScreen.photoSelectedVeiw{
+            }else if changeScreens == changeScreen.photoSelectedView{
                 PhotoSelectedView(changeScreens: $changeScreens).environmentObject(mapData)
             }
             
@@ -36,6 +36,6 @@ enum changeScreen{
     case contentView
     case homeView
     case resultView
-    case photoSelectedVeiw
+    case photoSelectedView
 }
 

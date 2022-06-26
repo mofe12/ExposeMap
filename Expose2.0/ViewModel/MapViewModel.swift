@@ -10,7 +10,6 @@ import MapKit
 import UIKit
 import PhotosUI
 import CoreLocation
-import OrderedCollections
 
 // All Map Data Goes here....
 
@@ -22,6 +21,8 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     
     //Current Page
     @Published var currentPage = changeScreen.contentView
+    
+    @Published var isNavActive: Bool = false
     
     @Published var OnBoardingStepArray: [OnBoardingStep] = [
         OnBoardingStep(Image: "heart.fill", Text: "WE CARE ABOUT PRIVACY!"),
@@ -35,8 +36,28 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // Map type
     @Published var mapType: MKMapType = .standard
     
+    // MapView permissions
+    
+    enum locationPermissionsEnum{
+        case allow
+        case notAllowed
+    }
+    @Published var locationPermission: locationPermissionsEnum = .allow
+    
+    @Published var alertValue: Bool = false
+    
+    struct AlertStruct{
+        var title: String
+        var message: String
+    }
+    
+    @Published var alertDetail = AlertStruct(title: "" , message: "")
+    
     // Search Text
     @Published var searchTxt = ""
+    
+    // Returned Places
+    @Published var noPlacesReturned: Bool = false
     
     // Searched Places...
     @Published var places : [Place] = []
@@ -63,7 +84,7 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     
     // Current Interest
     @Published var currentInterest: String = "SELECT INTEREST"
-
+    
     
     // ML results
     @Published var MLPhotoResults : [String] = []
@@ -82,28 +103,30 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     
     // Handle result
     func handleResults(_ results: [PHPickerResult]) {
-      for result in results {
-        result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] imageObject, error in
-          guard let image = imageObject as? UIImage else { return }
-            guard let data = image.jpegData(compressionQuality: 0.5), let compressedImage = UIImage(data: data) else{return}
-          DispatchQueue.main.async { [weak self] in
-            self?.photosToBeScanned.append(compressedImage)
-          }
+        for result in results {
+            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] imageObject, error in
+                guard let image = imageObject as? UIImage else { return }
+                guard let data = image.jpegData(compressionQuality: 0.5), let compressedImage = UIImage(data: data) else{return}
+                DispatchQueue.main.async { [weak self] in
+                    self?.photosToBeScanned.append(compressedImage)
+                }
+            }
         }
-      }
     }
-
+    
     
     
     // Search Places and puts result in placeArray
     func searchQuery(){
+        print("calling search Query")
         
+        noPlacesReturned = false
         places.removeAll()
         
         placesArray.removeAll()
         
         let request = MKLocalSearch.Request()
-       // request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.restaurant, .airport, .foodMarket,.])
+        // request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.restaurant, .airport, .foodMarket,.])
         request.region = region
         request.naturalLanguageQuery = currentInterest
         
@@ -112,19 +135,29 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             guard let result = respose else{return}
             
             DispatchQueue.main.async {
-                self.updateMapRegion(result: result)
+                self.updateMapInterestRegion(result: result)
             }
-
+            
             self.places = result.mapItems.compactMap({(item) -> Place? in
-                
                 // -- Easy fix rn to get the places in places Array immediately
                 self.placesArray.append(Place(place: item.placemark))
-                print("This is the self place array \(self.placesArray)")
-                // -- Easy fex
                 
                 return Place(place: item.placemark)
             })
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if self.placesArray.count == 0{
+                print("does it get here")
+                self.noInterestAlert()
+            }
+        }
+    }
+    
+    func noInterestAlert(){
+        self.noPlacesReturned = true
+        alertDetail = AlertStruct(title: "No Interest Near-By", message: "I'm sorry :( there is no place related to your interest at your current location. Try choosing another interest.")
+        alertValue = true
+        print("No place returned: \(noPlacesReturned)")
     }
     
     // Show All Places
@@ -142,11 +175,13 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     }
     
     // Updates the map to the region of the new interest selected
-    func updateMapRegion(result:  MKLocalSearch.Response){
+    func updateMapInterestRegion(result:  MKLocalSearch.Response){
         withAnimation(.easeInOut) {
             self.region = result.boundingRegion
         }
     }
+    
+    
     
     // Toggle Interest List view
     func toogleInterstListView(){
@@ -158,7 +193,7 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // Classifying image for ML
     func classifyImage(currentImageName: UIImage) {
         let image = currentImageName
-            guard let resizedImage = image.resizeImageTo(size:CGSize(width: 224, height: 224)),
+        guard let resizedImage = image.resizeImageTo(size:CGSize(width: 224, height: 224)),
               let buffer = resizedImage.convertToBuffer() else {
             return
         }
@@ -176,40 +211,75 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             {
                 stringOfResult = String(stringOfResult.prefix(upTo: index))
             }
-            MLPhotoResults.append(stringOfResult)
-        }
-    }
-    
-    // Everything below has to do with the location of the user
-    let locationManager = CLLocationManager()
-    
-    override init(){
-        super.init()
-        locationManager.delegate = self
-    }
-    
-    func requestAllowOnceLocationPermission(){
-        //locationManager.requestLocation()
-        locationManager.startUpdatingLocation()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.locationManager.stopUpdatingLocation()
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let latestLocation = locations.first else{return}
-        
-        
-        DispatchQueue.main.async{
-            // does the animation with every location update
-            withAnimation(.easeInOut){
-                self.region = MKCoordinateRegion(center: latestLocation.coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
+            // Making sure interest does not repeat itself
+            if !MLPhotoResults.contains(stringOfResult){
+                MLPhotoResults.append(stringOfResult)
             }
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error.localizedDescription)
+    // All about Locations part
+    var locationManager: CLLocationManager?
+    
+    func checkIfLocationServiceIsEnabled(){
+        if CLLocationManager.locationServicesEnabled(){
+            locationManager = CLLocationManager()
+            locationManager!.delegate = self
+            locationPermission = .allow
+        }else{
+            locationPermission = .notAllowed
+            alertDetail = AlertStruct(title: "Location Disabled", message: "Your location is off, turn on to use app")
+            alertValue = true
+        }
     }
+    
+    private func checkLocationAuthorization(){
+        guard let locationManager1 = locationManager else { return }
+        
+        
+        switch locationManager1.authorizationStatus{
+            
+        case .notDetermined:
+            locationManager1.requestWhenInUseAuthorization()
+            locationPermission = .allow
+            
+        case .restricted:
+            locationPermission = .notAllowed
+            alertDetail = AlertStruct(title: "Restricted Location", message: "Your current location can’t be determined because it is restricted. For great experience, Allow Exposé to use your location.\n Select \"While Using the App.\"")
+            alertValue = true
+            
+        case .denied:
+            locationPermission = .notAllowed
+            alertDetail = AlertStruct(title: "Denied Location", message: "You have DENIED the app location, go to settings to change it. For great experience, allow Exposé to use your location.\n Select \"While Using the App.\"")
+            alertValue = true
+            
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationPermission = .allow
+            DispatchQueue.main.async {
+                withAnimation(.easeInOut) {
+                    self.region = MKCoordinateRegion(center: locationManager1.location!.coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
+                }
+            }
+        @unknown default:
+            break
+        }
+        
+    }
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        checkLocationAuthorization()
+    }
+    
+    func updateMapRegion(){
+        guard let locationManager1 = locationManager else { return }
+        
+        print("LOCATION PERMISSION: \(locationPermission)")
+        if locationPermission == .notAllowed{
+            alertValue = true
+        }else{
+            withAnimation(.easeInOut) {
+                self.region = MKCoordinateRegion(center: locationManager1.location!.coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
+            }
+        }
+    }
+    
 }

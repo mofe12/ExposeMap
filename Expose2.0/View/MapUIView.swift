@@ -17,20 +17,26 @@ struct MapUIView: View {
             Map(coordinateRegion: $viewModel.region, showsUserLocation: true, annotationItems: viewModel.placesArray){ place in
                 MapAnnotation(coordinate: place.place.location!.coordinate) {
                         //LocationMapAnnotationView().environmentObject(viewModel)
-                            Image(systemName: "mappin")
-                                .font(.title)
-                                .onTapGesture {
-                                    viewModel.showMoreInfoView = true
-                                    viewModel.moreInfoPlace = PlaceMarked(name: place.place.name ?? "No name",
-                                                                          addressNumber: place.place.subThoroughfare ?? "No number",
-                                                                          streetName:  place.place.thoroughfare ?? "No street name",
-                                                                          city: place.place.locality ?? "No city name",
-                                                                          state: place.place.administrativeArea ?? "No State name",
-                                                                          county: place.place.subAdministrativeArea ?? "No county",
-                                                                          country: place.place.country ?? "No country",
-                                                                          zipCode: place.place.postalCode ?? "No postal code")
-                            }
+                    
+                    ZStack {
+                        Image(systemName: "mappin")
+                            .font(.title)
+                                    .onTapGesture {
+                                        viewModel.showMoreInfoView = true
+                                        viewModel.moreInfoPlace = PlaceMarked(name: place.place.name ?? "No name",
+                                                                              addressNumber: place.place.subThoroughfare ?? "No number",
+                                                                              streetName:  place.place.thoroughfare ?? "No street name",
+                                                                              city: place.place.locality ?? "No city name",
+                                                                              state: place.place.administrativeArea ?? "No State name",
+                                                                              county: place.place.subAdministrativeArea ?? "No county",
+                                                                              country: place.place.country ?? "No country",
+                                                                              zipCode: place.place.postalCode ?? "No postal code")
+                                }
+                    }
                 }
+            }
+            .onAppear{
+                viewModel.checkIfLocationServiceIsEnabled()
             }
             .ignoresSafeArea()
             .tint(.pink)

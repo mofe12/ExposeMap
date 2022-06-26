@@ -7,27 +7,62 @@
 
 import SwiftUI
 import MapKit
-import OrderedCollections
+import CoreLocationUI
 
 struct NewQuickFile: View {
-    @State var testArray = [1,2,3,4]
-    @State var orderedset = OrderedSet([1,2])
+
     var body: some View {
-        VStack {
-            ForEach(orderedset, id: \.self){ number in
-                    Text("\(number)")
+        VStack(spacing:0) {
+            Button {
+            } label: {
+                Image(systemName: "photo.fill")
+                    //.frame(width: , height: )
+                    .frame(maxWidth:  .infinity, maxHeight: .infinity)
+                    .padding(.bottom, 1)
+                    .foregroundColor(.gray)
             }
-        }.onAppear{
-            orderedset.append(1)
+            Divider()
+                .frame(width: 59)
+            ZStack {
+                Button {
+                } label: {
+                    Image(systemName:"location.fill")
+                        .frame(maxWidth:  .infinity, maxHeight: .infinity)
+                        .foregroundColor(.gray)
+                        .padding(.top, 1)
+                }
+
+                
+                
+            }
         }
-    }
-    init(){
-        orderedset = OrderedSet(testArray)
+        .font(.title2)
+        .frame(width: 50, height: 120)
+        .background(.thickMaterial)
+        .cornerRadius(10)
+        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
+        
+        
     }
 }
 
 struct NewQuickFile_Previews: PreviewProvider {
     static var previews: some View {
         NewQuickFile()
+            .preferredColorScheme(.dark)
     }
 }
+
+struct MyLabelStyle: LabelStyle {
+    let color: Color
+
+    func makeBody(configuration: Configuration) -> some View {
+        VStack {
+            configuration.title
+            configuration.icon
+                .symbolVariant(.fill)
+                .foregroundColor(.red)
+        }
+    }
+}
+

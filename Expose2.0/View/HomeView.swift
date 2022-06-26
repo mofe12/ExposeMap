@@ -18,31 +18,28 @@ struct HomeView: View {
         ZStack {
             // Using it as environment object so that it can  used in subviews...
             MapUIView().environmentObject(mapData)
+                .alert(isPresented: $mapData.alertValue) {
+                    Alert(
+                        title: Text(mapData.alertDetail.title),
+                        message: Text(mapData.alertDetail.message)
+                    )
+                }
+            if mapData.showInterestListView{
+                Color.black
+                    .opacity(0.4)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        mapData.toogleInterstListView()
+                    }
+            }
             VStack{
-                
                 header
-                
                 Spacer()
                 LocationAndGlobeButton(changeScreens: $changeScreens).environmentObject(mapData)
             }
             MoreInfoView(isShowing: $mapData.showMoreInfoView)
                 .environmentObject(mapData)
         }
-//        .onChange(of: mapData.currentInterest, perform:{ value in
-//            
-//            // Searching Place
-//            // You can use your delay time
-//            let delay = 0.1
-//            print("This is value \(value)")
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-//                if value == mapData.currentInterest{
-//                    print("So it is getting here")
-//                    // Search...
-//                    self.mapData.searchQuery()
-//                }
-//            }
-//        })
     }
 }
 
@@ -57,33 +54,37 @@ struct LocationAndGlobeButton: View {
     @EnvironmentObject var mapData : MapUIViewModel
     @Binding var changeScreens: changeScreen
     var body: some View {
-        VStack{
-            Button {
-                changeScreens = .photoSelectedVeiw
-            } label: {
-                Image(systemName: "photo.fill")
-                    .font(.largeTitle)
-                    .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
-            }.foregroundColor(.black)
-            
-            LocationButton(.currentLocation){
-                mapData.requestAllowOnceLocationPermission()
+        HStack {
+            Spacer()
+            VStack(spacing:0) {
+                Button {
+                    changeScreens = .photoSelectedView
+                    mapData.isNavActive = false
+                } label: {
+                    Image(systemName: "photo.fill")
+                        .frame(maxWidth:  .infinity, maxHeight: .infinity)
+                        .padding(.bottom, 1)
+                        .foregroundColor(.primary)
+                }
+                Divider()
+                    .frame(width: 59)
+                ZStack {
+                    Button {
+                        mapData.updateMapRegion()
+                    } label: {
+                        Image(systemName:"location.fill")
+                            .frame(maxWidth:  .infinity, maxHeight: .infinity)
+                            .foregroundColor(.primary)
+                            .padding(.top, 1)
+                    }
+                }
             }
-            .scaledToFill()
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .labelStyle(.iconOnly)
-            .symbolVariant(.fill)
-            .tint(.black)
-//            .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
-            
-            
+            .font(.title2)
+            .frame(width: 50, height: 120)
+            .background(.thickMaterial)
+            .cornerRadius(10)
+            .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
         }
-        .onAppear{
-            mapData.requestAllowOnceLocationPermission()
-        }
-        .frame(maxWidth: .infinity, alignment: .trailing)
-        .frame(maxWidth: .infinity, alignment: .center)
         .padding()
     }
 }
@@ -113,6 +114,7 @@ extension HomeView{
             
             if mapData.showInterestListView{
                 InterestListView()
+                    .frame(height: 400)
             }
         }
         .background(.thickMaterial)
