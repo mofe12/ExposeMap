@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct MoreInfoView: View {
-   // @Binding var myCustomObject: String
     @EnvironmentObject var viewModel : MapUIViewModel
     @Binding var isShowing: Bool
     @State private var isDragging = false
     
-    @State private var currHeight: CGFloat = 400
-    let minHeight: CGFloat = 400
+    @State private var currHeight: CGFloat = 500
+    let minHeight: CGFloat = 500
     let maxHeight: CGFloat = 700
     
     let startOpacity: Double = 0.4
@@ -34,10 +33,8 @@ struct MoreInfoView: View {
                     .onTapGesture {
                         isShowing = false
                     }
-//                Rectangle()
-//                    .scaledToFit()
                 mainView
-                .transition(.move(edge: .bottom))
+                    .transition(.move(edge: .bottom))
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
@@ -54,19 +51,11 @@ struct MoreInfoView: View {
             .frame(height: 40)
             .frame(maxWidth: .infinity)
             .background(Color.white.opacity(0.00001))
-            .gesture(dragGesture)
             // Explicity wrapping because I have it covered for when there is no value
             Text(viewModel.moreInfoPlace.name!)
                 .font(.title)
             Text("\(viewModel.moreInfoPlace.addressNumber!) \(viewModel.moreInfoPlace.streetName!) \(viewModel.moreInfoPlace.city!), \(viewModel.moreInfoPlace.state!) \(viewModel.moreInfoPlace.zipCode!) \(viewModel.moreInfoPlace.country!)")
             
-            
-//            ZStack {
-//                Text("Hello Hello HelloHelloHello Hello Hello Hello  Hello Hello  Hello  HelloHello")
-//
-//                Text(viewModel.moreInfoPlace)
-//            }
-//            .frame(maxHeight: .infinity)
             Spacer()
         }
         .padding()
@@ -81,6 +70,7 @@ struct MoreInfoView: View {
             }
                 .foregroundColor(Color("BackGroundColor"))
         )
+        .gesture(dragGesture)
         .animation(isDragging ? nil: .easeInOut(duration: 0.45))
         .onDisappear{
             currHeight = minHeight
@@ -100,7 +90,7 @@ struct MoreInfoView: View {
                     currHeight -= dragAmount / 6
                 }else{
                     currHeight -= dragAmount
-
+                    
                 }
                 prevDragTranslation = val.translation
             }
@@ -113,13 +103,18 @@ struct MoreInfoView: View {
                 else if currHeight < minHeight{
                     currHeight = minHeight
                 }
+                
+                if val.translation.height > 0 && currHeight == 500 {
+                    isShowing = false
+                    
+                }
             }
     }
 }
 
 struct MoreInfoView_Previews: PreviewProvider {
     static var previews: some View {
-MoreInfoView(isShowing: .constant(true))
+        MoreInfoView(isShowing: .constant(true))
             .environmentObject(MapUIViewModel())
         //LocationMapAnnotationView()
     }

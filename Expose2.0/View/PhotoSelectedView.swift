@@ -11,11 +11,11 @@ struct PhotoSelectedView: View {
     @EnvironmentObject var mapData : MapUIViewModel
     @Binding var changeScreens: changeScreen
     @State var showAlert: Bool = false
-    @State var isActive: Bool = false
+    @State var isNavActive: Bool = false
     
     var body: some View {
         NavigationView {
-            ZStack {
+            VStack {
                 ScrollView {
                     let gridItems: [GridItem] = Array(repeating: .init(.adaptive(minimum: 500)), count: 2)
                     LazyVGrid(
@@ -43,8 +43,6 @@ struct PhotoSelectedView: View {
                     trailing:
                         trailingButtons
                 )
-                
-                VStack{
                     Spacer()
                     if mapData.photosToBeScanned.isEmpty{
                         Button {
@@ -55,7 +53,7 @@ struct PhotoSelectedView: View {
                                 .tint(.black)
                         }
                     }else{
-                        NavigationLink(isActive: $isActive) {
+                        NavigationLink(isActive: $mapData.isNavActive) {
                             ResultsView(changeScreens: $changeScreens).environmentObject(mapData)
                         } label: {
                             
@@ -63,13 +61,11 @@ struct PhotoSelectedView: View {
                                 .foregroundColor(/*@START_MENU_TOKEN@*/Color("BackGroundColor")/*@END_MENU_TOKEN@*/)
                                 .onTapGesture {
                                     if !mapData.photosToBeScanned.isEmpty{
-                                        isActive = true
+                                        mapData.isNavActive = true
                                     }
                                 }
                         }
                     }
-                    
-                }
             }
         }
         .onAppear{mapData.isShowingImagePicker = true}
