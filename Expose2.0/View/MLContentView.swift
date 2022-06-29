@@ -24,7 +24,7 @@ struct MLContentView: View {
             // The button we will use to classify the image using our model
             Button("Classify") {
                 // Add more code here
-                viewModel.MLPhotoResults = []
+                viewModel.MLPhotoResultsToBeSaved = []
                 for photo in photosToBeScanned {
                     classifyImage(currentImageName: photo)
                 }

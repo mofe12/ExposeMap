@@ -19,6 +19,7 @@
 		555167F02857D9F6004E4D78 /* OnBoardingStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555167EF2857D9F6004E4D78 /* OnBoardingStep.swift */; };
 		5560C56F283FCD8F0045CA37 /* InterestListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5560C56E283FCD8F0045CA37 /* InterestListView.swift */; };
 		55AF2FA32835418F0040D030 /* LocationMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF2FA22835418F0040D030 /* LocationMapAnnotationView.swift */; };
+		55BC5B16286948D9000D0F28 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BC5B15286948D9000D0F28 /* Extensions.swift */; };
 		55CA7CC2283202C9008B5C2C /* Expose2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CA7CC1283202C9008B5C2C /* Expose2App.swift */; };
 		55CA7CC4283202C9008B5C2C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CA7CC3283202C9008B5C2C /* ContentView.swift */; };
 		55CA7CC6283202CD008B5C2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55CA7CC5283202CD008B5C2C /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 		555167EF2857D9F6004E4D78 /* OnBoardingStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingStep.swift; sourceTree = "<group>"; };
 		5560C56E283FCD8F0045CA37 /* InterestListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestListView.swift; sourceTree = "<group>"; };
 		55AF2FA22835418F0040D030 /* LocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapAnnotationView.swift; sourceTree = "<group>"; };
+		55BC5B15286948D9000D0F28 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		55CA7CBE283202C9008B5C2C /* Expose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Expose.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CA7CC1283202C9008B5C2C /* Expose2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expose2App.swift; sourceTree = "<group>"; };
 		55CA7CC3283202C9008B5C2C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				55CA7CD82832DFB0008B5C2C /* Place.swift */,
 				555167EF2857D9F6004E4D78 /* OnBoardingStep.swift */,
 				5540D925285BAACF0072AEAF /* FileManagerModel.swift */,
+				55BC5B15286948D9000D0F28 /* Extensions.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55BC5B16286948D9000D0F28 /* Extensions.swift in Sources */,
 				55E0EE7C28377D2B00CDB250 /* NewQuickFile.swift in Sources */,
 				555167F02857D9F6004E4D78 /* OnBoardingStep.swift in Sources */,
 				55CA7CD2283203D3008B5C2C /* HomeView.swift in Sources */,

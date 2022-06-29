@@ -19,6 +19,15 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // Instiating ML model
     let model = MobileNetV2()
     
+    @Published var photoToScanCheck: [UIImage] = []
+    
+    // File managing
+    static let shared = DataProvider()
+    
+    private let dataSourceURL: URL
+    
+    @Published var allInterest = Interest(Interests: [], photos: [])
+    
     //Current Page
     @Published var currentPage = changeScreen.contentView
     
@@ -77,17 +86,27 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // Showing image picker
     @Published var isShowingImagePicker = false
     
-    @Published var photosToBeScanned: [UIImage] = []
+    // Gotten File Manager
+    @Published var FileManagerData: Interest = Interest(Interests: [], photos: [])
+    // Photos to be saved
     
-    // Ordered set
-    @Published var OrderedPhotoToBeScanned = []
+    @Published var newPhotosToBeScanned: [UIImage] = []
+    
+    
+    @Published var scannedPhotoToBeSaved: [String] = []
+    
+    @Published var selectedPhotoToShow: [UIImage] = []
     
     // Current Interest
     @Published var currentInterest: String = "SELECT INTEREST"
     
     
     // ML results
-    @Published var MLPhotoResults : [String] = []
+    @Published var MLPhotoResultsToBeSaved : [String] = []
+    
+    @Published var NewMLPhotoResults : [String] = []
+    
+    @Published var MLPhotoResults: [String] = []
     
     // More info place
     @Published var moreInfoPlace: PlaceMarked =
@@ -106,14 +125,34 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
         for result in results {
             result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] imageObject, error in
                 guard let image = imageObject as? UIImage else { return }
-                guard let data = image.jpegData(compressionQuality: 0.5), let compressedImage = UIImage(data: data) else{return}
+                guard let data = image.jpegData(compressionQuality: 0.0), let compressedImage = UIImage(data: data) else{return}
                 DispatchQueue.main.async { [weak self] in
-                    self?.photosToBeScanned.append(compressedImage)
+                    self?.newPhotosToBeScanned.append(compressedImage)
+                    self?.selectedPhotoToShow.append(compressedImage)
                 }
             }
         }
     }
     
+    
+    func changeUIImageToString(_ uiImage: UIImage){
+        //DispatchQueue.main.async {
+            //for uiImage in uiImages {
+                self.scannedPhotoToBeSaved.append(uiImage.toJpegString(compressionQuality: 0.0) ?? "no Image")
+                
+            //}
+            //self.newPhotosToBeScanned = []
+        //}
+    }
+    
+    func changeStringToUIImage(_ strings: [String]){
+        DispatchQueue.main.async {
+            for string in strings {
+                print("CONVERTED BACK: \(string.toImage()!)")
+                self.selectedPhotoToShow.append(string.toImage()!)
+            }
+        }
+    }
     
     
     // Search Places and puts result in placeArray
@@ -141,7 +180,6 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             self.places = result.mapItems.compactMap({(item) -> Place? in
                 // -- Easy fix rn to get the places in places Array immediately
                 self.placesArray.append(Place(place: item.placemark))
-                
                 return Place(place: item.placemark)
             })
         }
@@ -213,10 +251,15 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             }
             // Making sure interest does not repeat itself
             if !MLPhotoResults.contains(stringOfResult){
+                NewMLPhotoResults.append(stringOfResult)
                 MLPhotoResults.append(stringOfResult)
+                
+            // Changing UIImage into String
+                changeUIImageToString(currentImageName)
             }
         }
     }
+    
     
     // All about Locations part
     var locationManager: CLLocationManager?
@@ -281,5 +324,51 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             }
         }
     }
+    
+    // Everything that has to do with file managing
+    
+    private func getInterest() -> Interest{
+        do{
+            let decoder = PropertyListDecoder()
+            let data = try Data(contentsOf: dataSourceURL)
+            let decodedInterest = try! decoder.decode(Interest.self, from: data)
+            return decodedInterest
+        }catch{
+            return Interest(Interests: [], photos: [])
+        }
+    }
+    
+    override init(){
+        
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let interestPath = documentsPath.appendingPathComponent("interest").appendingPathExtension("json")
+        dataSourceURL = interestPath
+        super.init()
+        _allInterest = Published(wrappedValue: getInterest())
+        FileManagerData = get()
+        MLPhotoResults = FileManagerData.Interests
+        changeStringToUIImage(FileManagerData.photos)
+    }
+    
+    private func saveInterest(){
+        do {
+                let encoder = PropertyListEncoder()
+                let data = try encoder.encode(allInterest)
+                try data.write(to: dataSourceURL)
+            } catch {
+
+            }
+    }
+    
+    func create(interest: Interest){
+        allInterest.Interests.insert(contentsOf: interest.Interests, at: 0)
+        allInterest.photos.insert(contentsOf: interest.photos, at: 0)
+        saveInterest()
+    }
+    
+    func get() -> Interest{
+        return getInterest()
+    }
+
     
 }

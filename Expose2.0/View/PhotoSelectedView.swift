@@ -20,14 +20,18 @@ struct PhotoSelectedView: View {
                     let gridItems: [GridItem] = Array(repeating: .init(.adaptive(minimum: 500)), count: 2)
                     LazyVGrid(
                         columns: gridItems, spacing: 20) {
-                            ForEach(0..<mapData.photosToBeScanned.count, id: \.self) { i in
-                                Image(uiImage: mapData.photosToBeScanned[i])
+                            ForEach(0..<mapData.selectedPhotoToShow.count, id: \.self) { i in
+                                Image(uiImage: mapData.selectedPhotoToShow[i])
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 180, height: 180)
                                     .clipped()
                                     .overlay( Button {
-                                        mapData.photosToBeScanned.remove(at: i)
+                                        mapData.selectedPhotoToShow.remove(at: i)
+                                        if !mapData.newPhotosToBeScanned.isEmpty {
+                                            mapData.newPhotosToBeScanned.remove(at: i)
+                                        }
+                                        
                                     } label: {
                                         Image(systemName: "minus.circle.fill")
                                             .font(.title)
@@ -44,7 +48,7 @@ struct PhotoSelectedView: View {
                         trailingButtons
                 )
                     Spacer()
-                    if mapData.photosToBeScanned.isEmpty{
+                if (mapData.selectedPhotoToShow.isEmpty && mapData.newPhotosToBeScanned.isEmpty){
                         Button {
                             mapData.isShowingImagePicker.toggle()
                         } label: {
@@ -60,15 +64,23 @@ struct PhotoSelectedView: View {
                             ScanPhoto().environmentObject(mapData)
                                 .foregroundColor(/*@START_MENU_TOKEN@*/Color("BackGroundColor")/*@END_MENU_TOKEN@*/)
                                 .onTapGesture {
-                                    if !mapData.photosToBeScanned.isEmpty{
+                                    if (!mapData.selectedPhotoToShow.isEmpty || !mapData.newPhotosToBeScanned.isEmpty){
                                         mapData.isNavActive = true
                                     }
                                 }
                         }
                     }
             }
+            .onAppear{mapData.isShowingImagePicker = true
+                print("\n\nPHOTO SELECTED NUMBER: \(mapData.newPhotosToBeScanned.count)\n")
+                
+                mapData.newPhotosToBeScanned = []
+                mapData.scannedPhotoToBeSaved = []
+                mapData.NewMLPhotoResults = []
+                
+            }
         }
-        .onAppear{mapData.isShowingImagePicker = true}
+        
         
         .sheet(isPresented: $mapData.isShowingImagePicker) {
             PhotoPickerUIKitView(isPresented: $mapData.isShowingImagePicker) {
@@ -95,7 +107,7 @@ struct ScanPhoto: View{
     @EnvironmentObject var mapData : MapUIViewModel
     var body: some View{
         VStack {
-            Text(mapData.photosToBeScanned.isEmpty ? "ADD MY PHOTOS" : "SCAN MY PHOTOS" )
+            Text(mapData.selectedPhotoToShow.isEmpty && mapData.newPhotosToBeScanned.isEmpty ? "ADD MY PHOTOS" : "SCAN MY PHOTOS" )
                 .foregroundColor(.primary)
                 .font(.title2)
                 .fontWeight(.black)

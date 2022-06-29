@@ -37,6 +37,10 @@ struct MapUIView: View {
             }
             .onAppear{
                 viewModel.checkIfLocationServiceIsEnabled()
+                
+                //viewModel.FileManagerData = viewModel.get()
+                //viewModel.changeStringToUIImage(viewModel.FileManagerData.photos)
+//                print("\n\nSAVED INTEREST \(fileManInt.Interests)\nSAVED PHOTOS \( viewModel.changeStringToUIImage(fileManInt.photos))\n\n")
             }
             .ignoresSafeArea()
             .tint(.pink)

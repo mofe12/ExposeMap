@@ -10,9 +10,9 @@ import SwiftUI
 struct ResultsView: View {
     @EnvironmentObject var viewModel : MapUIViewModel
     
-    
     @GestureState private var dragOffset = CGSize.zero
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    
     
     // For changing screen from the expose button
     @Binding var changeScreens: changeScreen
@@ -63,9 +63,21 @@ struct ResultsView: View {
                 }))
             
         }.onAppear {
-            viewModel.MLPhotoResults = []
-            for photo in viewModel.photosToBeScanned {
-                viewModel.classifyImage(currentImageName: photo)
+            print("PHOTOTOSCANCHECK: \(viewModel.photoToScanCheck)\n NEWPHOTOTOSCAN: \(viewModel.newPhotosToBeScanned)")
+            if viewModel.photoToScanCheck != viewModel.newPhotosToBeScanned{
+                viewModel.photoToScanCheck = viewModel.newPhotosToBeScanned
+               
+                print("BEFORE CONVERTING: \(viewModel.newPhotosToBeScanned.count)")
+                
+                // Classifies new photos to be scanned
+                for photo in viewModel.newPhotosToBeScanned {
+                    print("DID IT GET HERE")
+                    viewModel.classifyImage(currentImageName: photo)
+                }
+                print("\n\nSAVING THIS AMOUNT OF PHOTOS \(viewModel.scannedPhotoToBeSaved.count)\n\n")
+                print("\n\nSAVING THIS AMOUNT OF INTEREST \(viewModel.NewMLPhotoResults)\n\n")
+                viewModel.create(interest: Interest(Interests: viewModel.NewMLPhotoResults, photos: viewModel.scannedPhotoToBeSaved))
+                print("\n\n NEW PHOTO AMOUNT \(viewModel.newPhotosToBeScanned.count)\n\n")
             }
         }
     }
