@@ -22,7 +22,6 @@ struct ResultsView: View {
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
-                //.ignoresSafeArea()
                 .blur(radius: 15)
             VStack {
                 Message()
@@ -54,14 +53,13 @@ struct ResultsView: View {
                     .padding(6.0)
 
             })
-                    .gesture(DragGesture().updating($dragOffset, body: { (value, state, transaction) in
+            .gesture(DragGesture().updating($dragOffset, body: { (value, state, transaction) in
 
-                        if(value.startLocation.x < 20 && value.translation.width > 100) {
-                            self.mode.wrappedValue.dismiss()
-                        }
-
-                }))
-            
+                if(value.startLocation.x < 20 && value.translation.width > 100) {
+                    self.mode.wrappedValue.dismiss()
+                }
+        }))
+    
         }.onAppear {
             print("PHOTOTOSCANCHECK: \(viewModel.photoToScanCheck)\n NEWPHOTOTOSCAN: \(viewModel.newPhotosToBeScanned)")
             if viewModel.photoToScanCheck != viewModel.newPhotosToBeScanned{

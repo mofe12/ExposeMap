@@ -70,7 +70,9 @@ struct LocationAndGlobeButton: View {
                     .frame(width: 59)
                 ZStack {
                     Button {
-                        mapData.updateMapRegion()
+                        DispatchQueue.main.async {
+                            mapData.updateMapRegion()
+                        }
                     } label: {
                         Image(systemName:"location.fill")
                             .frame(maxWidth:  .infinity, maxHeight: .infinity)

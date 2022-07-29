@@ -148,7 +148,6 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     func changeStringToUIImage(_ strings: [String]){
         DispatchQueue.main.async {
             for string in strings {
-                print("CONVERTED BACK: \(string.toImage()!)")
                 self.selectedPhotoToShow.append(string.toImage()!)
             }
         }
@@ -165,7 +164,6 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
         placesArray.removeAll()
         
         let request = MKLocalSearch.Request()
-        // request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.restaurant, .airport, .foodMarket,.])
         request.region = region
         request.naturalLanguageQuery = currentInterest
         
@@ -206,10 +204,6 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
         
         placesArray = places
         searchTxt = ""
-        
-        // Moving map to the location
-        // updateMapRegion(place: places.first!)
-        
     }
     
     // Updates the map to the region of the new interest selected
@@ -345,7 +339,7 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
         dataSourceURL = interestPath
         super.init()
         _allInterest = Published(wrappedValue: getInterest())
-        FileManagerData = get()
+            FileManagerData = get()
         MLPhotoResults = FileManagerData.Interests
         changeStringToUIImage(FileManagerData.photos)
     }

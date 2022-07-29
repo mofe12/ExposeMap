@@ -17,7 +17,6 @@ struct MapUIView: View {
             Map(coordinateRegion: $viewModel.region, showsUserLocation: true, annotationItems: viewModel.placesArray){ place in
                 MapAnnotation(coordinate: place.place.location!.coordinate) {
                         //LocationMapAnnotationView().environmentObject(viewModel)
-                    
                     ZStack {
                         Image(systemName: "mappin")
                             .font(.title)
@@ -37,10 +36,6 @@ struct MapUIView: View {
             }
             .onAppear{
                 viewModel.checkIfLocationServiceIsEnabled()
-                
-                //viewModel.FileManagerData = viewModel.get()
-                //viewModel.changeStringToUIImage(viewModel.FileManagerData.photos)
-//                print("\n\nSAVED INTEREST \(fileManInt.Interests)\nSAVED PHOTOS \( viewModel.changeStringToUIImage(fileManInt.photos))\n\n")
             }
             .ignoresSafeArea()
             .tint(.pink)

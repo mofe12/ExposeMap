@@ -28,9 +28,6 @@ struct PhotoSelectedView: View {
                                     .clipped()
                                     .overlay( Button {
                                         mapData.selectedPhotoToShow.remove(at: i)
-                                        if !mapData.newPhotosToBeScanned.isEmpty {
-                                            mapData.newPhotosToBeScanned.remove(at: i)
-                                        }
                                         
                                     } label: {
                                         Image(systemName: "minus.circle.fill")
