@@ -13,8 +13,8 @@ import CoreLocationUI
 struct HomeView: View {
     @EnvironmentObject var mapData : MapUIViewModel
     @Binding var changeScreens: changeScreen
+    
     var body: some View {
-        
         ZStack {
             // Using it as environment object so that it can  used in subviews...
             MapUIView().environmentObject(mapData)
@@ -35,7 +35,17 @@ struct HomeView: View {
             VStack{
                 header
                 Spacer()
-                LocationAndGlobeButton(changeScreens: $changeScreens).environmentObject(mapData)
+                HStack{
+                    Button {
+                        print(mapData.locationPermission)
+                    } label: {
+                        Text("Click me")
+                    }
+                    Spacer()
+                    
+                    LocationAndGlobeButton(changeScreens: $changeScreens).environmentObject(mapData)
+                }
+                
             }
             MoreInfoView(isShowing: $mapData.showMoreInfoView)
                 .environmentObject(mapData)
@@ -70,9 +80,7 @@ struct LocationAndGlobeButton: View {
                     .frame(width: 59)
                 ZStack {
                     Button {
-                        DispatchQueue.main.async {
-                            mapData.updateMapRegion()
-                        }
+                        mapData.locationPermission != .allow ? mapData.alertValue = true : mapData.locationManagerService.updateMapRegion()
                     } label: {
                         Image(systemName:"location.fill")
                             .frame(maxWidth:  .infinity, maxHeight: .infinity)

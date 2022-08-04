@@ -10,16 +10,15 @@ import MapKit
 import UIKit
 import PhotosUI
 import CoreLocation
+import Combine
 
 // All Map Data Goes here....
 
 
 final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegate{
     
-    // Instiating ML model
-    let model = MobileNetV2()
-    
-    @Published var photoToScanCheck: [UIImage] = []
+    let locationManagerService = LocationService.instance
+    var cancellable = Set<AnyCancellable>()
     
     // File managing
     static let shared = DataProvider()
@@ -42,26 +41,36 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // Setting Region
     @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37, longitude: -95), latitudinalMeters: 10000000, longitudinalMeters: 10000000)
     
-    // Map type
-    @Published var mapType: MKMapType = .standard
+    
     
     // MapView permissions
-    
-    enum locationPermissionsEnum{
-        case allow
-        case notAllowed
-    }
-    @Published var locationPermission: locationPermissionsEnum = .allow
-    
+
     @Published var alertValue: Bool = false
     
-    struct AlertStruct{
-        var title: String
-        var message: String
+    
+    @Published var alertDetail =
+    AlertStruct(title: "" , message: "")
+    
+    @Published var locationPermission: locationPermissionsEnum = .notAllowed {
+        didSet{
+            switch locationPermission{
+                
+            case .allow:
+                alertValue = false
+            case .notAllowed:
+                alertDetail = AlertStruct(title: "Location Disabled", message: "Your location is off, turn on to use app")
+                alertValue = true
+            case .restricted:
+                alertDetail = AlertStruct(title: "Restricted Location", message: "Your current location can’t be determined because it is restricted. For great experience, Allow Exposé to use your location.\n Select \"While Using the App.\"")
+                alertValue = true
+            case .denied:
+                alertDetail = AlertStruct(title: "Denied Location", message: "You have DENIED the app location, go to settings to change it. For great experience, allow Exposé to use your location.\n Select \"While Using the App.\"")
+                alertValue = true
+
+            }
+        }
     }
-    
-    @Published var alertDetail = AlertStruct(title: "" , message: "")
-    
+
     // Search Text
     @Published var searchTxt = ""
     
@@ -81,21 +90,15 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // More list view
     @Published var showInterestListView = false
     
-    // Photos to be scanned by the ML
-    
-    // Showing image picker
-    @Published var isShowingImagePicker = false
     
     // Gotten File Manager
     @Published var FileManagerData: Interest = Interest(Interests: [], photos: [])
     // Photos to be saved
     
-    @Published var newPhotosToBeScanned: [UIImage] = []
-    
+    @Published var selectedPhotoToShow: [UIImage] = []
     
     @Published var scannedPhotoToBeSaved: [String] = []
     
-    @Published var selectedPhotoToShow: [UIImage] = []
     
     // Current Interest
     @Published var currentInterest: String = "SELECT INTEREST"
@@ -120,28 +123,13 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
                  , zipCode: "94133")
     
     
-    // Handle result
-    func handleResults(_ results: [PHPickerResult]) {
-        for result in results {
-            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] imageObject, error in
-                guard let image = imageObject as? UIImage else { return }
-                guard let data = image.jpegData(compressionQuality: 0.0), let compressedImage = UIImage(data: data) else{return}
-                DispatchQueue.main.async { [weak self] in
-                    self?.newPhotosToBeScanned.append(compressedImage)
-                    self?.selectedPhotoToShow.append(compressedImage)
-                }
-            }
-        }
-    }
-    
-    
     func changeUIImageToString(_ uiImage: UIImage){
         //DispatchQueue.main.async {
-            //for uiImage in uiImages {
-                self.scannedPhotoToBeSaved.append(uiImage.toJpegString(compressionQuality: 0.0) ?? "no Image")
-                
-            //}
-            //self.newPhotosToBeScanned = []
+        //for uiImage in uiImages {
+        self.scannedPhotoToBeSaved.append(uiImage.toJpegString(compressionQuality: 0.0) ?? "no Image")
+        
+        //}
+        //self.newPhotosToBeScanned = []
         //}
     }
     
@@ -222,102 +210,34 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
         }
     }
     
-    // Classifying image for ML
-    func classifyImage(currentImageName: UIImage) {
-        let image = currentImageName
-        guard let resizedImage = image.resizeImageTo(size:CGSize(width: 224, height: 224)),
-              let buffer = resizedImage.convertToBuffer() else {
-            return
-        }
-        
-        let output = try? model.prediction(image: buffer)
-        
-        if let output = output {
-            let results = output.classLabelProbs.sorted { $0.1 > $1.1 }
-            //let result = results.map { (key, value) in
-            //    return "\(key) = \(String(format: "%.2f", value * 100))%"
-            //}.joined(separator: "\n")
-            let result = results.first
-            var stringOfResult = result?.key ?? "No result"
-            if let index = (stringOfResult.range(of: ",")?.lowerBound)
-            {
-                stringOfResult = String(stringOfResult.prefix(upTo: index))
-            }
-            // Making sure interest does not repeat itself
-            if !MLPhotoResults.contains(stringOfResult){
-                NewMLPhotoResults.append(stringOfResult)
-                MLPhotoResults.append(stringOfResult)
-                
-            // Changing UIImage into String
-                changeUIImageToString(currentImageName)
-            }
-        }
-    }
+    
     
     
     // All about Locations part
-    var locationManager: CLLocationManager?
     
-    func checkIfLocationServiceIsEnabled(){
-        if CLLocationManager.locationServicesEnabled(){
-            locationManager = CLLocationManager()
-            locationManager!.delegate = self
-            locationPermission = .allow
-        }else{
-            locationPermission = .notAllowed
-            alertDetail = AlertStruct(title: "Location Disabled", message: "Your location is off, turn on to use app")
-            alertValue = true
-        }
-    }
     
-    private func checkLocationAuthorization(){
-        guard let locationManager1 = locationManager else { return }
-        
-        
-        switch locationManager1.authorizationStatus{
-            
-        case .notDetermined:
-            locationManager1.requestWhenInUseAuthorization()
-            locationPermission = .allow
-            
-        case .restricted:
-            locationPermission = .notAllowed
-            alertDetail = AlertStruct(title: "Restricted Location", message: "Your current location can’t be determined because it is restricted. For great experience, Allow Exposé to use your location.\n Select \"While Using the App.\"")
-            alertValue = true
-            
-        case .denied:
-            locationPermission = .notAllowed
-            alertDetail = AlertStruct(title: "Denied Location", message: "You have DENIED the app location, go to settings to change it. For great experience, allow Exposé to use your location.\n Select \"While Using the App.\"")
-            alertValue = true
-            
-        case .authorizedAlways, .authorizedWhenInUse:
-            locationPermission = .allow
-            DispatchQueue.main.async {
-                withAnimation(.easeInOut) {
-                    self.region = MKCoordinateRegion(center: locationManager1.location!.coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
+    func subscribeToLocationPermission(){
+        locationManagerService.$locationPermission
+            .sink { (completion) in
+                DispatchQueue.main.async{
+                    print("COMPLETION \(completion)")
                 }
+            } receiveValue: { (permissions) in
+                self.locationPermission = permissions
             }
-        @unknown default:
-            break
-        }
+            .store(in: &cancellable)
         
-    }
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkLocationAuthorization()
     }
     
-    func updateMapRegion(){
-        guard let locationManager1 = locationManager else { return }
-        
-        print("LOCATION PERMISSION: \(locationPermission)")
-        if locationPermission == .notAllowed{
-            alertValue = true
-        }else{
-            withAnimation(.easeInOut) {
-                self.region = MKCoordinateRegion(center: locationManager1.location!.coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
+    func subscribeToRegion(){
+        locationManagerService.$region
+            .sink { [weak self] region in
+                self?.region = region
             }
-        }
+            .store(in: &cancellable)
     }
+    
+    
     
     // Everything that has to do with file managing
     
@@ -333,25 +253,27 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     }
     
     override init(){
-        
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let interestPath = documentsPath.appendingPathComponent("interest").appendingPathExtension("json")
         dataSourceURL = interestPath
         super.init()
+        subscribeToLocationPermission()
+        subscribeToRegion()
+        
         _allInterest = Published(wrappedValue: getInterest())
-            FileManagerData = get()
+        FileManagerData = get()
         MLPhotoResults = FileManagerData.Interests
         changeStringToUIImage(FileManagerData.photos)
     }
     
     private func saveInterest(){
         do {
-                let encoder = PropertyListEncoder()
-                let data = try encoder.encode(allInterest)
-                try data.write(to: dataSourceURL)
-            } catch {
-
-            }
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(allInterest)
+            try data.write(to: dataSourceURL)
+        } catch {
+            
+        }
     }
     
     func create(interest: Interest){
@@ -363,6 +285,6 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     func get() -> Interest{
         return getInterest()
     }
-
+    
     
 }

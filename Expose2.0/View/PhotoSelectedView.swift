@@ -9,9 +9,13 @@ import SwiftUI
 
 struct PhotoSelectedView: View {
     @EnvironmentObject var mapData : MapUIViewModel
+    
+    @StateObject var photoPickerModel: PhotoPickerViewModel = PhotoPickerViewModel()
     @Binding var changeScreens: changeScreen
     @State var showAlert: Bool = false
     @State var isNavActive: Bool = false
+    
+    @State var imageClassificationResult: [String] = []
     
     var body: some View {
         NavigationView {
@@ -20,14 +24,14 @@ struct PhotoSelectedView: View {
                     let gridItems: [GridItem] = Array(repeating: .init(.adaptive(minimum: 500)), count: 2)
                     LazyVGrid(
                         columns: gridItems, spacing: 20) {
-                            ForEach(0..<mapData.selectedPhotoToShow.count, id: \.self) { i in
-                                Image(uiImage: mapData.selectedPhotoToShow[i])
+                            ForEach(0..<photoPickerModel.selectedPhotoToShow.count, id: \.self) { i in
+                                Image(uiImage: photoPickerModel.selectedPhotoToShow[i])
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 180, height: 180)
                                     .clipped()
                                     .overlay( Button {
-                                        mapData.selectedPhotoToShow.remove(at: i)
+                                        photoPickerModel.selectedPhotoToShow.remove(at: i)
                                         
                                     } label: {
                                         Image(systemName: "minus.circle.fill")
@@ -45,33 +49,46 @@ struct PhotoSelectedView: View {
                         trailingButtons
                 )
                     Spacer()
-                if (mapData.selectedPhotoToShow.isEmpty && mapData.newPhotosToBeScanned.isEmpty){
+                if (photoPickerModel.selectedPhotoToShow.isEmpty && photoPickerModel.newPhotosToBeScanned.isEmpty){
                         Button {
-                            mapData.isShowingImagePicker.toggle()
+                            photoPickerModel.isShowingImagePicker.toggle()
                         } label: {
-                            ScanPhoto().environmentObject(mapData)
+                            ScanPhoto(photoPickerModel: photoPickerModel)
                                 .foregroundColor(Color("BackGroundColor"))
                                 .tint(.black)
                         }
                     }else{
                         NavigationLink(isActive: $mapData.isNavActive) {
-                            ResultsView(changeScreens: $changeScreens).environmentObject(mapData)
+                            ResultsView(classificationResult: imageClassificationResult,changeScreens: $changeScreens).environmentObject(mapData)
                         } label: {
                             
-                            ScanPhoto().environmentObject(mapData)
+                            ScanPhoto(photoPickerModel: photoPickerModel)
                                 .foregroundColor(/*@START_MENU_TOKEN@*/Color("BackGroundColor")/*@END_MENU_TOKEN@*/)
                                 .onTapGesture {
-                                    if (!mapData.selectedPhotoToShow.isEmpty || !mapData.newPhotosToBeScanned.isEmpty){
+                                    guard let result = photoPickerModel.classifyAllImages(photoPickerModel.newPhotosToBeScanned)else{return}
+                                    
+                                    if (!photoPickerModel.selectedPhotoToShow.isEmpty || !photoPickerModel.newPhotosToBeScanned.isEmpty){
                                         mapData.isNavActive = true
+                                        
                                     }
+                                    
+                                    print("PHOTOTOSCANCHECK: \(photoPickerModel.photoToScanCheck)\n NEWPHOTOTOSCAN: \(photoPickerModel.newPhotosToBeScanned)")
+                                    if photoPickerModel.photoToScanCheck != photoPickerModel.newPhotosToBeScanned{
+                                        photoPickerModel.photoToScanCheck = photoPickerModel.newPhotosToBeScanned
+                                       
+                                            imageClassificationResult = result
+                                        
+                                        
+                                    }
+                                    
                                 }
                         }
                     }
             }
-            .onAppear{mapData.isShowingImagePicker = true
-                print("\n\nPHOTO SELECTED NUMBER: \(mapData.newPhotosToBeScanned.count)\n")
+            .onAppear{photoPickerModel.isShowingImagePicker = true
+                print("\n\nPHOTO SELECTED NUMBER: \(photoPickerModel.newPhotosToBeScanned.count)\n")
                 
-                mapData.newPhotosToBeScanned = []
+                photoPickerModel.newPhotosToBeScanned = []
                 mapData.scannedPhotoToBeSaved = []
                 mapData.NewMLPhotoResults = []
                 
@@ -79,15 +96,15 @@ struct PhotoSelectedView: View {
         }
         
         
-        .sheet(isPresented: $mapData.isShowingImagePicker) {
-            PhotoPickerUIKitView(isPresented: $mapData.isShowingImagePicker) {
-                mapData.handleResults($0)
+        .sheet(isPresented: $photoPickerModel.isShowingImagePicker) {
+            PhotoPickerUIKitView(isPresented: $photoPickerModel.isShowingImagePicker) {
+                photoPickerModel.handleResults($0)
             }
         }
     }
     private var trailingButtons: some View {
         HStack {
-            Button(action: { mapData.isShowingImagePicker.toggle() }) {
+            Button(action: { photoPickerModel.isShowingImagePicker.toggle() }) {
                 Image(systemName: "plus.circle")
             }
             .foregroundColor(Color("Turquoise"))
@@ -101,10 +118,10 @@ struct PhotoSelectedView_Previews: PreviewProvider {
     }
 }
 struct ScanPhoto: View{
-    @EnvironmentObject var mapData : MapUIViewModel
+    var photoPickerModel: PhotoPickerViewModel
     var body: some View{
         VStack {
-            Text(mapData.selectedPhotoToShow.isEmpty && mapData.newPhotosToBeScanned.isEmpty ? "ADD MY PHOTOS" : "SCAN MY PHOTOS" )
+            Text(photoPickerModel.selectedPhotoToShow.isEmpty && photoPickerModel.newPhotosToBeScanned.isEmpty ? "ADD MY PHOTOS" : "SCAN MY PHOTOS" )
                 .foregroundColor(.primary)
                 .font(.title2)
                 .fontWeight(.black)

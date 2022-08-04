@@ -35,7 +35,7 @@ struct MapUIView: View {
                 }
             }
             .onAppear{
-                viewModel.checkIfLocationServiceIsEnabled()
+                viewModel.locationManagerService.checkIfLocationServiceIsEnabled()
             }
             .ignoresSafeArea()
             .tint(.pink)

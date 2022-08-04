@@ -17,16 +17,11 @@ struct Expose2App: App {
 
             if changeScreens == changeScreen.contentView{
                 ContentView(changeScreens: $changeScreens).environmentObject(mapData)
-            }else if changeScreens == changeScreen.resultView{
-                ResultsView(changeScreens: $changeScreens).environmentObject(mapData)
             }else if changeScreens == changeScreen.homeView{
                 HomeView(changeScreens: $changeScreens).environmentObject(mapData)
             }else if changeScreens == changeScreen.photoSelectedView{
                 PhotoSelectedView(changeScreens: $changeScreens).environmentObject(mapData)
             }
-            
-           // NewOnboardingScreen()
-            
         }
     }
 }

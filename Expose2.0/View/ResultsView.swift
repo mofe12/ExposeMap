@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ResultsView: View {
     @EnvironmentObject var viewModel : MapUIViewModel
-    
+    var classificationResult: [String]
     @GestureState private var dragOffset = CGSize.zero
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
@@ -61,29 +61,37 @@ struct ResultsView: View {
         }))
     
         }.onAppear {
-            print("PHOTOTOSCANCHECK: \(viewModel.photoToScanCheck)\n NEWPHOTOTOSCAN: \(viewModel.newPhotosToBeScanned)")
-            if viewModel.photoToScanCheck != viewModel.newPhotosToBeScanned{
-                viewModel.photoToScanCheck = viewModel.newPhotosToBeScanned
-               
-                print("BEFORE CONVERTING: \(viewModel.newPhotosToBeScanned.count)")
-                
-                // Classifies new photos to be scanned
-                for photo in viewModel.newPhotosToBeScanned {
-                    print("DID IT GET HERE")
-                    viewModel.classifyImage(currentImageName: photo)
+            
+            for result in classificationResult {
+                if !viewModel.MLPhotoResults.contains(result){
+                    viewModel.NewMLPhotoResults.append(result)
+                    viewModel.MLPhotoResults.append(result)
                 }
-                print("\n\nSAVING THIS AMOUNT OF PHOTOS \(viewModel.scannedPhotoToBeSaved.count)\n\n")
-                print("\n\nSAVING THIS AMOUNT OF INTEREST \(viewModel.NewMLPhotoResults)\n\n")
-                viewModel.create(interest: Interest(Interests: viewModel.NewMLPhotoResults, photos: viewModel.scannedPhotoToBeSaved))
-                print("\n\n NEW PHOTO AMOUNT \(viewModel.newPhotosToBeScanned.count)\n\n")
             }
+            
+//            print("PHOTOTOSCANCHECK: \(viewModel.photoToScanCheck)\n NEWPHOTOTOSCAN: \(viewModel.newPhotosToBeScanned)")
+//            if viewModel.photoToScanCheck != viewModel.newPhotosToBeScanned{
+//                viewModel.photoToScanCheck = viewModel.newPhotosToBeScanned
+//
+//                print("BEFORE CONVERTING: \(viewModel.newPhotosToBeScanned.count)")
+//
+//                // Classifies new photos to be scanned
+//                for photo in viewModel.newPhotosToBeScanned {
+//                    print("DID IT GET HERE")
+//                    viewModel.classifyImage(currentImageName: photo)
+//                }
+//                print("\n\nSAVING THIS AMOUNT OF PHOTOS \(viewModel.scannedPhotoToBeSaved.count)\n\n")
+//                print("\n\nSAVING THIS AMOUNT OF INTEREST \(viewModel.NewMLPhotoResults)\n\n")
+//                viewModel.create(interest: Interest(Interests: viewModel.NewMLPhotoResults, photos: viewModel.scannedPhotoToBeSaved))
+//                print("\n\n NEW PHOTO AMOUNT \(viewModel.newPhotosToBeScanned.count)\n\n")
+//            }
         }
     }
 }
 
 struct ResultsView_Previews: PreviewProvider {
     static var previews: some View {
-        ResultsView(changeScreens: .constant(changeScreen.contentView))
+        ResultsView(classificationResult: ["",""],changeScreens: .constant(changeScreen.contentView))
             .environmentObject(MapUIViewModel())
             .preferredColorScheme(.dark)
     }

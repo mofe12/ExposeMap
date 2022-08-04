@@ -61,7 +61,7 @@ struct MLContentView: View {
             return
         }
         
-        let output = try? viewModel.model.prediction(image: buffer)
+        let output = try? ImageClassificationService.instance.model.prediction(image: buffer)
         
         if let output = output {
             let results = output.classLabelProbs.sorted { $0.1 > $1.1 }
