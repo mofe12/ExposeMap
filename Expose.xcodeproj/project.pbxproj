@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5501135328A345560037591D /* OnBoardingScreenVeiwModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501135228A345560037591D /* OnBoardingScreenVeiwModel.swift */; };
 		55020541283606FA004A2A69 /* MoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55020540283606FA004A2A69 /* MoreInfoView.swift */; };
 		55036B192853F12B000DEBB9 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 55036B182853F12B000DEBB9 /* OrderedCollections */; };
 		552A558328468A150057E81F /* PhotoPickerUIKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552A558228468A150057E81F /* PhotoPickerUIKitView.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5501135228A345560037591D /* OnBoardingScreenVeiwModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingScreenVeiwModel.swift; sourceTree = "<group>"; };
 		55020540283606FA004A2A69 /* MoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreInfoView.swift; sourceTree = "<group>"; };
 		552A558228468A150057E81F /* PhotoPickerUIKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerUIKitView.swift; sourceTree = "<group>"; };
 		552A558428468A660057E81F /* PhotoSelectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectedView.swift; sourceTree = "<group>"; };
@@ -105,12 +107,12 @@
 		55CA7CC0283202C9008B5C2C /* Expose2.0 */ = {
 			isa = PBXGroup;
 			children = (
-				55F69B442893AC5D00A909B5 /* Utilities */,
 				8A5C89DF283F15990036CBE8 /* CoreMLwithSwiftUI */,
+				55F69B442893AC5D00A909B5 /* Utilities */,
 				55CA7CD72832DF52008B5C2C /* Model */,
+				55CA7CCF28320399008B5C2C /* View */,
 				55CA7CD0283203A1008B5C2C /* ViewModel */,
 				55CA7CC1283202C9008B5C2C /* Expose2App.swift */,
-				55CA7CCF28320399008B5C2C /* View */,
 				55CA7CC5283202CD008B5C2C /* Assets.xcassets */,
 				55CA7CC7283202CD008B5C2C /* Preview Content */,
 			);
@@ -153,6 +155,7 @@
 				55CA7CD5283204AB008B5C2C /* MapViewModel.swift */,
 				5540D927285BAC800072AEAF /* DataProvider.swift */,
 				55F69B452893ADD200A909B5 /* PhotoPickerViewModel.swift */,
+				5501135228A345560037591D /* OnBoardingScreenVeiwModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				555167F02857D9F6004E4D78 /* OnBoardingStep.swift in Sources */,
 				55CA7CD2283203D3008B5C2C /* HomeView.swift in Sources */,
 				55CA7CD6283204AB008B5C2C /* MapViewModel.swift in Sources */,
+				5501135328A345560037591D /* OnBoardingScreenVeiwModel.swift in Sources */,
 				8A5C89E8283F15990036CBE8 /* UIImage+Extension.swift in Sources */,
 				552F27E32834BC27001634D8 /* MapUIView.swift in Sources */,
 				555167EE2857BF47004E4D78 /* NewOnboardingScreen.swift in Sources */,

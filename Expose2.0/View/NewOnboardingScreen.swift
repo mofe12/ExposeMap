@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewOnboardingScreen: View {
-    @EnvironmentObject var viewModel : MapUIViewModel
+    @StateObject var viewModel = OnBoardingScreenViewModel()
     
     @AppStorage("onBoarding") var onBoarding =  0
     @State private var currentStop = 0
@@ -28,12 +28,9 @@ struct NewOnboardingScreen: View {
                     
                 }
                 .padding(16)
-                Spacer()
-            }
-            VStack {
+                
                 TabView(selection: $currentStop) {
                     ForEach(0..<3) { steps in
-                        VStack() {
                             VStack {
                                 Image(systemName: viewModel.OnBoardingStepArray[steps].Image)
                                     .resizable()
@@ -41,7 +38,6 @@ struct NewOnboardingScreen: View {
                                     .foregroundColor(.red)
                                     .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
                                 
-                            }
                             Text(viewModel.OnBoardingStepArray[steps].Text)
                                 .font(.title2)
                                 .fontWeight(.black)
@@ -51,10 +47,9 @@ struct NewOnboardingScreen: View {
                                 .padding(.top,16)
                                 .foregroundColor(.white)
                         }
-                        //.tag(steps)
+//                        //.tag(steps)
                     }
-                    
-                    
+  
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
                 
@@ -76,7 +71,7 @@ struct NewOnboardingScreen: View {
 
 struct NewOnboardingScreen_Previews: PreviewProvider {
     static var previews: some View {
-        NewOnboardingScreen().environmentObject(MapUIViewModel())
+        NewOnboardingScreen()
     }
 }
 

@@ -48,42 +48,35 @@ struct PhotoSelectedView: View {
                     trailing:
                         trailingButtons
                 )
-                    Spacer()
+                Spacer()
                 if (photoPickerModel.selectedPhotoToShow.isEmpty && photoPickerModel.newPhotosToBeScanned.isEmpty){
-                        Button {
-                            photoPickerModel.isShowingImagePicker.toggle()
-                        } label: {
-                            ScanPhoto(photoPickerModel: photoPickerModel)
-                                .foregroundColor(Color("BackGroundColor"))
-                                .tint(.black)
-                        }
-                    }else{
-                        NavigationLink(isActive: $mapData.isNavActive) {
-                            ResultsView(classificationResult: imageClassificationResult,changeScreens: $changeScreens).environmentObject(mapData)
-                        } label: {
-                            
-                            ScanPhoto(photoPickerModel: photoPickerModel)
-                                .foregroundColor(/*@START_MENU_TOKEN@*/Color("BackGroundColor")/*@END_MENU_TOKEN@*/)
-                                .onTapGesture {
-                                    guard let result = photoPickerModel.classifyAllImages(photoPickerModel.newPhotosToBeScanned)else{return}
-                                    
-                                    if (!photoPickerModel.selectedPhotoToShow.isEmpty || !photoPickerModel.newPhotosToBeScanned.isEmpty){
-                                        mapData.isNavActive = true
-                                        
-                                    }
-                                    
-                                    print("PHOTOTOSCANCHECK: \(photoPickerModel.photoToScanCheck)\n NEWPHOTOTOSCAN: \(photoPickerModel.newPhotosToBeScanned)")
-                                    if photoPickerModel.photoToScanCheck != photoPickerModel.newPhotosToBeScanned{
-                                        photoPickerModel.photoToScanCheck = photoPickerModel.newPhotosToBeScanned
-                                       
-                                            imageClassificationResult = result
-                                        
-                                        
-                                    }
-                                    
-                                }
-                        }
+                    Button {
+                        photoPickerModel.isShowingImagePicker.toggle()
+                    } label: {
+                        ScanPhoto(photoPickerModel: photoPickerModel)
+                            .foregroundColor(Color("BackGroundColor"))
+                            .tint(.black)
                     }
+                }else{
+                    NavigationLink(isActive: $mapData.isNavActive) {
+                        ResultsView(classificationResult: imageClassificationResult,changeScreens: $changeScreens).environmentObject(mapData)
+                    } label: {
+                        
+                        ScanPhoto(photoPickerModel: photoPickerModel)
+                            .foregroundColor(/*@START_MENU_TOKEN@*/Color("BackGroundColor")/*@END_MENU_TOKEN@*/)
+                            .onTapGesture {
+                                guard let result = photoPickerModel.classifyAllImages(photoPickerModel.newPhotosToBeScanned)else{return}
+                                mapData.isNavActive = true
+                                
+                                print("PHOTOTOSCANCHECK: \(photoPickerModel.photoToScanCheck)\n NEWPHOTOTOSCAN: \(photoPickerModel.newPhotosToBeScanned)")
+                                if photoPickerModel.newPhotosToBeScanned != photoPickerModel.photoToScanCheck {
+                                    photoPickerModel.photoToScanCheck = photoPickerModel.newPhotosToBeScanned
+                                    imageClassificationResult = result
+                                }
+                                
+                            }
+                    }
+                }
             }
             .onAppear{photoPickerModel.isShowingImagePicker = true
                 print("\n\nPHOTO SELECTED NUMBER: \(photoPickerModel.newPhotosToBeScanned.count)\n")

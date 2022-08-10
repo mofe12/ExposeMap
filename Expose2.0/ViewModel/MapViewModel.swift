@@ -32,12 +32,6 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     
     @Published var isNavActive: Bool = false
     
-    @Published var OnBoardingStepArray: [OnBoardingStep] = [
-        OnBoardingStep(Image: "heart.fill", Text: "WE CARE ABOUT PRIVACY!"),
-        OnBoardingStep(Image: "nosign", Text: "Exposé DOES NOT keep or share any of your photos or information with any third parties nor do we store it!"),
-        OnBoardingStep(Image: "lasso.and.sparkles", Text: "We only use your photos to curate your interest and give you options of places to get exposed to around you! That's it!"),
-    ]
-    
     // Setting Region
     @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37, longitude: -95), latitudinalMeters: 10000000, longitudinalMeters: 10000000)
     
@@ -219,9 +213,12 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     func subscribeToLocationPermission(){
         locationManagerService.$locationPermission
             .sink { (completion) in
-                DispatchQueue.main.async{
-                    print("COMPLETION \(completion)")
+                switch completion{
+                    
+                case .finished:
+                    print("It finished")
                 }
+                print("COMPLETION \(completion)")
             } receiveValue: { (permissions) in
                 self.locationPermission = permissions
             }

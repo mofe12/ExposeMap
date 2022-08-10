@@ -36,11 +36,6 @@ struct HomeView: View {
                 header
                 Spacer()
                 HStack{
-                    Button {
-                        print(mapData.locationPermission)
-                    } label: {
-                        Text("Click me")
-                    }
                     Spacer()
                     
                     LocationAndGlobeButton(changeScreens: $changeScreens).environmentObject(mapData)
