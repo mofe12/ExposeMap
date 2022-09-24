@@ -23,7 +23,9 @@ struct NewOnboardingScreen: View {
                     Text("Skip")
                         .foregroundColor(.white)
                         .onTapGesture {
-                            currentStop = 2
+                            withAnimation(.default, {
+                                currentStop = 2
+                            })
                         }
                     
                 }
@@ -57,12 +59,11 @@ struct NewOnboardingScreen: View {
             VStack{
                 Spacer()
                 if currentStop == 2{
-                    Button {
-                        onBoarding = 1
-                    } label: {
-                        continueButton()
-                    }
-                    .foregroundColor(.primary)
+                    continueButton()
+                        .foregroundColor(.primary)
+                        .onTapGesture {
+                            onBoarding = 1
+                        }
                 }
             }
         }

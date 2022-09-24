@@ -10,17 +10,23 @@ import SwiftUI
 @main
 struct Expose2App: App {
     @StateObject var mapData = MapUIViewModel()
+    @AppStorage("onBoarding") var onBoarding = 0
+    
     @State var changeScreens : changeScreen = .contentView
     
     var body: some Scene {
         WindowGroup {
-
-            if changeScreens == changeScreen.contentView{
-                ContentView(changeScreens: $changeScreens).environmentObject(mapData)
-            }else if changeScreens == changeScreen.homeView{
-                HomeView(changeScreens: $changeScreens).environmentObject(mapData)
-            }else if changeScreens == changeScreen.photoSelectedView{
-                PhotoSelectedView(changeScreens: $changeScreens).environmentObject(mapData)
+            if onBoarding == 0{
+                NewOnboardingScreen()
+                    .environmentObject(mapData)
+            }else if onBoarding == 1 {
+                ProtoPhotoSelectorView()
+                    .environmentObject(mapData)
+            }else if onBoarding == 2{
+               // HomeView()
+                    //.environmentObject(mapData)
+                ProtoHomeView()
+                    .environmentObject(mapData)
             }
         }
     }

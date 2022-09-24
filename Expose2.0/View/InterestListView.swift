@@ -12,26 +12,36 @@ struct InterestListView: View {
     
     var body: some View {
         List {
-            ForEach(mapData.MLPhotoResults, id: \.self){ result in
-                Button {
-                    mapData.toogleInterstListView()
-                    mapData.currentInterest = result
-                    
-                    // Searching Place
-                    // You can use your delay time
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {self.mapData.searchQuery()}
-                    
-                } label: {
-                    Text(result)
-                        .textCase(.uppercase)
-                        .font(.headline)
-                        .padding()
+            ForEach(mapData.interestEntities){ result in
+                if let interest = result.interest{
+                    Button {
+                        mapData.toogleInterstListView()
+                        self.mapData.currentInterest = interest
+                        // Searching Place
+                        // You can use your delay time
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {self.mapData.searchQuery()
+                            
+                        }
+                        
+                    } label: {
+                        
+                        Text(interest)
+                            .textCase(.uppercase)
+                            .font(.headline)
+                            .padding()
+                        
+                    }
                 }
-            }.frame(maxWidth: .infinity, alignment: .leading)
-                .listRowBackground(Color.clear)
+                
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .listRowBackground(Color.clear)
             
         }
         .listStyle(PlainListStyle())
+        .onAppear {
+            mapData.getInterest()
+        }
     }
 }
 

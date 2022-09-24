@@ -43,7 +43,6 @@ class ImageClassificationService{
             
             // Making sure interest does not repeat itself
 //            if !MLPhotoResults.contains(stringOfResult){
-//                NewMLPhotoResults.append(stringOfResult)
 //                MLPhotoResults.append(stringOfResult)
 //
 //            // Changing UIImage into String

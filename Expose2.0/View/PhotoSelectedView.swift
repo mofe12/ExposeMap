@@ -10,119 +10,117 @@ import SwiftUI
 struct PhotoSelectedView: View {
     @EnvironmentObject var mapData : MapUIViewModel
     
-    @StateObject var photoPickerModel: PhotoPickerViewModel = PhotoPickerViewModel()
+    @State var userInterest: [AppInterest] = []
+    @StateObject var photoPickerModel = PhotoPickerViewModel()
     @Binding var changeScreens: changeScreen
-    @State var showAlert: Bool = false
     @State var isNavActive: Bool = false
     
-    @State var imageClassificationResult: [String] = []
-    
+    let columns: [GridItem] = [
+        GridItem(.flexible(), spacing: 20, alignment: nil),
+        GridItem(.flexible(), spacing: 20, alignment: nil)
+    ]
     var body: some View {
+        
         NavigationView {
             VStack {
-                ScrollView {
-                    let gridItems: [GridItem] = Array(repeating: .init(.adaptive(minimum: 500)), count: 2)
-                    LazyVGrid(
-                        columns: gridItems, spacing: 20) {
-                            ForEach(0..<photoPickerModel.selectedPhotoToShow.count, id: \.self) { i in
-                                Image(uiImage: photoPickerModel.selectedPhotoToShow[i])
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 180, height: 180)
-                                    .clipped()
-                                    .overlay( Button {
-                                        photoPickerModel.selectedPhotoToShow.remove(at: i)
-                                        
-                                    } label: {
-                                        Image(systemName: "minus.circle.fill")
-                                            .font(.title)
-                                            .foregroundColor(.red)
-                                    }, alignment: .bottomTrailing
-                                              
-                                    )
+                ScrollView{
+                    if !photoPickerModel.selectedPhotoToShow.isEmpty{
+                        Text("New Images")
+                            .bold()
+                            .font(.subheadline)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading)
+                        Divider()
+                            .frame(width: 350)
+                    }
+                    
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(0..<photoPickerModel.selectedPhotoToShow.count, id: \.self) { i in
+                            if let photo = photoPickerModel.selectedPhotoToShow[i].photos,
+                               let image = UIImage(data: photo)
+                            {
+                               // GettingPhotosView(photo: image, viewModel: photoPickerModel)
+                                   // .clipShape(RoundedRectangle(cornerRadius: 16))
                             }
                         }
+                    }
+                    .padding(.horizontal)
+                    
+                    if !photoPickerModel.gottenInterest.isEmpty
+                    {
+                        Text("Saved Images")
+                            .bold()
+                            .font(.subheadline)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading)
+                        Divider()
+                            .frame(width: 350)
+                    }
+                    
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(0..<photoPickerModel.gottenInterest.count, id: \.self) { i in
+                            if let photo = photoPickerModel.gottenInterest[i].photos,
+                               let image = UIImage(data: photo)
+                            {
+                             //   GettingPhotosView(photo: image, viewModel: photoPickerModel)
+                                    //.clipShape(RoundedRectangle(cornerRadius: 16))
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
                 }
                 .navigationTitle("Photos")
                 .navigationBarItems(
                     trailing:
                         trailingButtons
                 )
-                Spacer()
-                if (photoPickerModel.selectedPhotoToShow.isEmpty && photoPickerModel.newPhotosToBeScanned.isEmpty){
+                
+                
+                if (photoPickerModel.selectedPhotoToShow.isEmpty && photoPickerModel.gottenInterest.isEmpty){
                     Button {
                         photoPickerModel.isShowingImagePicker.toggle()
                     } label: {
-                        ScanPhoto(photoPickerModel: photoPickerModel)
-                            .foregroundColor(Color("BackGroundColor"))
-                            .tint(.black)
+                        ButtonTurView(text: "Add My Photos")
                     }
                 }else{
                     NavigationLink(isActive: $mapData.isNavActive) {
-                        ResultsView(classificationResult: imageClassificationResult,changeScreens: $changeScreens).environmentObject(mapData)
+                        ProtoResultView(photoPickerModel: photoPickerModel)
                     } label: {
                         
-                        ScanPhoto(photoPickerModel: photoPickerModel)
-                            .foregroundColor(/*@START_MENU_TOKEN@*/Color("BackGroundColor")/*@END_MENU_TOKEN@*/)
+                        ButtonTurView(text: "Scan My Photos")
                             .onTapGesture {
-                                guard let result = photoPickerModel.classifyAllImages(photoPickerModel.newPhotosToBeScanned)else{return}
+                                userInterest = photoPickerModel.classifyAllImages(photoPickerModel.selectedPhotoToShow)
                                 mapData.isNavActive = true
-                                
-                                print("PHOTOTOSCANCHECK: \(photoPickerModel.photoToScanCheck)\n NEWPHOTOTOSCAN: \(photoPickerModel.newPhotosToBeScanned)")
-                                if photoPickerModel.newPhotosToBeScanned != photoPickerModel.photoToScanCheck {
-                                    photoPickerModel.photoToScanCheck = photoPickerModel.newPhotosToBeScanned
-                                    imageClassificationResult = result
-                                }
                                 
                             }
                     }
                 }
             }
-            .onAppear{photoPickerModel.isShowingImagePicker = true
-                print("\n\nPHOTO SELECTED NUMBER: \(photoPickerModel.newPhotosToBeScanned.count)\n")
-                
-                photoPickerModel.newPhotosToBeScanned = []
-                mapData.scannedPhotoToBeSaved = []
-                mapData.NewMLPhotoResults = []
-                
-            }
         }
-        
-        
+        .environmentObject(photoPickerModel)
         .sheet(isPresented: $photoPickerModel.isShowingImagePicker) {
             PhotoPickerUIKitView(isPresented: $photoPickerModel.isShowingImagePicker) {
                 photoPickerModel.handleResults($0)
             }
         }
-    }
-    private var trailingButtons: some View {
-        HStack {
-            Button(action: { photoPickerModel.isShowingImagePicker.toggle() }) {
-                Image(systemName: "plus.circle")
-            }
-            .foregroundColor(Color("Turquoise"))
+        .onAppear{
+            photoPickerModel.isShowingImagePicker.toggle()      
         }
     }
+    
+    private var trailingButtons: some View {
+        HStack {
+            Button(action: {
+                photoPickerModel.isShowingImagePicker.toggle() }) {
+                    Image(systemName: "plus.circle")
+                }
+                .foregroundColor(Color("Turquoise"))
+        }
+    } // MARK: TrailingButton
 }
 
 struct PhotoSelectedView_Previews: PreviewProvider {
     static var previews: some View {
         PhotoSelectedView(changeScreens: .constant(changeScreen.contentView)).environmentObject(MapUIViewModel())
-    }
-}
-struct ScanPhoto: View{
-    var photoPickerModel: PhotoPickerViewModel
-    var body: some View{
-        VStack {
-            Text(photoPickerModel.selectedPhotoToShow.isEmpty && photoPickerModel.newPhotosToBeScanned.isEmpty ? "ADD MY PHOTOS" : "SCAN MY PHOTOS" )
-                .foregroundColor(.primary)
-                .font(.title2)
-                .fontWeight(.black)
-                .padding(16)
-                .frame(maxWidth: .infinity)
-                .background(Color("Turquoise"))
-                .cornerRadius(16)
-                .padding(.horizontal, 16)
-        }
     }
 }

@@ -40,13 +40,21 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     
     
     func checkIfLocationServiceIsEnabled(){
-        if CLLocationManager.locationServicesEnabled(){
-            locationManager = CLLocationManager()
-            locationManager!.delegate = self
-            locationPermission = .allow
-        }else{
-            locationPermission = .notAllowed
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            if CLLocationManager.locationServicesEnabled(){
+                DispatchQueue.main.async {
+                    self?.locationManager = CLLocationManager()
+                    self?.locationManager!.delegate = self
+                    self?.locationPermission = .allow
+                }
+                
+            }else{
+                DispatchQueue.main.async {
+                    self?.locationPermission = .notAllowed
+                }
+            }
         }
+        
     }
     
     private func checkLocationAuthorization(){
@@ -67,8 +75,8 @@ class LocationService: NSObject, CLLocationManagerDelegate {
             locationPermission = .notAllowed
         case .authorizedAlways, .authorizedWhenInUse:
             locationPermission = .allow
-            withAnimation(.easeInOut) {
-                self.region = self.regionAmount(locationManager.location!.coordinate)
+            if let location = locationManager.location {
+                self.region = regionAmount(location.coordinate)
             }
         @unknown default:
             break
@@ -84,7 +92,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         
         print("LOCATION PERMISSION: \(locationPermission)")
         
-        withAnimation(.easeInOut) {
+        withAnimation(.default) {
             if let location = locationManager.location {
                 self.region = regionAmount(location.coordinate)
             }

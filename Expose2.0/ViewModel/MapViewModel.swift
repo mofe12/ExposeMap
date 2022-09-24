@@ -11,6 +11,7 @@ import UIKit
 import PhotosUI
 import CoreLocation
 import Combine
+import CoreData
 
 // All Map Data Goes here....
 
@@ -18,19 +19,19 @@ import Combine
 final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegate{
     
     let locationManagerService = LocationService.instance
+    
+    let coreDataManager = CoreDataService.instance
+    
     var cancellable = Set<AnyCancellable>()
     
-    // File managing
-    static let shared = DataProvider()
     
-    private let dataSourceURL: URL
-    
-    @Published var allInterest = Interest(Interests: [], photos: [])
     
     //Current Page
-    @Published var currentPage = changeScreen.contentView
+    @Published var photoViewIsPresented = false
     
     @Published var isNavActive: Bool = false
+    
+    @Published var showPhotoScreen: Bool = false
     
     // Setting Region
     @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37, longitude: -95), latitudinalMeters: 10000000, longitudinalMeters: 10000000)
@@ -68,14 +69,9 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // Search Text
     @Published var searchTxt = ""
     
-    // Returned Places
-    @Published var noPlacesReturned: Bool = false
     
     // Searched Places...
     @Published var places : [Place] = []
-    
-    // places array
-    @Published var placesArray: [Place] = []
     
     
     // More info view
@@ -86,12 +82,17 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     
     
     // Gotten File Manager
-    @Published var FileManagerData: Interest = Interest(Interests: [], photos: [])
+    
+    @Published var gottenInterest: [AppInterest] = []
+    
+    
+    
+    
+    
+    @Published var FileManagerData: AppInterest = AppInterest(interest: nil, photos: nil)
     // Photos to be saved
     
-    @Published var selectedPhotoToShow: [UIImage] = []
-    
-    @Published var scannedPhotoToBeSaved: [String] = []
+    @Published var selectedPhotoToShow: [AppInterest] = []
     
     
     // Current Interest
@@ -101,10 +102,9 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // ML results
     @Published var MLPhotoResultsToBeSaved : [String] = []
     
-    @Published var NewMLPhotoResults : [String] = []
+    @Published var MLPhotoResults: [AppInterest] = [AppInterest(interest: nil, photos: nil)]
     
-    @Published var MLPhotoResults: [String] = []
-    
+
     // More info place
     @Published var moreInfoPlace: PlaceMarked =
     PlaceMarked( name: "Academy"
@@ -116,35 +116,25 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
                  , country: "US"
                  , zipCode: "94133")
     
-    
-    func changeUIImageToString(_ uiImage: UIImage){
-        //DispatchQueue.main.async {
-        //for uiImage in uiImages {
-        self.scannedPhotoToBeSaved.append(uiImage.toJpegString(compressionQuality: 0.0) ?? "no Image")
         
-        //}
-        //self.newPhotosToBeScanned = []
-        //}
-    }
+
+    @Published var interestEntities: [InterestEntity] = []
     
-    func changeStringToUIImage(_ strings: [String]){
-        DispatchQueue.main.async {
-            for string in strings {
-                self.selectedPhotoToShow.append(string.toImage()!)
-            }
+    func getInterest(){
+        let request = NSFetchRequest<InterestEntity>(entityName: "InterestEntity")
+        
+        do{
+            interestEntities = try coreDataManager.context.fetch(request)
+        }catch let error{
+            print("ERROR FETCHING ENTRY. \(error.localizedDescription)")
         }
     }
-    
     
     // Search Places and puts result in placeArray
     func searchQuery(){
         print("calling search Query")
-        
-        noPlacesReturned = false
+
         places.removeAll()
-        
-        placesArray.removeAll()
-        
         let request = MKLocalSearch.Request()
         request.region = region
         request.naturalLanguageQuery = currentInterest
@@ -154,39 +144,27 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             guard let result = respose else{return}
             
             DispatchQueue.main.async {
+                
+                self.places = result.mapItems.compactMap({(item) -> Place? in
+                    // -- Easy fix rn to get the places in places Array immediately
+                    return Place(place: item.placemark)
+                })
                 self.updateMapInterestRegion(result: result)
+                if self.places.isEmpty{
+                    print("Its empty")
+                    self.noInterestAlert()
+                }
             }
             
-            self.places = result.mapItems.compactMap({(item) -> Place? in
-                // -- Easy fix rn to get the places in places Array immediately
-                self.placesArray.append(Place(place: item.placemark))
-                return Place(place: item.placemark)
-            })
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            if self.placesArray.count == 0{
-                print("does it get here")
-                self.noInterestAlert()
-            }
+            
         }
     }
     
     func noInterestAlert(){
-        self.noPlacesReturned = true
         alertDetail = AlertStruct(title: "No Interest Near-By", message: "I'm sorry :( there is no place related to your interest at your current location. Try choosing another interest.")
         alertValue = true
-        print("No place returned: \(noPlacesReturned)")
     }
     
-    // Show All Places
-    func selectAllPlaces(places: [Place] ){
-        // Making sure the places array is not empty
-        guard places.count != 0 else{return}
-        
-        
-        placesArray = places
-        searchTxt = ""
-    }
     
     // Updates the map to the region of the new interest selected
     func updateMapInterestRegion(result:  MKLocalSearch.Response){
@@ -234,54 +212,13 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             .store(in: &cancellable)
     }
     
-    
-    
-    // Everything that has to do with file managing
-    
-    private func getInterest() -> Interest{
-        do{
-            let decoder = PropertyListDecoder()
-            let data = try Data(contentsOf: dataSourceURL)
-            let decodedInterest = try! decoder.decode(Interest.self, from: data)
-            return decodedInterest
-        }catch{
-            return Interest(Interests: [], photos: [])
-        }
-    }
-    
+
     override init(){
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let interestPath = documentsPath.appendingPathComponent("interest").appendingPathExtension("json")
-        dataSourceURL = interestPath
         super.init()
         subscribeToLocationPermission()
         subscribeToRegion()
-        
-        _allInterest = Published(wrappedValue: getInterest())
-        FileManagerData = get()
-        MLPhotoResults = FileManagerData.Interests
-        changeStringToUIImage(FileManagerData.photos)
     }
     
-    private func saveInterest(){
-        do {
-            let encoder = PropertyListEncoder()
-            let data = try encoder.encode(allInterest)
-            try data.write(to: dataSourceURL)
-        } catch {
-            
-        }
-    }
-    
-    func create(interest: Interest){
-        allInterest.Interests.insert(contentsOf: interest.Interests, at: 0)
-        allInterest.photos.insert(contentsOf: interest.photos, at: 0)
-        saveInterest()
-    }
-    
-    func get() -> Interest{
-        return getInterest()
-    }
-    
+
     
 }

@@ -38,7 +38,7 @@ struct MoreInfoView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-        .ignoresSafeArea()
+            .ignoresSafeArea()
         .animation(.easeInOut)
     }
     

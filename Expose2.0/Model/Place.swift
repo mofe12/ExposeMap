@@ -10,7 +10,6 @@ import MapKit
 
 struct Place: Identifiable, Equatable {
     var id = UUID().uuidString
-   // var images : [String?]
     var place: CLPlacemark
 }
 
