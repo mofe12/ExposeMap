@@ -12,7 +12,6 @@
 		55036B192853F12B000DEBB9 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 55036B182853F12B000DEBB9 /* OrderedCollections */; };
 		551555C128B83DE6004F169F /* ButtonTurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551555C028B83DE6004F169F /* ButtonTurView.swift */; };
 		552A558328468A150057E81F /* PhotoPickerUIKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552A558228468A150057E81F /* PhotoPickerUIKitView.swift */; };
-		552A558528468A660057E81F /* PhotoSelectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552A558428468A660057E81F /* PhotoSelectedView.swift */; };
 		552F27E32834BC27001634D8 /* MapUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552F27E22834BC26001634D8 /* MapUIView.swift */; };
 		55377B1E28942E3700517FA6 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55377B1D28942E3700517FA6 /* LocationService.swift */; };
 		55377B2028942EB800517FA6 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55377B1F28942EB800517FA6 /* AlertModel.swift */; };
@@ -21,6 +20,7 @@
 		555167EE2857BF47004E4D78 /* NewOnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555167ED2857BF47004E4D78 /* NewOnboardingScreen.swift */; };
 		555167F02857D9F6004E4D78 /* OnBoardingStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555167EF2857D9F6004E4D78 /* OnBoardingStep.swift */; };
 		55524F0C28DF6D66007DCE91 /* HomeHeaderComp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55524F0B28DF6D66007DCE91 /* HomeHeaderComp.swift */; };
+		55524F0E28DFDE7E007DCE91 /* InterestListComp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55524F0D28DFDE7E007DCE91 /* InterestListComp.swift */; };
 		55539DBD28D96CED006F6490 /* ProtoHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55539DBC28D96CED006F6490 /* ProtoHomeView.swift */; };
 		55539DBF28D96F1E006F6490 /* LocationAndGlobeButtonComp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55539DBE28D96F1E006F6490 /* LocationAndGlobeButtonComp.swift */; };
 		55539DC128D970F5006F6490 /* ProtoMoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55539DC028D970F5006F6490 /* ProtoMoreInfoView.swift */; };
@@ -42,10 +42,10 @@
 		55CA7CD6283204AB008B5C2C /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CA7CD5283204AB008B5C2C /* MapViewModel.swift */; };
 		55CA7CD92832DFB0008B5C2C /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CA7CD82832DFB0008B5C2C /* Place.swift */; };
 		55DCFA2428D588BA001BC4CB /* ProtoPhotoSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCFA2328D588BA001BC4CB /* ProtoPhotoSelectorView.swift */; };
-		55E0EE782836E1E000CDB250 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55E0EE772836E1E000CDB250 /* LaunchScreen.storyboard */; };
 		55E0EE7C28377D2B00CDB250 /* NewQuickFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E0EE7B28377D2B00CDB250 /* NewQuickFile.swift */; };
 		55E10DCB28D61EAB009A0573 /* NewPhotoComp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E10DCA28D61EAB009A0573 /* NewPhotoComp.swift */; };
 		55E10DCD28D62128009A0573 /* AddPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E10DCC28D62128009A0573 /* AddPhotoView.swift */; };
+		55E1F1CB28E116C800506F94 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E1F1CA28E116C800506F94 /* SplashScreen.swift */; };
 		55F69B462893ADD200A909B5 /* PhotoPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F69B452893ADD200A909B5 /* PhotoPickerViewModel.swift */; };
 		55F69B482893B68C00A909B5 /* ImageClassificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F69B472893B68C00A909B5 /* ImageClassificationService.swift */; };
 		8A5C89E8283F15990036CBE8 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C89E0283F15990036CBE8 /* UIImage+Extension.swift */; };
@@ -58,7 +58,6 @@
 		55020540283606FA004A2A69 /* MoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreInfoView.swift; sourceTree = "<group>"; };
 		551555C028B83DE6004F169F /* ButtonTurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTurView.swift; sourceTree = "<group>"; };
 		552A558228468A150057E81F /* PhotoPickerUIKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerUIKitView.swift; sourceTree = "<group>"; };
-		552A558428468A660057E81F /* PhotoSelectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectedView.swift; sourceTree = "<group>"; };
 		552F27E22834BC26001634D8 /* MapUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUIView.swift; sourceTree = "<group>"; };
 		55377B1D28942E3700517FA6 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		55377B1F28942EB800517FA6 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
@@ -67,6 +66,7 @@
 		555167ED2857BF47004E4D78 /* NewOnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOnboardingScreen.swift; sourceTree = "<group>"; };
 		555167EF2857D9F6004E4D78 /* OnBoardingStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingStep.swift; sourceTree = "<group>"; };
 		55524F0B28DF6D66007DCE91 /* HomeHeaderComp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderComp.swift; sourceTree = "<group>"; };
+		55524F0D28DFDE7E007DCE91 /* InterestListComp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestListComp.swift; sourceTree = "<group>"; };
 		55539DBC28D96CED006F6490 /* ProtoHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtoHomeView.swift; sourceTree = "<group>"; };
 		55539DBE28D96F1E006F6490 /* LocationAndGlobeButtonComp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAndGlobeButtonComp.swift; sourceTree = "<group>"; };
 		55539DC028D970F5006F6490 /* ProtoMoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtoMoreInfoView.swift; sourceTree = "<group>"; };
@@ -89,10 +89,11 @@
 		55CA7CD5283204AB008B5C2C /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		55CA7CD82832DFB0008B5C2C /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		55DCFA2328D588BA001BC4CB /* ProtoPhotoSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtoPhotoSelectorView.swift; sourceTree = "<group>"; };
-		55E0EE772836E1E000CDB250 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		55E0EE7B28377D2B00CDB250 /* NewQuickFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewQuickFile.swift; sourceTree = "<group>"; };
 		55E10DCA28D61EAB009A0573 /* NewPhotoComp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhotoComp.swift; sourceTree = "<group>"; };
 		55E10DCC28D62128009A0573 /* AddPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoView.swift; sourceTree = "<group>"; };
+		55E1F1CA28E116C800506F94 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		55E1F1CC28E1213B00506F94 /* Expose-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Expose-Info.plist"; sourceTree = "<group>"; };
 		55F69B452893ADD200A909B5 /* PhotoPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerViewModel.swift; sourceTree = "<group>"; };
 		55F69B472893B68C00A909B5 /* ImageClassificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClassificationService.swift; sourceTree = "<group>"; };
 		8A5C89E0283F15990036CBE8 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
@@ -129,6 +130,7 @@
 				55539DBE28D96F1E006F6490 /* LocationAndGlobeButtonComp.swift */,
 				55539DC428DAA6AC006F6490 /* BubblesComp.swift */,
 				55524F0B28DF6D66007DCE91 /* HomeHeaderComp.swift */,
+				55524F0D28DFDE7E007DCE91 /* InterestListComp.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -136,6 +138,7 @@
 		55CA7CB5283202C9008B5C2C = {
 			isa = PBXGroup;
 			children = (
+				55E1F1CC28E1213B00506F94 /* Expose-Info.plist */,
 				55CA7CC0283202C9008B5C2C /* Expose2.0 */,
 				55CA7CBF283202C9008B5C2C /* Products */,
 			);
@@ -177,9 +180,9 @@
 			isa = PBXGroup;
 			children = (
 				55CA7CC3283202C9008B5C2C /* ContentView.swift */,
+				55E1F1CA28E116C800506F94 /* SplashScreen.swift */,
 				8A5C89E6283F15990036CBE8 /* MLContentView.swift */,
 				555167ED2857BF47004E4D78 /* NewOnboardingScreen.swift */,
-				552A558428468A660057E81F /* PhotoSelectedView.swift */,
 				55E10DCC28D62128009A0573 /* AddPhotoView.swift */,
 				55DCFA2328D588BA001BC4CB /* ProtoPhotoSelectorView.swift */,
 				555D3F2828D44A1100983332 /* ProtoResultView.swift */,
@@ -192,7 +195,6 @@
 				55539DC028D970F5006F6490 /* ProtoMoreInfoView.swift */,
 				55020540283606FA004A2A69 /* MoreInfoView.swift */,
 				55CA7CD3283203F7008B5C2C /* MapView.swift */,
-				55E0EE772836E1E000CDB250 /* LaunchScreen.storyboard */,
 				552A558228468A150057E81F /* PhotoPickerUIKitView.swift */,
 				556C6AA728AF1B6300AF1CCA /* Components */,
 			);
@@ -306,7 +308,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55E0EE782836E1E000CDB250 /* LaunchScreen.storyboard in Resources */,
 				55CA7CC9283202CD008B5C2C /* Preview Assets.xcassets in Resources */,
 				55CA7CC6283202CD008B5C2C /* Assets.xcassets in Resources */,
 			);
@@ -321,6 +322,7 @@
 			files = (
 				55BC5B16286948D9000D0F28 /* Extensions.swift in Sources */,
 				55E0EE7C28377D2B00CDB250 /* NewQuickFile.swift in Sources */,
+				55524F0E28DFDE7E007DCE91 /* InterestListComp.swift in Sources */,
 				55524F0C28DF6D66007DCE91 /* HomeHeaderComp.swift in Sources */,
 				55539DC528DAA6AC006F6490 /* BubblesComp.swift in Sources */,
 				555167F02857D9F6004E4D78 /* OnBoardingStep.swift in Sources */,
@@ -339,7 +341,6 @@
 				556C6AA628AF19E300AF1CCA /* SavedPhotoComp.swift in Sources */,
 				5540D928285BAC800072AEAF /* DataProvider.swift in Sources */,
 				5540D926285BAACF0072AEAF /* FileManagerModel.swift in Sources */,
-				552A558528468A660057E81F /* PhotoSelectedView.swift in Sources */,
 				5560C56F283FCD8F0045CA37 /* InterestListView.swift in Sources */,
 				55CA7CD4283203F7008B5C2C /* MapView.swift in Sources */,
 				55020541283606FA004A2A69 /* MoreInfoView.swift in Sources */,
@@ -357,6 +358,7 @@
 				552A558328468A150057E81F /* PhotoPickerUIKitView.swift in Sources */,
 				55F69B482893B68C00A909B5 /* ImageClassificationService.swift in Sources */,
 				55377B1E28942E3700517FA6 /* LocationService.swift in Sources */,
+				55E1F1CB28E116C800506F94 /* SplashScreen.swift in Sources */,
 				8A5C89EB283F15990036CBE8 /* MobileNetV2.mlmodel in Sources */,
 				55AF2FA32835418F0040D030 /* LocationMapAnnotationView.swift in Sources */,
 			);
@@ -485,15 +487,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Expose2.0/Preview Content\"";
 				DEVELOPMENT_TEAM = 8KG8PL9HFA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Expose-Info.plist";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Exposé uses your location to show places of interest around you.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -517,15 +519,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Expose2.0/Preview Content\"";
 				DEVELOPMENT_TEAM = 8KG8PL9HFA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Expose-Info.plist";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Exposé uses your location to show places of interest around you.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

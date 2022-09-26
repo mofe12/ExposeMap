@@ -11,7 +11,7 @@ struct ProtoPhotoSelectorView: View {
     @AppStorage("onBoarding") var onBoarding =  0
     @StateObject var viewModel = PhotoPickerViewModel()
     @EnvironmentObject var mapData : MapUIViewModel
-
+    @State private var isActive = false
     
     var body: some View {
         NavigationView {
@@ -76,19 +76,18 @@ struct ProtoPhotoSelectorView: View {
                             viewModel.isShowingImagePicker.toggle()
                         }
                 }else{
-                    NavigationLink(isActive: $mapData.isNavActive) {
+                    NavigationLink(isActive: $isActive) {
                         ProtoResultView(photoPickerModel: viewModel)
                             .navigationBarTitleDisplayMode(.inline)
                     } label: {
                         ButtonTurView(text: "SCAN MY PHOTOS")
                     }
+                    .sync($mapData.isNavActive, with: $isActive)
 
                 }
             }
             .onAppear {
-                DispatchQueue.global(qos: .background).async {
-                    viewModel.getInterest()
-                }
+                viewModel .getInterest()
                 viewModel.isShowingImagePicker = true
             }
         }

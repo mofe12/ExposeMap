@@ -36,6 +36,7 @@ struct ProtoHomeView: View {
                 }
                 VStack{
                     HomeHeaderComp()
+                        .zIndex(2.0)
                      Spacer()
                 }
                 

@@ -33,7 +33,7 @@ struct ProtoResultView: View {
                         photoPickerModel.selectedPhotoToShow.removeAll()
                         viewModel.addInterest(interests: viewModel.appInterest)
                         onBoarding = 2
-                        photoPickerModel.navAction.toggle()
+                        photoPickerModel.navActive.toggle()
                         mapData.showPhotoScreen = false
                     }
                     .onAppear {

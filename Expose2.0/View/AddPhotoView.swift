@@ -11,7 +11,7 @@ struct AddPhotoView: View {
     @StateObject var viewModel = PhotoPickerViewModel()
     @EnvironmentObject var mapData : MapUIViewModel
     @Environment(\.presentationMode) var presentationMode
-    
+    @State private var isNavActive = false
     var body: some View {
             VStack{
                 ScrollView{
@@ -68,12 +68,13 @@ struct AddPhotoView: View {
                             viewModel.isShowingImagePicker.toggle()
                         }
                 }else{
-                    NavigationLink(destination: ProtoResultView(photoPickerModel: viewModel), isActive: $viewModel.navAction) {
+                    NavigationLink(destination: ProtoResultView(photoPickerModel: viewModel), isActive: $isNavActive) {
                         ButtonTurView(text: "SCAN YOUR PHOTOS")
                             .onTapGesture {
-                                viewModel.navAction.toggle()
+                                viewModel.navActive.toggle()
                             }
                     }
+                    .sync($viewModel.navActive, with: $isNavActive)
                     //.environmentObject(viewModel)
                 }
                 

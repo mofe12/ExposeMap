@@ -16,18 +16,7 @@ struct Expose2App: App {
     
     var body: some Scene {
         WindowGroup {
-            if onBoarding == 0{
-                NewOnboardingScreen()
-                    .environmentObject(mapData)
-            }else if onBoarding == 1 {
-                ProtoPhotoSelectorView()
-                    .environmentObject(mapData)
-            }else if onBoarding == 2{
-               // HomeView()
-                    //.environmentObject(mapData)
-                ProtoHomeView()
-                    .environmentObject(mapData)
-            }
+            SplashScreen(mapData: mapData)
         }
     }
 }

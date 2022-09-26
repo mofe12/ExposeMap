@@ -9,39 +9,30 @@ import SwiftUI
 
 struct InterestListView: View {
     @EnvironmentObject private var mapData: MapUIViewModel
-    
+    @State var currentInterest: String = ""
     var body: some View {
-        List {
-            ForEach(mapData.interestEntities){ result in
-                if let interest = result.interest{
+        ScrollView(content: {
+            ForEach(mapData.interestEntities) { item in
+                
+                if  let imageData = item.image,
+                    let image = UIImage(data: imageData),
+                   let interest = item.interest
+                {
                     Button {
                         mapData.toogleInterstListView()
-                        self.mapData.currentInterest = interest
-                        // Searching Place
-                        // You can use your delay time
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {self.mapData.searchQuery()
-                            
-                        }
-                        
+                        currentInterest = interest
+//                        Searching Place
+//                        You can use your delay time
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {self.mapData.searchQuery()}
                     } label: {
-                        
-                        Text(interest)
-                            .textCase(.uppercase)
-                            .font(.headline)
-                            .padding()
-                        
+                        InterestListComp(image: image , interest: interest)
+                    }
+                    .onChange(of: currentInterest) { newValue in
+                        mapData.currentInterest = newValue
                     }
                 }
-                
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .listRowBackground(Color.clear)
-            
-        }
-        .listStyle(PlainListStyle())
-        .onAppear {
-            mapData.getInterest()
-        }
+        })
     }
 }
 

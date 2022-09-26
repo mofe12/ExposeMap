@@ -9,16 +9,18 @@ import SwiftUI
 
 struct LocationAndGlobeButtonComp: View {
     @EnvironmentObject var mapData : MapUIViewModel
+    @State private var showPhotoScreen = false
     var body: some View {
         HStack {
             Spacer()
             VStack(spacing:0) {
-                NavigationLink(destination: AddPhotoView(), isActive: $mapData.showPhotoScreen) {
+                NavigationLink(destination: AddPhotoView(), isActive: $showPhotoScreen) {
                     Image(systemName: "photo.fill")
                         .frame(maxWidth:  .infinity, maxHeight: .infinity)
                         .padding(.bottom, 1)
                         .foregroundColor(.primary)
                 }
+                .sync($mapData.showPhotoScreen, with: $showPhotoScreen)
                 .onTapGesture {
                     mapData.showPhotoScreen.toggle()
                 }
@@ -26,6 +28,7 @@ struct LocationAndGlobeButtonComp: View {
                     .frame(width: 59)
                 ZStack {
                     Button {
+                        mapData.regionButtonClicked = true
                         mapData.locationPermission != .allow ? mapData.alertValue = true : mapData.locationManagerService.updateMapRegion()
                     } label: {
                         Image(systemName:"location.fill")

@@ -40,17 +40,17 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     
     
     func checkIfLocationServiceIsEnabled(){
-        DispatchQueue.global(qos: .background).async { [weak self] in
+        DispatchQueue.global(qos: .background).async {
             if CLLocationManager.locationServicesEnabled(){
                 DispatchQueue.main.async {
-                    self?.locationManager = CLLocationManager()
-                    self?.locationManager!.delegate = self
-                    self?.locationPermission = .allow
+                    self.locationManager = CLLocationManager()
+                    self.locationManager!.delegate = self
+                    self.locationPermission = .allow
                 }
                 
             }else{
                 DispatchQueue.main.async {
-                    self?.locationPermission = .notAllowed
+                    self.locationPermission = .notAllowed
                 }
             }
         }

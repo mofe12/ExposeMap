@@ -20,7 +20,7 @@ class PhotoPickerViewModel : ObservableObject{
     ]
     
     @Published var gottenInterest: [AppInterest] = []
-    @Published var navAction: Bool = false
+    @Published var navActive: Bool = false
     
     @Published var selectedPhotoToShow: [AppInterest] = []
     @Published var photoToScanCheck: [AppInterest] = []

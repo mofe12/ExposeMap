@@ -19,6 +19,7 @@ import CoreData
 final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegate{
     
     let locationManagerService = LocationService.instance
+
     
     let coreDataManager = CoreDataService.instance
     
@@ -35,7 +36,7 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     
     // Setting Region
     @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37, longitude: -95), latitudinalMeters: 10000000, longitudinalMeters: 10000000)
-    
+    @Published var regionButtonClicked = false
     
     
     // MapView permissions
@@ -65,9 +66,6 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             }
         }
     }
-
-    // Search Text
-    @Published var searchTxt = ""
     
     
     // Searched Places...
@@ -80,16 +78,6 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // More list view
     @Published var showInterestListView = false
     
-    
-    // Gotten File Manager
-    
-    @Published var gottenInterest: [AppInterest] = []
-    
-    
-    
-    
-    
-    @Published var FileManagerData: AppInterest = AppInterest(interest: nil, photos: nil)
     // Photos to be saved
     
     @Published var selectedPhotoToShow: [AppInterest] = []
@@ -122,12 +110,20 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     
     func getInterest(){
         let request = NSFetchRequest<InterestEntity>(entityName: "InterestEntity")
+        var container: [InterestEntity] = []
         
-        do{
-            interestEntities = try coreDataManager.context.fetch(request)
-        }catch let error{
-            print("ERROR FETCHING ENTRY. \(error.localizedDescription)")
+        DispatchQueue.global(qos: .background).async {
+            
+            do{
+                container = try self.coreDataManager.context.fetch(request)
+            }catch let error{
+                print("ERROR FETCHING ENTRY. \(error.localizedDescription)")
+            }
+            DispatchQueue.main.async {
+                self.interestEntities = container
+            }
         }
+        
     }
     
     // Search Places and puts result in placeArray
