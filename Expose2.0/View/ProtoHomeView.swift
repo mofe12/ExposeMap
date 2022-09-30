@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProtoHomeView: View {
     @EnvironmentObject var mapData : MapUIViewModel
+    @State var moreInfoSheetView = false
     var body: some View {
         NavigationView {
             ZStack(){
@@ -41,8 +42,15 @@ struct ProtoHomeView: View {
                 }
                 
                 MoreInfoView(isShowing: $mapData.showMoreInfoView)
+            } // MARK: ZSTACK
+        }
+        .sheet(isPresented: $moreInfoSheetView) {
+            if #available(iOS 16.0, *) {
+                MoreInfoComp()
+                    .presentationDetents([.medium,.large])
             }
         }
+        .sync($mapData.showHalfSheetView, with: $moreInfoSheetView)
     }
 }
 

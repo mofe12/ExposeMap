@@ -15,23 +15,31 @@ struct MapUIView: View {
 
     var body: some View {
         Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: viewModel.places){ place in
-            MapAnnotation(coordinate: place.place.location!.coordinate) {
+            MapAnnotation(coordinate: place.place.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37, longitude: -95) ) {
                 //LocationMapAnnotationView().environmentObject(viewModel)
                 ZStack {
-                    Image(systemName: "mappin")
-                        .font(.title)
-                        .padding()
-                        .onTapGesture {
+                    Button {
+                        guard let location = place.place.location else {return}
+                        if #available(iOS 16.0, *){
+                            viewModel.showHalfSheetView = true
+                        }else{
                             viewModel.showMoreInfoView = true
-                            viewModel.moreInfoPlace = PlaceMarked(name: place.place.name ?? "",
-                                                                  addressNumber: place.place.subThoroughfare ?? "",
-                                                                  streetName:  place.place.thoroughfare ?? "",
-                                                                  city: place.place.locality ?? "",
-                                                                  state: place.place.administrativeArea ?? "",
-                                                                  county: place.place.subAdministrativeArea ?? "",
-                                                                  country: place.place.country ?? "",
-                                                                  zipCode: place.place.postalCode ?? "")
                         }
+                        
+                        viewModel.moreInfoPlace = PlaceMarked(name: place.place.name ?? "",
+                                                              location: location, addressNumber: place.place.subThoroughfare ?? "",
+                                                              streetName:  place.place.thoroughfare ?? "",
+                                                              city: place.place.locality ?? "",
+                                                              state: place.place.administrativeArea ?? "",
+                                                              county: place.place.subAdministrativeArea ?? "",
+                                                              country: place.place.country ?? "",
+                                                              zipCode: place.place.postalCode ?? "")
+                    } label: {
+                        Image(systemName: "mappin")
+                            .font(.title)
+                            .padding()
+                            .foregroundColor(.primary)
+                    }
                 }
             }
         }

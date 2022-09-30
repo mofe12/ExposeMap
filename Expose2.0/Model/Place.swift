@@ -17,6 +17,7 @@ struct Place: Identifiable, Equatable {
 struct PlaceMarked: Identifiable{
     var id = UUID().uuidString
     var name : String?
+    var location: CLLocation
     var addressNumber: String?
     var streetName: String? // thoroughfare
     var city: String? // Locality

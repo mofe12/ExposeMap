@@ -48,17 +48,14 @@ struct MoreInfoView: View {
                 Capsule()
                     .frame(width: 60, height: 6)
             }
-            .frame(height: 40)
+            .padding(.top)
             .frame(maxWidth: .infinity)
             .background(Color.white.opacity(0.00001))
             // Explicity wrapping because I have it covered for when there is no value
-            Text(viewModel.moreInfoPlace.name!)
-                .font(.title)
-            Text("\(viewModel.moreInfoPlace.addressNumber!) \(viewModel.moreInfoPlace.streetName!) \(viewModel.moreInfoPlace.city!), \(viewModel.moreInfoPlace.state!) \(viewModel.moreInfoPlace.zipCode!) \(viewModel.moreInfoPlace.country!)")
+            MoreInfoComp()
             
-            Spacer()
+           // Spacer()
         }
-        .padding()
         .frame(height: currHeight)
         .frame(maxWidth: .infinity)
         .background(

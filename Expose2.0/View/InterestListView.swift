@@ -12,23 +12,28 @@ struct InterestListView: View {
     @State var currentInterest: String = ""
     var body: some View {
         ScrollView(content: {
-            ForEach(mapData.interestEntities) { item in
-                
-                if  let imageData = item.image,
-                    let image = UIImage(data: imageData),
-                   let interest = item.interest
-                {
-                    Button {
-                        mapData.toogleInterstListView()
-                        currentInterest = interest
-//                        Searching Place
-//                        You can use your delay time
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {self.mapData.searchQuery()}
-                    } label: {
-                        InterestListComp(image: image , interest: interest)
-                    }
-                    .onChange(of: currentInterest) { newValue in
-                        mapData.currentInterest = newValue
+            if mapData.interestEntities.isEmpty{
+                ProgressView()
+            }
+            else{
+                ForEach(mapData.interestEntities) { item in
+                    
+                    if  let imageData = item.image,
+                        let image = UIImage(data: imageData),
+                        let interest = item.interest
+                    {
+                        Button {
+                            mapData.toogleInterstListView()
+                            currentInterest = interest
+                            //                        Searching Place
+                            //                        You can use your delay time
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {self.mapData.searchQuery()}
+                        } label: {
+                            InterestListComp(image: image , interest: interest)
+                        }
+                        .onChange(of: currentInterest) { newValue in
+                            mapData.currentInterest = newValue
+                        }
                     }
                 }
             }

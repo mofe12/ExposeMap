@@ -32,6 +32,7 @@
 		555D3F2928D44A1100983332 /* ProtoResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555D3F2828D44A1100983332 /* ProtoResultView.swift */; };
 		5560C56F283FCD8F0045CA37 /* InterestListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5560C56E283FCD8F0045CA37 /* InterestListView.swift */; };
 		556C6AA628AF19E300AF1CCA /* SavedPhotoComp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556C6AA528AF19E300AF1CCA /* SavedPhotoComp.swift */; };
+		55A7CA6028E6BD1D00A50796 /* MoreInfoComp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A7CA5F28E6BD1D00A50796 /* MoreInfoComp.swift */; };
 		55AF2FA32835418F0040D030 /* LocationMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF2FA22835418F0040D030 /* LocationMapAnnotationView.swift */; };
 		55BC5B16286948D9000D0F28 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BC5B15286948D9000D0F28 /* Extensions.swift */; };
 		55CA7CC2283202C9008B5C2C /* Expose2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CA7CC1283202C9008B5C2C /* Expose2App.swift */; };
@@ -78,6 +79,7 @@
 		555D3F2828D44A1100983332 /* ProtoResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtoResultView.swift; sourceTree = "<group>"; };
 		5560C56E283FCD8F0045CA37 /* InterestListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestListView.swift; sourceTree = "<group>"; };
 		556C6AA528AF19E300AF1CCA /* SavedPhotoComp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPhotoComp.swift; sourceTree = "<group>"; };
+		55A7CA5F28E6BD1D00A50796 /* MoreInfoComp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreInfoComp.swift; sourceTree = "<group>"; };
 		55AF2FA22835418F0040D030 /* LocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapAnnotationView.swift; sourceTree = "<group>"; };
 		55BC5B15286948D9000D0F28 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		55CA7CBE283202C9008B5C2C /* Expose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Expose.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +126,7 @@
 		556C6AA728AF1B6300AF1CCA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				55A7CA5F28E6BD1D00A50796 /* MoreInfoComp.swift */,
 				551555C028B83DE6004F169F /* ButtonTurView.swift */,
 				556C6AA528AF19E300AF1CCA /* SavedPhotoComp.swift */,
 				55E10DCA28D61EAB009A0573 /* NewPhotoComp.swift */,
@@ -335,6 +338,7 @@
 				55DCFA2428D588BA001BC4CB /* ProtoPhotoSelectorView.swift in Sources */,
 				8A5C89E8283F15990036CBE8 /* UIImage+Extension.swift in Sources */,
 				552F27E32834BC27001634D8 /* MapUIView.swift in Sources */,
+				55A7CA6028E6BD1D00A50796 /* MoreInfoComp.swift in Sources */,
 				555167EE2857BF47004E4D78 /* NewOnboardingScreen.swift in Sources */,
 				555D3F2328D438A600983332 /* AppInterestContainer.xcdatamodeld in Sources */,
 				55E10DCB28D61EAB009A0573 /* NewPhotoComp.swift in Sources */,
@@ -487,7 +491,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Expose2.0/Preview Content\"";
 				DEVELOPMENT_TEAM = 8KG8PL9HFA;
 				ENABLE_PREVIEWS = YES;
@@ -519,7 +523,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Expose2.0/Preview Content\"";
 				DEVELOPMENT_TEAM = 8KG8PL9HFA;
 				ENABLE_PREVIEWS = YES;

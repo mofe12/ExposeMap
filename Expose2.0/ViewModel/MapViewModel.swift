@@ -75,6 +75,8 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // More info view
     @Published var showMoreInfoView = false
     
+    @Published var showHalfSheetView  = false
+    
     // More list view
     @Published var showInterestListView = false
     
@@ -96,9 +98,10 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     // More info place
     @Published var moreInfoPlace: PlaceMarked =
     PlaceMarked( name: "Academy"
-                 ,addressNumber: "1001"
+                 ,location: CLLocation(latitude: 37, longitude: -95)
+                 , addressNumber: "1001"
                  , streetName: "Grant Ave"
-                 , city: "San Francisco"
+                 , city: "San Frandcisco"
                  , state: "CA"
                  , county: "test"
                  , country: "US"
