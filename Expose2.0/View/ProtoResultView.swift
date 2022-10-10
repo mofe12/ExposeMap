@@ -13,46 +13,32 @@ struct ProtoResultView: View {
     @StateObject var viewModel = ResultPageViewModel()
     @ObservedObject var photoPickerModel: PhotoPickerViewModel
     @EnvironmentObject var mapData : MapUIViewModel
-        // @State var newAppInterest: [AppInterest]
     
     var body: some View {
-                ScrollView {
-                        ProtoMessage()
-                        ForEach(viewModel.appInterest) { item in
-                            BubblesComp(image: UIImage(data: item.photos!) ?? UIImage(systemName: "questionmark.square.fill")!, text: item.interest ?? "")
-                        }
-                        ForEach(viewModel.interestEntities) { item in
-                            if let image = item.image {
-                                BubblesComp(image: UIImage(data: image) ?? UIImage(systemName: "questionmark.square.fill")!, text: item.interest ?? "")
-                            }
-                        }
+        ScrollView {
+            ProtoMessage()
+            ForEach(viewModel.appInterest) { item in
+                BubblesComp(image: UIImage(data: item.photos!) ?? UIImage(systemName: "questionmark.square.fill")!, text: item.interest ?? "")
+            }
+            ForEach(viewModel.interestEntities) { item in
+                if let image = item.image {
+                    BubblesComp(image: UIImage(data: image) ?? UIImage(systemName: "questionmark.square.fill")!, text: item.interest ?? "")
                 }
-                
-                ButtonTurView(text: "GET EXPOSED")
-                    .onTapGesture {
-                        photoPickerModel.selectedPhotoToShow.removeAll()
-                        viewModel.addInterest(interests: viewModel.appInterest)
-                        onBoarding = 2
-                        photoPickerModel.navActive.toggle()
-                        mapData.showPhotoScreen = false
-                    }
-                    .onAppear {
-                        viewModel.getInterest()
-                        viewModel.getImageInterest(from: photoPickerModel.selectedPhotoToShow)
-                    }
-                    .navigationBarBackButtonHidden(true)
-                    .toolbar(content: {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button {
-                                presentationMode.wrappedValue.dismiss()
-                            } label: {
-                                Text("\(Image(systemName: "chevron.backward"))")
-                                    .foregroundColor(Color("Turquoise"))
-                            }
-
-                        }
-                    })
-    }
+            }
+        }
+        Button(action: getExposedAction, label: {
+            ButtonTurView(text: "GET EXPOSED")
+        })
+        .onAppear {
+            onAppearAction()
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar(content: {
+            ToolbarItem(placement: .navigationBarLeading) {
+                leadingButton
+            }
+        })
+    } // MARK: VIEW
 }
 
 struct ProtoResultView_Previews: PreviewProvider {
@@ -75,8 +61,33 @@ struct ProtoMessage: View{
         HStack{
             Text("Your result show that you are interested in a lot, Here are some of those things:")
                 .foregroundColor(.gray)
-
+            
         }
         
+    }
+}
+
+
+extension ProtoResultView{
+    func getExposedAction(){
+        photoPickerModel.selectedPhotoToShow.removeAll()
+        viewModel.addInterest(interests: viewModel.appInterest)
+        onBoarding = 2
+        photoPickerModel.navActive.toggle()
+        mapData.showPhotoScreen = false
+    }
+    
+    func onAppearAction(){
+        viewModel.getInterest()
+        viewModel.getImageInterest(from: photoPickerModel.selectedPhotoToShow)
+    }
+    
+    var leadingButton: some View{
+        Button {
+            presentationMode.wrappedValue.dismiss()
+        } label: {
+            Text("\(Image(systemName: "chevron.backward"))")
+                .foregroundColor(Color("Turquoise"))
+        }
     }
 }

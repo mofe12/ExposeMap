@@ -23,6 +23,7 @@ struct PlaceMarked: Identifiable{
     var city: String? // Locality
     var state: String? // administrativeArea
     var county: String? //subAdministrativeArea
+    var isoCountryCode: String
     var country: String?
     var zipCode: String? //postal code
     

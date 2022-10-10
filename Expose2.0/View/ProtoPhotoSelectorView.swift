@@ -42,7 +42,7 @@ struct ProtoPhotoSelectorView: View {
                         
                         if !viewModel.interestEntities.isEmpty
                         {
-                            Text("Saved Images")
+                            Text("Scanned Images")
                                 .bold()
                                 .font(.subheadline)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -71,7 +71,7 @@ struct ProtoPhotoSelectorView: View {
 
                 
                 if (viewModel.selectedPhotoToShow.isEmpty && viewModel.interestEntities.isEmpty){
-                    ButtonTurView(text: "ADD MY PHOTOTS")
+                    ButtonTurView(text: "ADD MY PHOTOS")
                         .onTapGesture {
                             viewModel.isShowingImagePicker.toggle()
                         }

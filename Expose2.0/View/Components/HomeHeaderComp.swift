@@ -12,9 +12,9 @@ struct HomeHeaderComp: View {
     var body: some View {
         VStack{
             Button {
-                mapData.toogleInterstListView()
+                mapData.toggleInterstListView()
             } label: {
-                Text(mapData.currentInterest)
+                Text(mapData.currentInterest ?? "SELECT INTEREST")
                     .font(.title2)
                     .fontWeight(.black)
                     .foregroundColor(.primary)
@@ -27,6 +27,12 @@ struct HomeHeaderComp: View {
                             .foregroundColor(.primary)
                             .padding()
                             .rotationEffect(Angle(degrees: mapData.showInterestListView ? 180: 0))
+                    }
+                    .overlay(alignment: .trailing) {
+                        if mapData.interestIsClicked && mapData.places.isEmpty{
+                            ProgressView()
+                                .padding()
+                        }
                     }
             }
             

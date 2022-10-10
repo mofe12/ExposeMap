@@ -17,14 +17,11 @@ struct MoreInfoComp: View {
                         .font(.title)
                         .fontWeight(.black)
                         .foregroundColor(.primary)
-                    .padding(.top)
+                        .padding(.top)
                     
                     Spacer()
                     Button {
-                        let url = URL(string: "maps://?saddr=&daddr=\(mapData.moreInfoPlace.location.coordinate.latitude),\(mapData.moreInfoPlace.location.coordinate.longitude)")
-                        if UIApplication.shared.canOpenURL(url!){
-                            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-                        }
+                        openAppleMaps()
                     } label: {
                         (Text("Navigation " ) + Text(Image(systemName: "arrow.right")))
                             .font(.caption)
@@ -36,10 +33,33 @@ struct MoreInfoComp: View {
                     }
 
                 }
-                Text("\(mapData.moreInfoPlace.addressNumber!) \(mapData.moreInfoPlace.streetName!) \(mapData.moreInfoPlace.city!), \(mapData.moreInfoPlace.state!) \(mapData.moreInfoPlace.zipCode!) \(mapData.moreInfoPlace.country!)")
+                .padding(.horizontal)
+                .padding(.top)
+                Address
+                Divider()
+                    .padding(.horizontal)
+                InterestImagesView()
+                    .padding(.top, 5)
+  
             }
-            .padding()
+            
         }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    } // MARK: VIEW
+    
+    
+    var Address: some View {
+        return Text("\(mapData.moreInfoPlace.addressNumber!) \(mapData.moreInfoPlace.streetName!) \(mapData.moreInfoPlace.city!), \(mapData.moreInfoPlace.state!) \(mapData.moreInfoPlace.zipCode!) \(mapData.moreInfoPlace.country!)")
+            .padding(.horizontal)
+    }
+    
+    
+    
+    func openAppleMaps(){
+        guard let url = URL(string: "maps://?saddr=&daddr=\(mapData.moreInfoPlace.location.coordinate.latitude),\(mapData.moreInfoPlace.location.coordinate.longitude)") else {return}
+        
+        if UIApplication.shared.canOpenURL(url){
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 }
 
@@ -49,3 +69,6 @@ struct MoreInfoComp_Previews: PreviewProvider {
             .environmentObject(MapUIViewModel())
     }
 }
+
+
+

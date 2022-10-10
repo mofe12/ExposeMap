@@ -23,7 +23,8 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     
     static let instance = LocationService()
     
-    private override init(){}
+    private override init(){
+    }
     
     let regionAmount = { (location:  CLLocationCoordinate2D ) -> MKCoordinateRegion in
         MKCoordinateRegion(center: location, latitudinalMeters: 10000, longitudinalMeters: 10000)
@@ -37,24 +38,20 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     // All about Locations part
     var locationManager: CLLocationManager?
     
-    
-    
     func checkIfLocationServiceIsEnabled(){
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInitiated).async{
             if CLLocationManager.locationServicesEnabled(){
                 DispatchQueue.main.async {
                     self.locationManager = CLLocationManager()
                     self.locationManager!.delegate = self
                     self.locationPermission = .allow
                 }
-                
             }else{
                 DispatchQueue.main.async {
                     self.locationPermission = .notAllowed
                 }
             }
         }
-        
     }
     
     private func checkLocationAuthorization(){

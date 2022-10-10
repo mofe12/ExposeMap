@@ -12,7 +12,11 @@
 		55036B192853F12B000DEBB9 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 55036B182853F12B000DEBB9 /* OrderedCollections */; };
 		551555C128B83DE6004F169F /* ButtonTurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551555C028B83DE6004F169F /* ButtonTurView.swift */; };
 		552A558328468A150057E81F /* PhotoPickerUIKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552A558228468A150057E81F /* PhotoPickerUIKitView.swift */; };
+		552E117928F076CA002DC58D /* YelpDetailedBusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E117828F076CA002DC58D /* YelpDetailedBusModel.swift */; };
+		552E117B28F0F1A7002DC58D /* YelpMatchBusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E117A28F0F1A7002DC58D /* YelpMatchBusModel.swift */; };
 		552F27E32834BC27001634D8 /* MapUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552F27E22834BC26001634D8 /* MapUIView.swift */; };
+		5537756028EFCDCC00293CC3 /* YelpSearchDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5537755F28EFCDCC00293CC3 /* YelpSearchDataModel.swift */; };
+		5537756228EFCE1C00293CC3 /* YelpAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5537756128EFCE1C00293CC3 /* YelpAPIService.swift */; };
 		55377B1E28942E3700517FA6 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55377B1D28942E3700517FA6 /* LocationService.swift */; };
 		55377B2028942EB800517FA6 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55377B1F28942EB800517FA6 /* AlertModel.swift */; };
 		5540D926285BAACF0072AEAF /* FileManagerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540D925285BAACF0072AEAF /* FileManagerModel.swift */; };
@@ -32,6 +36,11 @@
 		555D3F2928D44A1100983332 /* ProtoResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555D3F2828D44A1100983332 /* ProtoResultView.swift */; };
 		5560C56F283FCD8F0045CA37 /* InterestListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5560C56E283FCD8F0045CA37 /* InterestListView.swift */; };
 		556C6AA628AF19E300AF1CCA /* SavedPhotoComp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556C6AA528AF19E300AF1CCA /* SavedPhotoComp.swift */; };
+		5587331528F20E5900F0D5C1 /* InterestImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587331428F20E5900F0D5C1 /* InterestImagesView.swift */; };
+		5587331728F2102800F0D5C1 /* DownloadingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587331628F2102800F0D5C1 /* DownloadingImageView.swift */; };
+		5587331928F2155F00F0D5C1 /* DowloadingImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587331828F2155F00F0D5C1 /* DowloadingImageViewModel.swift */; };
+		5587331D28F238AE00F0D5C1 /* YelpPhotosCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587331C28F238AE00F0D5C1 /* YelpPhotosCacheService.swift */; };
+		5587331F28F2416900F0D5C1 /* NoInterstImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587331E28F2416900F0D5C1 /* NoInterstImageView.swift */; };
 		55A7CA6028E6BD1D00A50796 /* MoreInfoComp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A7CA5F28E6BD1D00A50796 /* MoreInfoComp.swift */; };
 		55AF2FA32835418F0040D030 /* LocationMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF2FA22835418F0040D030 /* LocationMapAnnotationView.swift */; };
 		55BC5B16286948D9000D0F28 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BC5B15286948D9000D0F28 /* Extensions.swift */; };
@@ -59,7 +68,11 @@
 		55020540283606FA004A2A69 /* MoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreInfoView.swift; sourceTree = "<group>"; };
 		551555C028B83DE6004F169F /* ButtonTurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTurView.swift; sourceTree = "<group>"; };
 		552A558228468A150057E81F /* PhotoPickerUIKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerUIKitView.swift; sourceTree = "<group>"; };
+		552E117828F076CA002DC58D /* YelpDetailedBusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpDetailedBusModel.swift; sourceTree = "<group>"; };
+		552E117A28F0F1A7002DC58D /* YelpMatchBusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpMatchBusModel.swift; sourceTree = "<group>"; };
 		552F27E22834BC26001634D8 /* MapUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUIView.swift; sourceTree = "<group>"; };
+		5537755F28EFCDCC00293CC3 /* YelpSearchDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpSearchDataModel.swift; sourceTree = "<group>"; };
+		5537756128EFCE1C00293CC3 /* YelpAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpAPIService.swift; sourceTree = "<group>"; };
 		55377B1D28942E3700517FA6 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		55377B1F28942EB800517FA6 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		5540D925285BAACF0072AEAF /* FileManagerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerModel.swift; sourceTree = "<group>"; };
@@ -79,6 +92,11 @@
 		555D3F2828D44A1100983332 /* ProtoResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtoResultView.swift; sourceTree = "<group>"; };
 		5560C56E283FCD8F0045CA37 /* InterestListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestListView.swift; sourceTree = "<group>"; };
 		556C6AA528AF19E300AF1CCA /* SavedPhotoComp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPhotoComp.swift; sourceTree = "<group>"; };
+		5587331428F20E5900F0D5C1 /* InterestImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestImagesView.swift; sourceTree = "<group>"; };
+		5587331628F2102800F0D5C1 /* DownloadingImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadingImageView.swift; sourceTree = "<group>"; };
+		5587331828F2155F00F0D5C1 /* DowloadingImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DowloadingImageViewModel.swift; sourceTree = "<group>"; };
+		5587331C28F238AE00F0D5C1 /* YelpPhotosCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpPhotosCacheService.swift; sourceTree = "<group>"; };
+		5587331E28F2416900F0D5C1 /* NoInterstImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInterstImageView.swift; sourceTree = "<group>"; };
 		55A7CA5F28E6BD1D00A50796 /* MoreInfoComp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreInfoComp.swift; sourceTree = "<group>"; };
 		55AF2FA22835418F0040D030 /* LocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapAnnotationView.swift; sourceTree = "<group>"; };
 		55BC5B15286948D9000D0F28 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -126,7 +144,7 @@
 		556C6AA728AF1B6300AF1CCA /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				55A7CA5F28E6BD1D00A50796 /* MoreInfoComp.swift */,
+				5587331A28F2345900F0D5C1 /* MoreInfoGroup */,
 				551555C028B83DE6004F169F /* ButtonTurView.swift */,
 				556C6AA528AF19E300AF1CCA /* SavedPhotoComp.swift */,
 				55E10DCA28D61EAB009A0573 /* NewPhotoComp.swift */,
@@ -136,6 +154,27 @@
 				55524F0D28DFDE7E007DCE91 /* InterestListComp.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		5587331A28F2345900F0D5C1 /* MoreInfoGroup */ = {
+			isa = PBXGroup;
+			children = (
+				55A7CA5F28E6BD1D00A50796 /* MoreInfoComp.swift */,
+				5587331428F20E5900F0D5C1 /* InterestImagesView.swift */,
+				5587331628F2102800F0D5C1 /* DownloadingImageView.swift */,
+				5587331E28F2416900F0D5C1 /* NoInterstImageView.swift */,
+			);
+			path = MoreInfoGroup;
+			sourceTree = "<group>";
+		};
+		5587331B28F2348100F0D5C1 /* YelpModelGroup */ = {
+			isa = PBXGroup;
+			children = (
+				5537755F28EFCDCC00293CC3 /* YelpSearchDataModel.swift */,
+				552E117828F076CA002DC58D /* YelpDetailedBusModel.swift */,
+				552E117A28F0F1A7002DC58D /* YelpMatchBusModel.swift */,
+			);
+			path = YelpModelGroup;
 			sourceTree = "<group>";
 		};
 		55CA7CB5283202C9008B5C2C = {
@@ -212,6 +251,7 @@
 				55F69B452893ADD200A909B5 /* PhotoPickerViewModel.swift */,
 				5501135228A345560037591D /* OnBoardingScreenVeiwModel.swift */,
 				555D3F2628D446A900983332 /* ResultPageViewModel.swift */,
+				5587331828F2155F00F0D5C1 /* DowloadingImageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -219,6 +259,7 @@
 		55CA7CD72832DF52008B5C2C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5587331B28F2348100F0D5C1 /* YelpModelGroup */,
 				55CA7CD82832DFB0008B5C2C /* Place.swift */,
 				555167EF2857D9F6004E4D78 /* OnBoardingStep.swift */,
 				5540D925285BAACF0072AEAF /* FileManagerModel.swift */,
@@ -234,6 +275,8 @@
 				55F69B472893B68C00A909B5 /* ImageClassificationService.swift */,
 				55377B1D28942E3700517FA6 /* LocationService.swift */,
 				555D3F2428D4390F00983332 /* CoreDataService.swift */,
+				5537756128EFCE1C00293CC3 /* YelpAPIService.swift */,
+				5587331C28F238AE00F0D5C1 /* YelpPhotosCacheService.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -324,13 +367,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				55BC5B16286948D9000D0F28 /* Extensions.swift in Sources */,
+				5587331528F20E5900F0D5C1 /* InterestImagesView.swift in Sources */,
 				55E0EE7C28377D2B00CDB250 /* NewQuickFile.swift in Sources */,
 				55524F0E28DFDE7E007DCE91 /* InterestListComp.swift in Sources */,
 				55524F0C28DF6D66007DCE91 /* HomeHeaderComp.swift in Sources */,
+				552E117928F076CA002DC58D /* YelpDetailedBusModel.swift in Sources */,
 				55539DC528DAA6AC006F6490 /* BubblesComp.swift in Sources */,
+				5587331F28F2416900F0D5C1 /* NoInterstImageView.swift in Sources */,
 				555167F02857D9F6004E4D78 /* OnBoardingStep.swift in Sources */,
+				5587331928F2155F00F0D5C1 /* DowloadingImageViewModel.swift in Sources */,
 				55539DC728DAAA2B006F6490 /* BubbleResultView.swift in Sources */,
+				5587331728F2102800F0D5C1 /* DownloadingImageView.swift in Sources */,
+				5537756028EFCDCC00293CC3 /* YelpSearchDataModel.swift in Sources */,
 				555D3F2528D4390F00983332 /* CoreDataService.swift in Sources */,
+				552E117B28F0F1A7002DC58D /* YelpMatchBusModel.swift in Sources */,
 				55CA7CD6283204AB008B5C2C /* MapViewModel.swift in Sources */,
 				55539DBD28D96CED006F6490 /* ProtoHomeView.swift in Sources */,
 				5501135328A345560037591D /* OnBoardingScreenVeiwModel.swift in Sources */,
@@ -342,6 +392,7 @@
 				555167EE2857BF47004E4D78 /* NewOnboardingScreen.swift in Sources */,
 				555D3F2328D438A600983332 /* AppInterestContainer.xcdatamodeld in Sources */,
 				55E10DCB28D61EAB009A0573 /* NewPhotoComp.swift in Sources */,
+				5587331D28F238AE00F0D5C1 /* YelpPhotosCacheService.swift in Sources */,
 				556C6AA628AF19E300AF1CCA /* SavedPhotoComp.swift in Sources */,
 				5540D928285BAC800072AEAF /* DataProvider.swift in Sources */,
 				5540D926285BAACF0072AEAF /* FileManagerModel.swift in Sources */,
@@ -354,6 +405,7 @@
 				551555C128B83DE6004F169F /* ButtonTurView.swift in Sources */,
 				55377B2028942EB800517FA6 /* AlertModel.swift in Sources */,
 				55CA7CC4283202C9008B5C2C /* ContentView.swift in Sources */,
+				5537756228EFCE1C00293CC3 /* YelpAPIService.swift in Sources */,
 				55F69B462893ADD200A909B5 /* PhotoPickerViewModel.swift in Sources */,
 				55E10DCD28D62128009A0573 /* AddPhotoView.swift in Sources */,
 				555D3F2728D446A900983332 /* ResultPageViewModel.swift in Sources */,
@@ -502,8 +554,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -534,8 +585,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -26,9 +26,7 @@ struct ProtoHomeView: View {
                     LocationAndGlobeButtonComp()
                 }
                 if mapData.showInterestListView{
-                    Color.black
-                        .opacity(0.5)
-                        .ignoresSafeArea()
+                    darkShadow
                         .onTapGesture {
                             withAnimation(.default) {
                                 mapData.showInterestListView.toggle()
@@ -43,7 +41,12 @@ struct ProtoHomeView: View {
                 
                 MoreInfoView(isShowing: $mapData.showMoreInfoView)
             } // MARK: ZSTACK
-        }
+            .onAppear {
+                mapData.locationManagerService.checkIfLocationServiceIsEnabled()
+                mapData.getInterest()
+            }
+        } // MARK: VIEW
+        
         .sheet(isPresented: $moreInfoSheetView) {
             if #available(iOS 16.0, *) {
                 MoreInfoComp()
@@ -61,3 +64,11 @@ struct ProtoHomeView_Previews: PreviewProvider {
     }
 }
 
+
+extension ProtoHomeView{
+    var darkShadow: some View{
+        Color.black
+            .opacity(0.5)
+            .ignoresSafeArea()
+    }
+}

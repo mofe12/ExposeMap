@@ -30,6 +30,19 @@ extension String {
         }
         return nil
     }
+    
+    
+//    func addAmpersand(in word: String) -> String{
+//        var newWord = word
+//        for (i,char) in newWord.enumerated(){
+//            if char.description == " "{
+//                var n = newWord.index(newWord.startIndex, offsetBy: i)
+//                newWord.remove(at: n)
+//                newWord.insert("&", at: n )
+//            }
+//        }
+//        return newWord
+//    }
 }
 
 
@@ -45,3 +58,5 @@ extension View{
             }
     }
 }
+
+

@@ -12,28 +12,13 @@ import CoreLocationUI
 struct MapUIView: View {
     @EnvironmentObject var viewModel : MapUIViewModel
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37, longitude: -95), latitudinalMeters: 10000000, longitudinalMeters: 10000000)
-
+    
     var body: some View {
         Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: viewModel.places){ place in
             MapAnnotation(coordinate: place.place.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37, longitude: -95) ) {
-                //LocationMapAnnotationView().environmentObject(viewModel)
                 ZStack {
                     Button {
-                        guard let location = place.place.location else {return}
-                        if #available(iOS 16.0, *){
-                            viewModel.showHalfSheetView = true
-                        }else{
-                            viewModel.showMoreInfoView = true
-                        }
-                        
-                        viewModel.moreInfoPlace = PlaceMarked(name: place.place.name ?? "",
-                                                              location: location, addressNumber: place.place.subThoroughfare ?? "",
-                                                              streetName:  place.place.thoroughfare ?? "",
-                                                              city: place.place.locality ?? "",
-                                                              state: place.place.administrativeArea ?? "",
-                                                              county: place.place.subAdministrativeArea ?? "",
-                                                              country: place.place.country ?? "",
-                                                              zipCode: place.place.postalCode ?? "")
+                        mapPinButton(with: place)
                     } label: {
                         Image(systemName: "mappin")
                             .font(.title)
@@ -52,13 +37,37 @@ struct MapUIView: View {
             }else{self.region = region}
             
         })
-        .onAppear{
-            viewModel.locationManagerService.checkIfLocationServiceIsEnabled()
-            viewModel.getInterest()
-        }
+//        .onAppear{
+//            DispatchQueue.main.asyncAfter(deadline:.now() + 1.0){
+//                viewModel.locationManagerService.checkIfLocationServiceIsEnabled()
+//            }
+//            viewModel.getInterest()
+//        }
         
         .ignoresSafeArea()
         
+    }
+    
+    private func mapPinButton(with place: Place){
+        guard let location = place.place.location else {return}
+        
+        if #available(iOS 16.0, *){
+            viewModel.showHalfSheetView = true
+        }else{
+            viewModel.showMoreInfoView = true
+        }
+        
+        viewModel.moreInfoPlace = PlaceMarked(name: place.place.name ?? "",
+                                              location: location,
+                                              addressNumber: place.place.subThoroughfare ?? "",
+                                              streetName:  place.place.thoroughfare ?? "",
+                                              city: place.place.locality ?? "",
+                                              state: place.place.administrativeArea ?? "",
+                                              county: place.place.subAdministrativeArea ?? "",
+                                              isoCountryCode: place.place.isoCountryCode ?? "US",
+                                              country: place.place.country ?? "",
+                                              zipCode: place.place.postalCode ?? "")
+        viewModel.downloadYelpBusDetailData(name: place.place.name ?? "", address: "\(place.place.subThoroughfare ?? "") \(place.place.thoroughfare ?? "")", city: place.place.locality ?? "", state: place.place.administrativeArea ?? "", isoCountry: place.place.isoCountryCode ?? "US")
     }
 }
 

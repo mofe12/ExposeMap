@@ -17,20 +17,17 @@ struct ContentView: View {
         
         if onBoarding == 0{
             NewOnboardingScreen()
-                //.environmentObject(viewModel)
         }else if onBoarding == 1{
             ProtoPhotoSelectorView()
         }else if onBoarding == 2{
-           // HomeView()
             ProtoHomeView()
-                //.environmentObject(viewModel)
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(changeScreens: .constant(changeScreen.contentView))//.environmentObject(MapUIViewModel())
+        ContentView(changeScreens: .constant(changeScreen.contentView))
     }
 }
 

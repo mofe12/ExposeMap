@@ -16,7 +16,7 @@ import CoreData
 // All Map Data Goes here....
 
 
-final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegate{
+final class MapUIViewModel: NSObject, ObservableObject{
     
     let locationManagerService = LocationService.instance
 
@@ -86,7 +86,9 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
     
     
     // Current Interest
-    @Published var currentInterest: String = "SELECT INTEREST"
+    @Published var currentInterest: String? = nil
+    
+    @Published var interestIsClicked: Bool = false
     
     
     // ML results
@@ -104,6 +106,7 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
                  , city: "San Frandcisco"
                  , state: "CA"
                  , county: "test"
+                 , isoCountryCode: "US"
                  , country: "US"
                  , zipCode: "94133")
     
@@ -152,6 +155,8 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
                 if self.places.isEmpty{
                     print("Its empty")
                     self.noInterestAlert()
+                }else{
+                    self.toggleInterestIsClicked()
                 }
             }
             
@@ -171,14 +176,22 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             self.region = result.boundingRegion
         }
     }
-    
-    
-    
+
     // Toggle Interest List view
-    func toogleInterstListView(){
+    func toggleInterstListView(){
         withAnimation(.easeInOut) {
             showInterestListView.toggle()
         }
+    }
+    
+    func toggleInterestIsClicked(){
+        withAnimation(.default) {
+            interestIsClicked.toggle()
+        }
+    }
+    
+    func updateCurrentInterest(with newValue: String){
+        currentInterest = newValue
     }
     
     
@@ -211,11 +224,70 @@ final class MapUIViewModel: NSObject, ObservableObject, CLLocationManagerDelegat
             .store(in: &cancellable)
     }
     
+// Yelp
+    
+    
+    let yelpService = YelpAPIService.instance
+    
+    @Published var YelpSearchResult: YelpMatch?
+    @Published var YelpBusDetail: YelpBusinessDetail?
+    
+    func downloadYelpBusDetailData(name: String, address: String, city: String, state: String, isoCountry: String){
+        YelpBusDetail = nil
+        yelpService.downloadSearchData(name: name, address: address, city: city, state: state, isoCountry: isoCountry)
+    }
+    
+    func subscribeToYelpSearch(){
+        yelpService.$yelpResults
+            .sink(receiveValue: { [weak self] returnedYelpModel in
+                self?.YelpSearchResult = returnedYelpModel
+            })
+            .store(in: &cancellable)
+    }
+    
+    func findBusiness(lon: Double ,lat: Double){
+        guard let businesses = YelpSearchResult?.businesses else {return}
+        
+        let roundedLon = roundUp2decimal(value: lon)
+        let roundedLat = roundUp2decimal(value: lat)
+        
+        
+        for business in businesses{
+            let busLon = roundUp2decimal(value: business.coordinates.longitude)
+            let busLat = roundUp2decimal(value: business.coordinates.latitude)
+            if roundedLon == busLon && roundedLat == busLat{
+                print("Found")
+                getBusinessDetail(withID: business.id)
+                break
+            }
+        }
+        
+        
+    }
+    
+    private func roundUp2decimal(value: Double) -> Double{
+        return round(value * 100) / 100.0
+    }
+    
+    func getBusinessDetail(withID id: String){
+        yelpService.downloadDetailBusData(withID: id)
+    }
+    
+    func subscribeToYelpBusDetail(){
+        yelpService.$yelpBusinessDetail
+            .sink(receiveValue: { [weak self] returnedBusDetail in
+                self?.YelpBusDetail = returnedBusDetail
+            })
+            .store(in: &cancellable)
+    }
+
 
     override init(){
         super.init()
         subscribeToLocationPermission()
         subscribeToRegion()
+        subscribeToYelpSearch()
+        subscribeToYelpBusDetail()
     }
     
 

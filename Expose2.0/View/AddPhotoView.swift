@@ -40,7 +40,7 @@ struct AddPhotoView: View {
                     
                     if !viewModel.interestEntities.isEmpty
                     {
-                        Text("Saved Images")
+                        Text("Scanned Images")
                             .bold()
                             .font(.subheadline)
                             .frame(maxWidth: .infinity, alignment: .leading)

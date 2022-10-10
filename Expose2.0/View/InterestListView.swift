@@ -17,28 +17,37 @@ struct InterestListView: View {
             }
             else{
                 ForEach(mapData.interestEntities) { item in
-                    
                     if  let imageData = item.image,
                         let image = UIImage(data: imageData),
                         let interest = item.interest
                     {
                         Button {
-                            mapData.toogleInterstListView()
-                            currentInterest = interest
-                            //                        Searching Place
-                            //                        You can use your delay time
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {self.mapData.searchQuery()}
+                            interestButton(interest)
                         } label: {
                             InterestListComp(image: image , interest: interest)
                         }
                         .onChange(of: currentInterest) { newValue in
-                            mapData.currentInterest = newValue
+                            mapData.updateCurrentInterest(with: newValue)
                         }
                     }
                 }
             }
         })
     }
+    
+    
+    func interestButton(_ interest: String){
+        mapData.toggleInterstListView()
+        mapData.toggleInterestIsClicked()
+        currentInterest = interest
+        // Searching Place
+        // You can use your delay time
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.mapData.searchQuery()
+            //self.mapData.downloadYelpData(with: interest)
+        }
+    }
+
 }
 
 struct InterestListView_Previews: PreviewProvider {
